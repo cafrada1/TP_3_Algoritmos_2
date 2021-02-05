@@ -5,26 +5,46 @@
 #ifndef TP_3_ALGORITMOS_2_DICCIONARIO_H
 #define TP_3_ALGORITMOS_2_DICCIONARIO_H
 
-#include "Personaje.h"
+#include "personaje.h"
+#include "NodoABB.h"
+#include <string>
 
+using namespace std;
 
-template<typename Dato1, typename Dato2>
 class Diccionario{
 private:
-    Dato1 clave;
-
-    Dato2 valor;
+    NodoABB<string , Personaje *> *raiz;
 
 public:
-    Diccionario(Dato1 clave, Dato2 valor);
+    Diccionario();
 
+    NodoABB<string , Personaje *> *getRaiz();
+
+    NodoABB<string , Personaje *> *agregarNodo(NodoABB<string , Personaje *> *nodo_nuevo, Personaje *nodo_viejo);
+
+    void agregarPersonaje(Personaje *personaje);
+
+    NodoABB<string , Personaje *> *buscar(NodoABB<string , Personaje *> *nodo, string nombre);
+
+    bool buscar(string nombre);
+
+    void mostrarOrdenados(NodoABB<string , Personaje *> *nodo);
+
+    void mostrarOrdenados();
+
+    NodoABB<string , Personaje *> *encuentraMinimo(NodoABB<string , Personaje *> *nodo);
+
+    void quitarNodo( NodoABB<string , Personaje *> *nodo);
+
+    void quitarNodo(string nombre);
+
+    void limpiar();
+
+    bool vacio();
+
+
+    ~Diccionario();
 };
-
-template<typename Dato1, typename Dato2>
-Diccionario<Dato1,Dato2>::Diccionario(Dato1 clave, Dato2 valor){
-    this->clave = clave;
-    this->valor = valor;
-}
 
 
 #endif //TP_3_ALGORITMOS_2_DICCIONARIO_H
