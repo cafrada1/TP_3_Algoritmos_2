@@ -85,6 +85,8 @@ public:
      */
     Nodo<Dato> *buscarNodo(int posicion);
 
+    Nodo<Dato> *buscarNodo(Dato valor);
+
     ~Lista();
 };
 
@@ -183,6 +185,25 @@ Nodo<Dato> *Lista<Dato>::buscarNodo(int posicion) {
 
     for (int i = 1; i < posicion; i++) {
         buscado = buscado->obtenerSiguiente();
+    }
+
+    return buscado;
+}
+
+template<typename Dato>
+Nodo<Dato> *Lista<Dato>::buscarNodo(Dato valor) {
+    if (listaVacia()) {
+        return nullptr;
+    }
+
+    Nodo<Dato> *buscado = primero;
+    int i = 0;
+    while ((buscado->obtenerDato() != valor) && (i<largo)) {
+        buscado = buscado->obtenerSiguiente();
+        i++;
+    }
+    if (buscado->obtenerDato() != valor){
+        return nullptr;
     }
 
     return buscado;

@@ -76,7 +76,9 @@ void Nodo<Dato>::asignarSiguiente(Nodo<Dato> *siguiente_nodo) {
 
 template<typename Dato>
 Nodo<Dato>::~Nodo() {
-    delete elemento;
+    if (elemento != nullptr){
+        delete elemento;
+    }
 }
 
 #endif //TP2_NODO_H
