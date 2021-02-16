@@ -5,9 +5,21 @@
 #ifndef TP2_FUEGO_H
 #define TP2_FUEGO_H
 
-#include "personaje.h"
+#include "Personaje.h"
+#include "Tablero.h"
 
-class Fuego : public Personaje {
+class Fuego : public Personaje{
+
+private:
+    Tablero tablero;
+    const int COSTO_ENERGIA_ATAQUE = 5;
+    const int COSTO_ENERGIA_DEFENSA = 5;
+    const int DEBILIDAD = -10;
+    const int FORTALEZA = -30;
+    const int ATAQUE = -20;
+    const int DEFENSA_PERSONAL = 10;
+    std::string elemento_debilidad = "agua";
+    std::string elemento_fortaleza = "aire";
 
 public:
 
@@ -16,7 +28,7 @@ public:
      * POST:
      * FUNCIONAMIENTO:
      */
-    Fuego(unsigned int vida, string nombre, unsigned int escudo, unsigned int energia, string tipo);
+    Fuego(unsigned int vida,  std::string nombre, unsigned int escudo, unsigned int energia,  std::string tipo, int posicion, Tablero tablero);
 
     /*
      * PRE: -
@@ -29,6 +41,13 @@ public:
      * por pantalla la energia recuperada y el alimento usado.
      */
     void alimentarse();
+
+
+    void atacar(int fila, int columna);
+
+
+
+    void defenderse();
 };
 
 

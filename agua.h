@@ -5,13 +5,22 @@
 #ifndef TP2_AGUA_H
 #define TP2_AGUA_H
 
-#include "personaje.h"
+#include "Personaje.h"
+#include "tablero.h"
 
-class Agua : public Personaje {
+class Agua : public Personaje{
 
     // Atributos
 private:
+
     int cantidad_alimentado = 0;
+    unsigned int COSTO_ENERGIA_ATAQUE = 5;
+    int MINIMO_ENERGIA_DEFENSA = 12;
+    int DEBILIDAD_TIERRA = -10;
+    int FORTALEZA_FUEGO = -30;
+    int ATAQUE = -20;
+    int DEFENSA_PERSONAL = 50;
+    int DEFENSA_EQUIPO = 10;
 
     //Metodos
 public:
@@ -20,7 +29,7 @@ public:
      * POST:
      * FUNCIONAMIENTO:
      */
-    Agua(unsigned int vida, string nombre, unsigned int escudo, unsigned int energia, string tipo);
+    Agua(unsigned int vida, std::string nombre, unsigned int escudo, unsigned int energia, std::string tipo, int posicion, Tablero tablero);
 
     /*
      * PRE: -
@@ -33,6 +42,15 @@ public:
      * por pantalla la salud recuperada y el alimento usado.
      */
     void alimentarse();
+
+
+
+
+    void atacar(int fila, int columna);
+
+
+
+    void defenderse();
 
 };
 
