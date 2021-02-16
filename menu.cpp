@@ -9,7 +9,12 @@ using namespace std;
 
 const int MINIMO_VALOR_MENU = 1, MAXIMO_VALOR_MENU = 6;
 
-enum opciones { AGREGAR_PERSONAJE = 1, ELIMINAR_PERSONAJE = 2, MOSTRAR_PERSONAJES = 3, DETALLES_PERSONAJE = 4, COMENZAR_JUEGO = 5, SALIR = 6 };
+enum opciones { AGREGAR_PERSONAJE = 1,
+				ELIMINAR_PERSONAJE = 2,
+				MOSTRAR_PERSONAJES = 3,
+				DETALLES_PERSONAJE = 4,
+				COMENZAR_JUEGO = 5,
+				SALIR = 6 };
 
 
 void Menu::mostrar_menu(){
@@ -44,6 +49,14 @@ void Menu::elegir_opcion(Diccionario<string, Personaje *> &personajes){
 		while(!validar_opcion(opcion,MINIMO_VALOR_MENU, MAXIMO_VALOR_MENU)){
 			opcion = ingresar_opcion();
 		}
+
+		procesar_opcion(opcion,continuar,personajes);
+
+	}while(continuar);
+}
+
+
+void Menu::procesar_opcion(int opcion, bool &continuar,Diccionario<string, Personaje *> &personajes){
 
 	switch(opcion){
 		case AGREGAR_PERSONAJE:
@@ -84,7 +97,7 @@ void Menu::elegir_opcion(Diccionario<string, Personaje *> &personajes){
 			string nombre;
 			cout << "Ingrese el nombre del personaje al que desea alimentar: ";
 			cin >> nombre;
-			if (esta_en_la_lista(personajes,nombre))
+			if (personajes.buscar(nombre))
 				alimentar_personaje(personajes, nombre);
 			else
 				cout << "El nombre del personaje no es válido" << endl;
@@ -99,9 +112,7 @@ void Menu::elegir_opcion(Diccionario<string, Personaje *> &personajes){
 			continuar = false;
 			break;
 		}
-	}while(continuar);
 }
-
 
 void Menu::validar_elemento(string &elemento){
 	while (elemento != "agua" && elemento != "fuego" && elemento != "tierra" && elemento != "aire"){
@@ -140,74 +151,23 @@ void Menu::agregar_nuevo_personaje(Diccionario<string, Personaje *> &personajes)
 
 
 void Menu::eliminar_personaje(Diccionario<string, Personaje *> &personajes, string nombre){
-	//int posicion_eliminado = buscar_personaje(personajes, nombre);
-	//cout << "posicion eliminado: " << posicion_eliminado << endl;
-	//Personaje* personaje_eliminado = personajes.quitarNodo(nombre);
 	personajes.quitarNodo(nombre);
-	//delete personaje_eliminado;    CUIDADO, FIJARSE QUE EL PERSONAJE ELIMINADO NO PIERDA MEMORIA
-	//personajes.baja(posicion_eliminado);
-	//personajes.reiniciar();
 }
 
-/*
-int Menu::buscar_personaje(Diccionario<string, Personaje *> personajes, string nombre){
-
-	while(! personajes.buscar(nombre)){
-		Personaje* personaje_actual = personajes(nombre);
-	}
-	return personaje_actual;
-
-
-
-	int posicion = 1;
-	bool encontrado = false;
-
-	while(personajes.hay_siguiente() && !encontrado){
-		Personaje* personaje_actual = personajes.siguiente();
-		//cout << "ENTRA" << endl;
-		if (personaje_actual->obtener_nombre() == nombre){
-			encontrado = true;
-		}
-		else{
-			posicion += 1;
-		}
-	}
-	//cout << "posicion: " << posicion << endl;
-	personajes.reiniciar();
-	return posicion;
-
-}
-
-
-void Menu::mostrar_nombres_personajes(Diccionario<string, Personaje *> personajes){
-	string nombre;
-	cout << "Personajes:\n";
-	while(personajes.hay_siguiente()){
-		Personaje* personaje_actual = personajes.siguiente();
-		nombre = personaje_actual->obtener_nombre();
-		cout << nombre << " ";
-		}
-	personajes.reiniciar();
-	cout << "\n";
-}
-*/
 
 void Menu::mostrar_datos_personaje(Diccionario<string, Personaje *> &personajes, string nombre){
-	//int posicion = buscar_personaje(personajes, nombre);
 	Personaje *personaje = personajes.traer(nombre);
-	cout << "Nombre: " << personaje->obtenerNombre() << endl;
-	cout << "Elemento: " << personaje->obtenerTipo() << endl;
-	cout << "Vida: " << personaje->obtenerVida() << endl;
-	cout << "Escudo: " << personaje->obtenerEscudo() << endl;
-	cout << "Energía: " << personaje->obtenerEnergia() << endl;
+	personaje->mostrarDatos();
+	//cout << "Nombre: " << personaje->obtenerNombre() << endl;
+	//cout << "Elemento: " << personaje->obtenerTipo() << endl;
+	//cout << "Vida: " << personaje->obtenerVida() << endl;
+	//cout << "Escudo: " << personaje->obtenerEscudo() << endl;
+	//cout << "Energía: " << personaje->obtenerEnergia() << endl;
 }
 
 
 void Menu::alimentar_personaje(Diccionario<string, Personaje *> &personajes, string nombre){
 	Personaje *personaje = personajes.traer(nombre);
-
-	//int posicion = buscar_personaje(personajes, nombre);
-	//Personaje* personaje = personajes.consulta(posicion);
 	personaje->alimentarse();
 }
 

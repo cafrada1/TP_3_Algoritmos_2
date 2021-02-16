@@ -24,9 +24,6 @@ void cargar_atributos_personaje(Personaje* &nuevo_personaje,int vida,string nomb
 void agregar_personaje_a_diccionario(Diccionario<string, Personaje *> &personajes, Personaje* &nuevo_personaje);
 
 
-//PRE:
-//POS: Recorre la lista y elimina los personajes guardados en cada nodo
-//void eliminar_lista(Diccionario mi_dicc);
 
 
 #endif /* FUNCIONES_H_ */

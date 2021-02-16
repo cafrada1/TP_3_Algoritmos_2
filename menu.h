@@ -20,6 +20,8 @@ public:
 	//POS:
 	int ingresar_opcion();
 
+	void procesar_opcion(int opcion, bool &continuar,Diccionario<string, Personaje *> &personajes);
+
 	//PRE:
 	//POS:
 	void pedir_datos_personaje(string &elemento, string &nombre);

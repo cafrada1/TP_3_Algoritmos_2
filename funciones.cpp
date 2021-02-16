@@ -41,9 +41,7 @@ void procesar_linea_archivo(string linea, Diccionario<string, Personaje *> &pers
 	string vida;
 
 	getline(ss, tipo, ',');
-
 	getline(ss, nombre, ',');
-
 	getline(ss, escudo, ',');
 	int escudo_numero = stoi(escudo);  //Como era una cadena, lo paso a int
 
@@ -52,23 +50,14 @@ void procesar_linea_archivo(string linea, Diccionario<string, Personaje *> &pers
 
 	Personaje* nuevo_personaje;
 
-	int energia = rand()% 20;
-
-	cout << "punto 2" << endl;
+	int energia = rand() % 20;
 
 	cargar_atributos_personaje(nuevo_personaje, vida_numero, nombre, escudo_numero, energia, tipo);
-
-	cout << "punto 3" << endl;
-
 	agregar_personaje_a_diccionario(personajes,nuevo_personaje);
-
-	cout << "punto 4" << endl;
-
 }
 
 
 void agregar_personaje_a_diccionario(Diccionario<string, Personaje *> &personajes, Personaje* &nuevo_personaje){
-	//int cantidad_personajes_en_lista = personajes.obtener_cantidad();
 	string nombre_personaje;
 	nombre_personaje = nuevo_personaje->obtenerNombre();
 	personajes.agregarPersonaje(nombre_personaje,nuevo_personaje);
@@ -90,16 +79,4 @@ void cargar_atributos_personaje(Personaje* &nuevo_personaje,int vida,string nomb
 		nuevo_personaje = new Aire(vida, nombre, escudo, energia, tipo);
 	}
 }
-
-/*
-void eliminar_diccionario(Diccionario<string, Personaje *> &personajes){
-
-
-	for(int i = 1; i<= personajes.obtener_cantidad(); i++){  //Borrar la lista.
-		Personaje* personaje = personajes.consulta(i);
-		//cout << personaje->obtener_nombre() << endl;;      //Para ver que personajes se eliminan
-		delete personaje;
-	}
-}
-*/
 

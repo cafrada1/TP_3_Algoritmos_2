@@ -7,7 +7,7 @@
 
 #include "personaje.h"
 #include "NodoABB.h"
-#include "fuego.h"
+
 
 using namespace std;
 
@@ -183,7 +183,7 @@ void Diccionario<T1, T2>::quitarHijoDerecho(NodoABB<T1 , T2> *nodo){
 template<typename T1, typename T2>
 void Diccionario<T1, T2>::quitarHijoIzquierdo(NodoABB<T1 , T2> *nodo){
 
-    nodo->getPadre()->setHijoNuevo(nodo->getPadre(), nodo->getDerecho());
+    nodo->getPadre()->setHijoNuevo(nodo->getPadre(), nodo->getIzquierdo()); //derecho o izquierdo?
     nodo->getIzquierdo()->setPadre(nodo->getPadre());
 
     delete nodo;
@@ -198,31 +198,27 @@ void Diccionario<T1, T2>::quitarDosHijos(NodoABB<T1 , T2> *nodo){
     nodo->setValue(nodo_predecesor->getValue());
     nodo->setKey(nodo_predecesor->getKey());
 
-    if (nodo_predecesor->esHoja()){  //AGREGADO EL IF
+    if (!nodo_predecesor->esHoja()){  //AGREGADO EL IF
+    	NodoABB<T1 , T2> *padre_nodo_predecesor = nodo_predecesor->getPadre();
+    	NodoABB<T1 , T2> *hijo_nodo_predecesor = nodo_predecesor->getIzquierdo();
+    	hijo_nodo_predecesor->quitarPadre(hijo_nodo_predecesor);
+
+    	if (padre_nodo_predecesor->getIzquierdo() == nodo_predecesor){
+    	padre_nodo_predecesor->setIzquierdo(hijo_nodo_predecesor);  //Uno el abuelo con el hijo del hijo izquierdo
+    	}
+    	else{
+    		padre_nodo_predecesor->setDerecho(hijo_nodo_predecesor); //Uno el abuelo con el hijo del hijo derecho
+    	}
+    	hijo_nodo_predecesor->setPadre(padre_nodo_predecesor);
+    }
+
+    else{
     	nodo_predecesor->quitarPadre(nodo_predecesor);
+    }
     	nodo_predecesor->setValue(aux_value);
     	nodo_predecesor->setKey(aux_key);
 
     delete nodo_predecesor;
-    }
-    else{  //AGREGADO
-    	NodoABB<T1 , T2> *hijo_izquierdo = nodo_predecesor->getIzquierdo();
-    	NodoABB<T1 , T2> *hijo_derecho = nodo_predecesor->getDerecho();
-    	if (hijo_izquierdo != nullptr){
-    		nodo->setIzquierdo(hijo_izquierdo);  //conecto el abuelo con el nieto
-    		hijo_izquierdo->quitarPadre(hijo_izquierdo);
-    		hijo_izquierdo->setPadre(nodo);
-    	}
-    	else if (hijo_derecho != nullptr){
-    		nodo->setDerecho(hijo_derecho);  //conecto el abuelo con el nieto
-    		hijo_derecho->quitarPadre(hijo_derecho);
-    		hijo_derecho->setPadre(nodo);
-    	}
-    	nodo_predecesor->setValue(aux_value);
-    	nodo_predecesor->setKey(aux_key);
-
-    	delete nodo_predecesor;
-    }  //HASTA ACA
 }
 
 template<typename T1, typename T2>
@@ -277,46 +273,6 @@ T2 Diccionario<T1,T2>::traer(T1 key){
 	}
 	return nullptr;
 }
-
-/*
-template<typename T1, typename T2>
-void Diccionario<T1,T2>::baja(){
-
-	if (raiz->esHoja()){  //aux apunta al nodo,el nodo pasa a ser null, se borra aux
-	     NodoABB< T1 , T2> *aux = raiz;
-
-		 raiz = nullptr;
-		 delete aux;
-	}
-
-	else if (raiz->hijoDerechoUnico()){  //el nodo tiene solo hijo derecho
-	     NodoABB< T1 , T2> *aux = raiz;
-	     if (raiz->getPadre()->getDerecho() == raiz){    //si el hijo derecho del padre es el nodo
-	    	 raiz->getPadre()->setDerecho(raiz->getDerecho());   //el hijo derecho del nodo pasa a ser el hijo derecho del padre
-	     }
-	     else if(raiz->getPadre()->getIzquierdo() == raiz){  //si el hijo izquierdo del padre es el nodo
-	    	 raiz->getPadre()->setIzquierdo(raiz->getDerecho());  //el hijo derecho del nodo pasa a ser el hijo izquierdo del padre
-	     }
-	     delete aux;
-	}
-
-	else if (raiz->hijoIzquierdoUnico()){  //el nodo tiene solo hijo izquierdo
-	     NodoABB< T1 , T2> *aux = raiz;
-	     NodoABB< T1, T2> *nodo_padre = raiz->getPadre();
-	     if (nodo_padre->getDerecho() == raiz){  //si el hijo derecho del padre es el nodo
-	    	 nodo_padre->setDerecho(raiz->getIzquierdo()); //el hijo izquierdo del nodo pasa a ser el hijo derecho del padre
-	     }
-	     else if(nodo_padre->getIzquierdo() == raiz){  //si el hijo izquierdo del padre es el nodo
-	    	 nodo_padre->setIzquierdo(raiz->getIzquierdo());  //el hijo izquierdo del nodo pasa a ser el hijo izquierdo del padre
-	     }
-	     delete aux;
-	}
-
-	else if (raiz->dosHijos()){
-		quitarDosHijos(raiz);
-	}
-}
-*/
 
 
 #endif //TP_3_ALGORITMOS_2_DICCIONARIO_H
