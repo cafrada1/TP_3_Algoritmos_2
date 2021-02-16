@@ -3,7 +3,7 @@
 
 #include "personaje.h"
 #include "NodoABB.h"
-#include "fuego.h"
+
 
 using namespace std;
 
@@ -13,7 +13,6 @@ class Diccionario{
 
 private:
     NodoABB<T1 , T2> *raiz;
-    int cantidadPersonajes;
 
 public:
     Diccionario();
@@ -24,13 +23,11 @@ public:
 
     void agregarPersonaje(T1 key, T2 personaje);
 
-    int obtenerCantidad();
-
     NodoABB<T1 , T2> *buscar(NodoABB<T1 , T2> *nodo, T1 key);
 
-    T2 buscarPersonaje(T1 key);
-
     bool buscar(T1 key);
+
+    T2 traer(T1 key);
 
     void mostrarOrdenados(NodoABB<T1 , T2> *nodo);
 
@@ -59,6 +56,8 @@ public:
 
     bool vacio();
 
+    //void baja();
+
 
     ~Diccionario();
 };
@@ -66,7 +65,6 @@ public:
 template<typename T1, typename T2>
 Diccionario<T1, T2>::Diccionario() {
     raiz = nullptr;
-    cantidadPersonajes = 0;
 }
 
 template<typename T1, typename T2>
@@ -91,13 +89,7 @@ template<typename T1, typename T2>
 void Diccionario<T1, T2>::agregarPersonaje(T1 key, T2 personaje) {
 
     raiz = agregarNodo(raiz,key,personaje);
-    cantidadPersonajes++;
 
-}
-
-template<typename T1, typename T2>
-int Diccionario<T1, T2>::obtenerCantidad(){
-    return cantidadPersonajes;
 }
 
 template<typename T1, typename T2>
@@ -116,11 +108,6 @@ bool Diccionario<T1, T2>::buscar(T1 key) {
     NodoABB<T1 , T2> *encontrado = buscar(raiz, key);
 
     return (encontrado != nullptr);
-}
-
-template<typename T1, typename T2>
-T2 Diccionario<T1, T2>::buscarPersonaje(T1 key) {
-    return buscar(raiz,key)->getValue();
 }
 
 template<typename T1, typename T2>
@@ -151,10 +138,6 @@ NodoABB<T1 , T2> *Diccionario<T1, T2>::encuentraMinimo(NodoABB<T1 , T2> *nodo) {
     return nodo;
 }
 
-template<typename T1, typename T2>
-NodoABB<T1 , T2> *Diccionario<T1, T2>::encuentraMinimo() {
-    return encuentraMinimo(raiz);
-}
 template<typename T1, typename T2>
 void Diccionario<T1, T2>::quitarRaiz() {
     if (raiz->dosHijos()){
@@ -198,7 +181,7 @@ void Diccionario<T1, T2>::quitarHijoDerecho(NodoABB<T1 , T2> *nodo){
 template<typename T1, typename T2>
 void Diccionario<T1, T2>::quitarHijoIzquierdo(NodoABB<T1 , T2> *nodo){
 
-    nodo->getPadre()->setHijoNuevo(nodo->getPadre(), nodo->getDerecho());
+    nodo->getPadre()->setHijoNuevo(nodo->getPadre(), nodo->getIzquierdo()); //derecho o izquierdo?
     nodo->getIzquierdo()->setPadre(nodo->getPadre());
 
     delete nodo;
@@ -213,7 +196,23 @@ void Diccionario<T1, T2>::quitarDosHijos(NodoABB<T1 , T2> *nodo){
     nodo->setValue(nodo_predecesor->getValue());
     nodo->setKey(nodo_predecesor->getKey());
 
-    nodo_predecesor->quitarPadre(nodo_predecesor);
+    if (!nodo_predecesor->esHoja()){  //AGREGADO EL IF
+        NodoABB<T1 , T2> *padre_nodo_predecesor = nodo_predecesor->getPadre();
+        NodoABB<T1 , T2> *hijo_nodo_predecesor = nodo_predecesor->getIzquierdo();
+        hijo_nodo_predecesor->quitarPadre(hijo_nodo_predecesor);
+
+        if (padre_nodo_predecesor->getIzquierdo() == nodo_predecesor){
+            padre_nodo_predecesor->setIzquierdo(hijo_nodo_predecesor);  //Uno el abuelo con el hijo del hijo izquierdo
+        }
+        else{
+            padre_nodo_predecesor->setDerecho(hijo_nodo_predecesor); //Uno el abuelo con el hijo del hijo derecho
+        }
+        hijo_nodo_predecesor->setPadre(padre_nodo_predecesor);
+    }
+
+    else{
+        nodo_predecesor->quitarPadre(nodo_predecesor);
+    }
     nodo_predecesor->setValue(aux_value);
     nodo_predecesor->setKey(aux_key);
 
@@ -265,4 +264,18 @@ Diccionario<T1, T2>::~Diccionario(){
     limpiar();
 };
 
-#endif //TP_3_ALGORITMOS_2_DICCIONARIO_H
+template<typename T1, typename T2>
+T2 Diccionario<T1,T2>::traer(T1 key){
+    if(buscar(key)){
+        return buscar(raiz,key)->getValue();
+    }
+    return nullptr;
+}
+
+template<typename T1, typename T2>
+NodoABB<T1 , T2> *Diccionario<T1, T2>::encuentraMinimo() {
+    return encuentraMinimo(raiz);
+}
+
+
+#endif
