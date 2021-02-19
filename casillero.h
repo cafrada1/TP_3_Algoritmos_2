@@ -14,16 +14,20 @@ private:
     int pos_y = 0;
     string tipo_terreno;
     bool disponible = true;
+    int numero = 0;
 public:
     Casillero() = default;
-    Casillero(int x, int y, string terreno);
+    Casillero(int x, int y, string terreno, int numero_casillero);
     void setX( int x);
     void setY(int y);
+    string getTerreno();
+
     void setTerreno(string tipo);
     void cambiarDisponible();
     bool getDisponible();
     int getX();
     int getY();
+    int getNumero();
     int distancia(Casillero *casillero);
     void mostrar();
 };

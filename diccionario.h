@@ -194,9 +194,18 @@ void Diccionario<T1, T2>::quitarDosHijos(NodoABB<T1 , T2> *nodo){
     nodo->setValue(nodo_predecesor->getValue());
     nodo->setKey(nodo_predecesor->getKey());
 
-    nodo_predecesor->quitarPadre(nodo_predecesor);
     nodo_predecesor->setValue(aux_value);
     nodo_predecesor->setKey(aux_key);
+
+    if (nodo_predecesor->getIzquierdo() != nullptr){
+
+        nodo_predecesor->getPadre()->setHijoNuevo(nodo_predecesor->getPadre(), nodo_predecesor->getIzquierdo());
+        nodo_predecesor->getIzquierdo()->setPadre(nodo_predecesor->getPadre());
+    }
+    else{
+        nodo_predecesor->quitarPadre(nodo_predecesor);
+
+    }
 
     delete nodo_predecesor;
 }

@@ -112,13 +112,14 @@ bool Lista<Dato>::listaVacia() {
 
 template<typename Dato>
 void Lista<Dato>::alta(Dato elemento_agregar) {
-    auto *nuevo_nodo = new Nodo<Dato>(elemento_agregar);
+    Nodo<Dato> *nuevo_nodo = new Nodo<Dato>(elemento_agregar);
 
     if (largo == 0) {
         primero = nuevo_nodo;
     } else {
-        nuevo_nodo->asignarSiguiente(primero);
-        primero = nuevo_nodo;
+        buscarNodo(largo)->asignarSiguiente(nuevo_nodo);
+        //nuevo_nodo->asignarSiguiente(primero);
+        //primero = nuevo_nodo;
     }
 
     largo++;
