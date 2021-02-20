@@ -28,10 +28,10 @@ public:
     /*
      * PRE: -
      *
-     * POST: -
+     * POST: Setea el valor de siguiente al hasta entonces ultimo elemento con el valor del
+     *  nuevo ultimo elemento.
      *
-     * FUNCIONAMIENTO: agrega al principio de la lista el elemento .
-     *                  asigna a primero la direccion del elemento y aumenta el largo en 1.
+     * FUNCIONAMIENTO: agrega al final de la lista el elemento .
      */
     void alta(Dato elemento_agregar);
 
@@ -118,8 +118,6 @@ void Lista<Dato>::alta(Dato elemento_agregar) {
         primero = nuevo_nodo;
     } else {
         buscarNodo(largo)->asignarSiguiente(nuevo_nodo);
-        //nuevo_nodo->asignarSiguiente(primero);
-        //primero = nuevo_nodo;
     }
 
     largo++;

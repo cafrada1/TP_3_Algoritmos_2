@@ -11,13 +11,46 @@ private:
     T1 value;
 
 public:
+
+    /*
+     *  PRE: -
+     *  POST: No asigna ningun valor al atributo value.
+     *  Descripcion:
+     *      Constructor por default de Vertice.
+     */
     Vertice() = default;
+
+    /*
+     *  PRE: -
+     *  POST: -
+     *  Descripcion:
+     *      Constructor de vertice que setea el atributo value.
+     */
     Vertice(T1 value);
 
+    /*
+     *  PRE: -
+     *  POST: -
+     *  Descripcion:
+     *      Retorna el valor del atributo value.
+     */
     T1 getValue();
 
+    /*
+     *  PRE: -
+     *  POST: -
+     *  Descripcion:
+     *      Setea el atributo value al valor pasado como parametro.
+     */
     void setValue(T1 value);
 
+    /*
+     *  PRE: -
+     *  POST:
+     *      No aplica delete al valor de value.
+     *  Descripcion:
+     *      Destructor por default de vertice.
+     */
     ~Vertice() = default;
 };
 
