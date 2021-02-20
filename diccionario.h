@@ -247,6 +247,18 @@ public:
      */
     bool vacio();
 
+    /*
+     *  PRE: -
+     *
+     *  POST: -
+     *
+     *  Descripcion:
+     *      Retorna el valor de value si la key se encuentra en el diccionario.
+     *      Retorna nullptr si la key no se encuentra.
+     */
+    T2 traer(T1 key);
+
+
 #pragma region DESTRUCTOR
 
     /*
@@ -439,6 +451,14 @@ void Diccionario<T1, T2>::limpiar() {
     while (!vacio()) {
         quitarRaiz();
     }
+}
+
+template<typename T1, typename T2>
+T2 Diccionario<T1,T2>::traer(T1 key){
+    if(buscar(key)){
+        return buscar(raiz,key)->getValue();
+    }
+    return nullptr;
 }
 
 template<typename T1, typename T2>
