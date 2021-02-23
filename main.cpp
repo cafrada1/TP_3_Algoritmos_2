@@ -1,5 +1,4 @@
 #include <iostream>
-#include "funciones.h"
 #include "personaje.h"
 #include "diccionario.h"
 #include "NodoABB.h"
@@ -13,18 +12,16 @@ using namespace std;
 
 int main() {
 
+	//if existe partida, cargar la partida
+
+	//borrar la partida sería un método de partida? guardarla tambien?
 	srand(time(0));
 
     Diccionario<string, Personaje*> *personajes = new Diccionario<string, Personaje *>();
 
     Menu menu_principal;
 
-    leer_archivo(*personajes);
-
     personajes->mostrarOrdenados();
-
-    //cout << "punto 1" << endl;
-
 
     menu_principal.elegir_opcion(*personajes);
 
@@ -73,30 +70,6 @@ int main() {
     //cout << "Escudo: " << p1->obtenerEscudo() << endl;
     //cout << "Energía: " << p1->obtenerEnergia() << endl;
 
-
-    /*
-    int vida = 100;
-    int escudo = 1;
-    int energia = 15;
-    string tipo = "fuego";
-    string nombre = "ariadna";
-    nombre = "ariadna";
-    Personaje *mi_personaje = new Fuego(vida, nombre, escudo, energia, tipo);
-    personajes->agregarPersonaje(nombre,mi_personaje);
-    nombre = "amiadna";
-    mi_personaje = new Fuego(vida, nombre, escudo, energia, tipo);
-    personajes->agregarPersonaje(nombre, mi_personaje);
-    nombre = "juan";
-    mi_personaje = new Fuego(vida, nombre, escudo, energia, tipo);
-    personajes->agregarPersonaje(nombre, mi_personaje);
-    nombre = "bruno";
-    mi_personaje = new Fuego(vida, nombre, escudo, energia, tipo);
-    personajes->agregarPersonaje(nombre, mi_personaje);
-
-    personajes->mostrarOrdenados();
-	*/
-
-    //eliminar_diccionario();
 
     delete personajes;
     return 0;

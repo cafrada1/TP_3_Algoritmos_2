@@ -2,7 +2,6 @@
 #include "diccionario.h"
 #include "NodoABB.h"
 #include "menu.h"
-#include "funciones.h"
 #include <string>
 
 using namespace std;
@@ -91,19 +90,6 @@ void Menu::procesar_opcion(int opcion, bool &continuar,Diccionario<string, Perso
 			}
 			break;
 
-/*
-		case ALIMENTAR_PERSONAJE:
-			{
-			string nombre;
-			cout << "Ingrese el nombre del personaje al que desea alimentar: ";
-			cin >> nombre;
-			if (personajes.buscar(nombre))
-				alimentar_personaje(personajes, nombre);
-			else
-				cout << "El nombre del personaje no es válido" << endl;
-			}
-			break;
-*/
 		case COMENZAR_JUEGO:
 			comenzar_juego(personajes);
 			break;
@@ -144,9 +130,7 @@ void Menu::agregar_nuevo_personaje(Diccionario<string, Personaje *> &personajes)
 	int energia = rand() % 21;
 	pedir_datos_personaje(tipo, nombre);
 	validar_datos(tipo);
-	cargar_atributos_personaje(nuevo_personaje,vida,nombre,escudo,energia,tipo);
-	agregar_personaje_a_diccionario(personajes, nuevo_personaje);
-
+	personajes.agregarPersonaje(nuevo_personaje,vida,nombre,escudo,energia,tipo);
 }
 
 
@@ -158,11 +142,6 @@ void Menu::eliminar_personaje(Diccionario<string, Personaje *> &personajes, stri
 void Menu::mostrar_datos_personaje(Diccionario<string, Personaje *> &personajes, string nombre){
 	Personaje *personaje = personajes.traer(nombre);
 	personaje->mostrarDatos();
-	//cout << "Nombre: " << personaje->obtenerNombre() << endl;
-	//cout << "Elemento: " << personaje->obtenerTipo() << endl;
-	//cout << "Vida: " << personaje->obtenerVida() << endl;
-	//cout << "Escudo: " << personaje->obtenerEscudo() << endl;
-	//cout << "Energía: " << personaje->obtenerEnergia() << endl;
 }
 
 
@@ -222,4 +201,5 @@ void Menu::mostrar_menu_2(){
 				"3) Seleccionar personaje\n"
 				"4) Salir.\n";
 }
+
 

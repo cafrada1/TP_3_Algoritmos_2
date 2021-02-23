@@ -69,6 +69,11 @@ private:
 	bool validar_opcion(int opcion, int minimo, int maximo);
 
 	void validar_datos(string &elemento);
+
+	void cargar_atributos_personaje(Personaje* &nuevo_personaje,int vida,string nombre,int escudo,int energia,string tipo);
+
+
+
 };
 
 

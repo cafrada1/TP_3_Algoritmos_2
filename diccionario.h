@@ -7,7 +7,16 @@
 
 #include "personaje.h"
 #include "NodoABB.h"
+#include <fstream>
+#include <sstream>
+#include "agua.h"
+#include "fuego.h"
+#include "tierra.h"
+#include "aire.h"
 
+using namespace std;
+
+const string PATH_ARCHIVO = "personajes.csv";   //"../personajes.csv" para la terminal o "personajes.csv" para un IDE
 
 using namespace std;
 
@@ -18,6 +27,14 @@ class Diccionario{
 private:
     NodoABB<T1 , T2> *raiz;
 
+    void leer_archivo();
+
+    void procesar_linea_archivo(string linea);
+
+    void cargar_atributos_personaje(Personaje* &nuevo_personaje,int vida,string nombre,int escudo,int energia,string tipo);
+
+    void agregar_personaje_a_diccionario(Personaje* &nuevo_personaje);
+
 public:
     Diccionario();
 
@@ -27,16 +44,24 @@ public:
 
     void agregarPersonaje(T1 key, T2 personaje);
 
+    void agregarPersonaje(Personaje* &nuevo_personaje,int vida,string nombre,int escudo,int energia,string tipo);
+
     NodoABB<T1 , T2> *buscar(NodoABB<T1 , T2> *nodo, T1 key);
 
     bool buscar(T1 key);
 
+    //PRE:
+    //POST: Devuelve el valor asociado a la clave o nullptr si la clave no se encuentra en el diccionario
     T2 traer(T1 key);
 
+    //PRE:
+    //POST: Muestra los nombres de los personajes en orden alfabetico
     void mostrarOrdenados(NodoABB<T1 , T2> *nodo);
 
     void mostrarOrdenados();
 
+    //PRE:
+    //POST: Encuentra el nodo con la clave inmediatamente menor a la que se encuentra dentro del nodo pasado por referencia
     NodoABB<T1 , T2> *encuentraMinimo(NodoABB<T1 , T2> *nodo);
 
     void quitarRaiz();
@@ -45,28 +70,41 @@ public:
 
     void quitarNodo(T1 key);
 
-
+    //PRE:
+    //POST: quita un nodo que no tiene hijos
     void quitarHoja(NodoABB<T1 , T2> *nodo);
     
-    void quitarHijoDerecho(NodoABB<T1 , T2> *nodo);
+    //PRE:	El nodo padre no tiene hijo izquierdo
+    //POST: Quita el nodo pasado por parametro que solo tiene hijo derecho
+    void quitarNodoConHijoDerecho(NodoABB<T1 , T2> *nodo);
     
-    void quitarHijoIzquierdo(NodoABB<T1 , T2> *nodo);
+    //PRE: El nodo padre no tiene hijo derecho
+    //POST: Quita el nodo pasado por parametro que solo tiene hijo izquierdo
+    void quitarNodoConHijoIzquierdo(NodoABB<T1 , T2> *nodo);
     
-    void quitarDosHijos(NodoABB<T1 , T2> *nodo);
+    //PRE:
+    //POST: Quita un nodo que tiene 2 hijos
+    void quitarNodoConDosHijos(NodoABB<T1 , T2> *nodo);
 
     void limpiar();
 
     bool vacio();
 
-    //void baja();
-
 
     ~Diccionario();
 };
 
+//template<typename T1, typename T2>
+//Diccionario<T1, T2>::Diccionario() {
+//    raiz = nullptr;
+//}
+
 template<typename T1, typename T2>
-Diccionario<T1, T2>::Diccionario() {
-    raiz = nullptr;
+Diccionario<T1, T2>::Diccionario(){
+	raiz = nullptr;
+
+	leer_archivo();
+
 }
 
 template<typename T1, typename T2>
@@ -91,6 +129,14 @@ template<typename T1, typename T2>
 void Diccionario<T1, T2>::agregarPersonaje(T1 key, T2 personaje) {
 
     raiz = agregarNodo(raiz,key,personaje);
+
+}
+
+template<typename T1, typename T2>
+void Diccionario<T1, T2>::agregarPersonaje(Personaje* &nuevo_personaje,int vida,string nombre,int escudo,int energia,string tipo) {
+
+	cargar_atributos_personaje(nuevo_personaje,vida,nombre,escudo,energia,tipo);
+	agregarPersonaje(nombre, nuevo_personaje);
 
 }
 
@@ -143,7 +189,7 @@ NodoABB<T1 , T2> *Diccionario<T1, T2>::encuentraMinimo(NodoABB<T1 , T2> *nodo) {
 template<typename T1, typename T2>
 void Diccionario<T1, T2>::quitarRaiz() {
     if (raiz->dosHijos()){
-        quitarDosHijos(raiz);
+        quitarNodoConDosHijos(raiz);
     }
     else{
         NodoABB< T1 , T2> *aux = raiz;
@@ -172,7 +218,7 @@ void Diccionario<T1, T2>::quitarHoja(NodoABB<T1 , T2> *nodo){
 }
 
 template<typename T1, typename T2>
-void Diccionario<T1, T2>::quitarHijoDerecho(NodoABB<T1 , T2> *nodo){
+void Diccionario<T1, T2>::quitarNodoConHijoDerecho(NodoABB<T1 , T2> *nodo){
 
     nodo->getPadre()->setHijoNuevo(nodo->getPadre(), nodo->getDerecho());
     nodo->getDerecho()->setPadre(nodo->getPadre());
@@ -181,16 +227,16 @@ void Diccionario<T1, T2>::quitarHijoDerecho(NodoABB<T1 , T2> *nodo){
 }
 
 template<typename T1, typename T2>
-void Diccionario<T1, T2>::quitarHijoIzquierdo(NodoABB<T1 , T2> *nodo){
+void Diccionario<T1, T2>::quitarNodoConHijoIzquierdo(NodoABB<T1 , T2> *nodo){
 
-    nodo->getPadre()->setHijoNuevo(nodo->getPadre(), nodo->getIzquierdo()); //derecho o izquierdo?
+    nodo->getPadre()->setHijoNuevo(nodo->getPadre(), nodo->getIzquierdo());
     nodo->getIzquierdo()->setPadre(nodo->getPadre());
 
     delete nodo;
 }
 
 template<typename T1, typename T2>
-void Diccionario<T1, T2>::quitarDosHijos(NodoABB<T1 , T2> *nodo){
+void Diccionario<T1, T2>::quitarNodoConDosHijos(NodoABB<T1 , T2> *nodo){
     NodoABB<T1 , T2> *nodo_predecesor = encuentraMinimo(nodo->getIzquierdo());
     T2 aux_value = nodo->getValue();
     T1 aux_key = nodo->getKey();
@@ -198,21 +244,21 @@ void Diccionario<T1, T2>::quitarDosHijos(NodoABB<T1 , T2> *nodo){
     nodo->setValue(nodo_predecesor->getValue());
     nodo->setKey(nodo_predecesor->getKey());
 
-    if (!nodo_predecesor->esHoja()){  //AGREGADO EL IF
+    if (!nodo_predecesor->esHoja()){  //El nodo predecesor tiene hijos
     	NodoABB<T1 , T2> *padre_nodo_predecesor = nodo_predecesor->getPadre();
     	NodoABB<T1 , T2> *hijo_nodo_predecesor = nodo_predecesor->getIzquierdo();
     	hijo_nodo_predecesor->quitarPadre(hijo_nodo_predecesor);
 
-    	if (padre_nodo_predecesor->getIzquierdo() == nodo_predecesor){
-    	padre_nodo_predecesor->setIzquierdo(hijo_nodo_predecesor);  //Uno el abuelo con el hijo del hijo izquierdo
+    	if (padre_nodo_predecesor->getIzquierdo() == nodo_predecesor){ //El predecesor es el hijo inmediato izquierdo del nodo
+    	padre_nodo_predecesor->setIzquierdo(hijo_nodo_predecesor);  //Uno el abuelo con el hijo(izq) del hijo izquierdo
     	}
     	else{
-    		padre_nodo_predecesor->setDerecho(hijo_nodo_predecesor); //Uno el abuelo con el hijo del hijo derecho
+    		padre_nodo_predecesor->setDerecho(hijo_nodo_predecesor); //Uno el abuelo con el hijo(izq) del hijo derecho
     	}
     	hijo_nodo_predecesor->setPadre(padre_nodo_predecesor);
     }
 
-    else{
+    else{  //El nodo predecesor es hoja
     	nodo_predecesor->quitarPadre(nodo_predecesor);
     }
     	nodo_predecesor->setValue(aux_value);
@@ -231,15 +277,15 @@ void Diccionario<T1, T2>::quitarNodo(NodoABB<T1 , T2> *nodo) {
     }
 
     else if (nodo->hijoDerechoUnico()){
-        quitarHijoDerecho(nodo);
+        quitarNodoConHijoDerecho(nodo);
     }
 
     else if (nodo->hijoIzquierdoUnico()){
-        quitarHijoIzquierdo(nodo);
+        quitarNodoConHijoIzquierdo(nodo);
     }
 
     else{
-        quitarDosHijos(nodo);
+        quitarNodoConDosHijos(nodo);
     }
 }
 
@@ -272,6 +318,64 @@ T2 Diccionario<T1,T2>::traer(T1 key){
 		return buscar(raiz,key)->getValue();
 	}
 	return nullptr;
+}
+
+template<typename T1, typename T2>
+void Diccionario<T1, T2>::leer_archivo(){
+	ifstream archivo;
+	archivo.open(PATH_ARCHIVO);
+	if(!archivo){
+		cout << "No se pudo abrir el archivo" << endl;
+		//exit(1);
+	}
+	else{
+		string linea;
+
+		while(getline(archivo,linea)){
+			//cout << linea << endl;
+			procesar_linea_archivo(linea);
+		}
+		archivo.close();
+	}
+}
+
+template<typename T1, typename T2>
+void Diccionario<T1, T2>::procesar_linea_archivo(string linea){
+	stringstream ss(linea);
+	string tipo;
+	string nombre;
+	string escudo;
+	string vida;
+
+	getline(ss, tipo, ',');
+	getline(ss, nombre, ',');
+	getline(ss, escudo, ',');
+	int escudo_numero = stoi(escudo);  //Como era una cadena, lo paso a int
+
+	getline(ss, vida, ',');
+	int vida_numero = stoi(vida);  //Como era una cadena lo paso a int
+
+	Personaje* nuevo_personaje;
+
+	int energia = rand() % 20;
+
+	agregarPersonaje(nuevo_personaje, vida_numero, nombre, escudo_numero, energia, tipo);
+}
+
+template<typename T1, typename T2>
+void Diccionario<T1, T2>::cargar_atributos_personaje(Personaje* &nuevo_personaje,int vida,string nombre,int escudo,int energia,string tipo){
+	if(tipo == "agua"){
+		nuevo_personaje = new Agua(vida, nombre, escudo, energia, tipo);
+	}
+	else if(tipo == "fuego"){
+		nuevo_personaje = new Fuego(vida, nombre, escudo, energia, tipo);
+	}
+	else if(tipo == "tierra"){
+		nuevo_personaje = new Tierra(vida, nombre, escudo, energia, tipo);
+	}
+	else if(tipo == "aire"){
+		nuevo_personaje = new Aire(vida, nombre, escudo, energia, tipo);
+	}
 }
 
 
