@@ -17,7 +17,7 @@ public:
     //POST: crea un nodo con dato = nuevo_elemento y siguiente = 0
     Nodo(Dato nuevoElemento);
 
-    void cambiarSiguiente(Nodo<Dato> * sig);
+    void asignarSiguiente(Nodo<Dato> * sig);
 
     //POST: devuelve el nodo siguiente.
     Nodo<Dato> * obtenerSiguiente();
@@ -34,7 +34,7 @@ Nodo<Dato>::Nodo(Dato nuevoElemento){
 }
 
 template<typename Dato>
-void Nodo<Dato>::cambiarSiguiente(Nodo<Dato> * sig) {
+void Nodo<Dato>::asignarSiguiente(Nodo<Dato> * sig) {
     siguiente = sig;
 }
 

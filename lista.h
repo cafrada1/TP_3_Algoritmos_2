@@ -1,161 +1,237 @@
-//
-// Created by milagros on 30/1/21.
-//
-
 #ifndef TP_3_ALGORITMOS_2_LISTA_H
 #define TP_3_ALGORITMOS_2_LISTA_H
-
-#include "nodo.h"
 #include <string>
+#include "nodo.h"
+#include <iostream>
 
 using namespace std;
 
 template<typename Dato>
 class Lista {
-
 private:
-    Nodo<Dato>* primero;
-    Nodo<Dato>* actual;
+    Nodo<Dato> *primero;
+    int largo;
 
 public:
-    //POST: crea la lista con primero = 0, actual = 0
+    /*
+     * PRE:
+     * POST:
+     * FUNCIONAMIENTO:
+     */
     Lista();
 
-    //POST: si la lista está vacia, inserta el dato d en primero; sino lo inserta en último
-    void insertar(Dato nuevoDato);
+    /*
+     * PRE: -
+     *
+     * POST: Setea el valor de siguiente al hasta entonces ultimo elemento con el valor del
+     *  nuevo ultimo elemento.
+     *
+     * FUNCIONAMIENTO: agrega al final de la lista el elemento .
+     */
+    void alta(Dato elemento_agregar);
 
-    //POST: iguala al puntero actual a la primera posicion o a 0.
-    void reiniciar ( );
+    /*
+     * PRE: -
+     *
+     * POST: Devuelve la cantidad de elementos que contiene la lista.
+     *
+     * FUNCIONAMIENTO: -
+     */
+    int obtenerLargo();
 
-    // POS: devuelve true si actual no apunta a 0, sino devuelve false.
-    bool haySiguiente ( );
+    /*
+     * PRE: -
+     *
+     * POST: devuelve el dato del elemento encontrado y si no lo encuentra devuelve
+     * un puntero nulo. Si en la lista hay mas de una coincidencia devuelve la primera.
+     *
+     * FUNCIONAMIENTO: -
+     * */
+    Dato buscarElemento(string nombre);
 
-    //PRE: haySiguiente == True.
-    //POST: devuelve el elemento actual y avanza.
-    Dato siguiente ( );
+    /*
+     * PRE: -
+     *
+     * POST: devuelve true si el elemento esta en la lista y si no lo encuentra devuelve
+     * false.
+     *
+     * FUNCIONAMIENTO: -
+     * */
+    bool chequeo(string nombre);
 
-    //POST: devuelve true si el elemento está en la lista, o false si no está .
-    bool busqueda(string nombre);
+    /*
+     * PRE: posicion mayor a 0 y menor al largo de la lista.
+     * POST: -
+     * FUNCIONAMIENTO: elimina el elemento de la posicion pasada y apunta el anterior al eliminado
+     *                  al siguiente de la lista.
+     */
+    void baja(int posicion);
 
-    //POST: devuelve si la lista está vacia.
-    bool vacia();
+    /*
+     * PRE: -
+     * POST: Devuelve si la lista tiene elementos.
+     * FUNCIONAMIENTO: -
+     */
+    bool listaVacia();
 
-    //POST: elimina todos los elementos de la lista.
-    virtual ~Lista();
+    /*
+     * PRE: -
+     *
+     * POST: Muestra la informacion de los elementos  de la lista con su respectiva posicion.
+     *
+     * FUNCIONAMIENTO: -
+     */
+    void mostrarLista();
 
+    /*
+     * PRE:
+     * POST:
+     * FUNCIONAMIENTO:
+     */
+    Nodo<Dato> *buscarNodo(int posicion);
 
-private:
-    //PRE: 0 <= pos < cantidad de elementos dentro de la lista
-    //POST: devuelve el nodo en pos.
-    Nodo<Dato> * obtenerNodo(int pos);
+    Nodo<Dato> *buscarNodo(Dato valor);
 
-    //PRE: 0 <= pos < cantidad de elementos dentro de la lista
-    //POST: elimina al elemento en pos.
-    void baja(int pos);
+    ~Lista();
 };
 
+
 template<typename Dato>
-Lista<Dato>::Lista()
-{
-    primero = 0;
-    actual = 0;
+Lista<Dato>::Lista() {
+
+    primero = nullptr;
+
+    largo = 0;
 }
 
 template<typename Dato>
-bool Lista<Dato>::vacia()
-{
-    return primero == 0;
+int Lista<Dato>::obtenerLargo() {
+    return largo;
 }
 
 template<typename Dato>
-void Lista<Dato>::insertar(Dato nuevoDato)
-{
-    Nodo<Dato>* nuevo = new Nodo<Dato>(nuevoDato);
-    if(vacia())
-    {
-        nuevo -> cambiarSiguiente(primero);
-        primero = nuevo;
-        reiniciar();
+bool Lista<Dato>::listaVacia() {
+    return largo == 0;
+}
+
+
+template<typename Dato>
+void Lista<Dato>::alta(Dato elemento_agregar) {
+    Nodo<Dato> *nuevo_nodo = new Nodo<Dato>(elemento_agregar);
+
+    if (largo == 0) {
+        primero = nuevo_nodo;
+    } else {
+        buscarNodo(largo)->asignarSiguiente(nuevo_nodo);
     }
-    else
-    {
-        Nodo<Dato>* ultimo = primero;
-        while(ultimo -> obtenerSiguiente()!= 0)
-        {
-            ultimo = ultimo -> obtenerSiguiente();
+
+    largo++;
+}
+
+
+template<typename Dato>
+Dato Lista<Dato>::buscarElemento(string nombre) {
+
+    Nodo<Dato> *actual = primero;
+
+    while (actual != nullptr && actual->obtenerDato()->obtenerNombre() != nombre) {
+        actual = actual->obtenerSiguiente();
+    }
+
+    if (!actual) {
+        return nullptr;
+    }
+    return actual->obtenerDato();
+}
+
+template<typename Dato>
+bool Lista<Dato>::chequeo(string nombre) {
+    Nodo<Dato> *actual = primero;
+
+    while (actual != nullptr && actual->obtenerDato() != nombre) {
+        actual = actual->obtenerSiguiente();
+    }
+    if (!actual) {
+        return false;
+    }
+    return true;
+}
+
+
+template<typename Dato>
+void Lista<Dato>::baja(int posicion) {
+
+    Nodo<Dato> *nodo_aux = buscarNodo(posicion);
+
+    if (posicion == 1) {
+        primero = nodo_aux->obtenerSiguiente();
+
+    } else {
+        Nodo<Dato> *nodo_anterior = buscarNodo(posicion - 1);
+
+        nodo_anterior->asignarSiguiente(nodo_aux->obtenerSiguiente());
+    }
+
+    largo--;
+
+    delete nodo_aux;
+}
+
+template<typename Dato>
+void Lista<Dato>::mostrarLista() {
+
+    if (largo == 0) {
+        cout << "\nLa lista esta vacia\n" << endl;
+    } else {
+        for (int i = 1; i <= largo; i++) {
+            Dato elemento = buscarNodo(i)->obtenerDato();
+            cout << "\n--------------------" << endl;
+            cout << "Elemento Nº" << i << ": " << endl;
+            elemento->mostrarDatos();
         }
-        ultimo -> cambiarSiguiente(nuevo);
+        cout << "--------------------" << endl;
     }
 }
 
 template<typename Dato>
-Nodo<Dato>* Lista<Dato>::obtenerNodo(int pos)
-{
-    Nodo<Dato> *aux = primero;
-    for(int i = 0; i < pos; i++)
-        aux = aux -> obtenerSiguiente();
-    return aux;
-}
-
-template<typename Dato>
-Dato Lista<Dato>::siguiente()
-{
-    Nodo<Dato>* aux = actual;
-    actual = actual -> obtenerSiguiente();
-    return aux -> obtenerDato();
-}
-
-template<typename Dato>
-bool Lista<Dato>::busqueda(string nombre) {
-    bool encontrado = false;
-    reiniciar();
-    while (haySiguiente() && ! encontrado) {
-        if (siguiente() == nombre)
-            encontrado = true;
+Nodo<Dato> *Lista<Dato>::buscarNodo(int posicion) {
+    if (listaVacia() || posicion > largo) {
+        return nullptr;
     }
-    return encontrado;
-}
 
-template<typename Dato>
-void Lista<Dato>::baja(int pos)
-{
-    Nodo<Dato>* borrar;
-    if (pos == 0)
-    {
-        borrar = primero;
-        primero = primero -> obtenerSiguiente();
+    Nodo<Dato> *buscado = primero;
+
+    for (int i = 1; i < posicion; i++) {
+        buscado = buscado->obtenerSiguiente();
     }
-    else
-    {
-        Nodo<Dato>* anterior = obtenerNodo(pos - 1);
-        borrar = anterior -> obtenerSiguiente();
-        Nodo<Dato>* siguiente = borrar -> obtenerSiguiente();
-        anterior -> cambiarSiguiente(siguiente);
+
+    return buscado;
+}
+
+template<typename Dato>
+Nodo<Dato> *Lista<Dato>::buscarNodo(Dato valor) {
+    if (listaVacia()) {
+        return nullptr;
     }
-    reiniciar();
-    delete borrar;
+
+    Nodo<Dato> *buscado = primero;
+    int i = 0;
+    while ((buscado->obtenerDato() != valor) && (i<largo)) {
+        buscado = buscado->obtenerSiguiente();
+        i++;
+    }
+    if (buscado->obtenerDato() != valor){
+        return nullptr;
+    }
+
+    return buscado;
 }
 
 template<typename Dato>
-void Lista<Dato>::reiniciar()
-{
-    actual = primero;
+Lista<Dato>::~Lista() {
+    while (!listaVacia()) {
+        baja(1);
+    }
 }
-
-template<typename Dato>
-bool Lista<Dato>::haySiguiente()
-{
-    return (actual != 0);
-}
-
-template<typename Dato>
-Lista<Dato>::~Lista()
-{
-    while (! vacia())
-        baja(0);
-}
-
-
-
 
 #endif //TP_3_ALGORITMOS_2_LISTA_H

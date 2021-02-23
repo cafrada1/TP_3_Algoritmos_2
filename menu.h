@@ -1,5 +1,12 @@
 #include <iostream>
 #include "diccionario.h"
+#include "lista.h"
+#include <fstream>
+#include <cstdlib>
+
+const string NOMBRE_ARCHIVO = "../partida.csv";
+const int CANTIDAD_PERSONAJES = 3;
+const int CANTIDAD_JUGADORES = 2;
 
 using namespace std;
 
@@ -7,7 +14,11 @@ using namespace std;
 #define MENU_H_
 
 class Menu{
+private:
+    Diccionario<string,Personaje*>* personajes;
 public:
+    Menu();
+
     //PRE:
     //POS: Muestra las opciones del menú
     void mostrar_menu();
@@ -62,8 +73,22 @@ public:
     //POST: crea un archivo csv con la informacion de los personajes del jugador.
     void guardarPartida(Diccionario<string, Personaje*> &jugador, int num/*,int columna, int fila*/);
 
+    //PRE: diccPersonajes debe tener nodos con los personajes.
+    //POST: muestra los detalles del personaje deseado.
+    void buscarPersonaje(Diccionario<string, Personaje*> &diccPersonajes);
 
+    void seleccionarPersonajes(string jugador1[], string jugador2[]);
+
+    void comienzoJuego();
+
+    ~Menu();
 private:
+
+    //PRE: guarda el personaje elegido en el diccionario
+    void guardarPersonaje(Diccionario<string, Personaje*> &diccPersonajes, Diccionario<string, Personaje*> &jugador, string nombre);
+
+    string pedirNombre(Diccionario<string, Personaje*> &diccPersonajes);
+
     //PRE:
     //POS: Si el elemento no es válido, le pide al usuario que lo vuelva a ingresar hasta que lo sea
     void validar_elemento(string &elemento);
@@ -73,6 +98,26 @@ private:
     bool validar_opcion(int opcion, int minimo, int maximo);
 
     void validar_datos(string &elemento);
+
+    //PRE:
+    //POST: devuelve true si existe el archivo partida.csv, false en caso contrario.
+    bool existePartida();
+
+    //PRE:
+    //POST: si el personaje no esta repetido, devuelve el nombre.
+    string chequeaRepetido(Lista<string> *repetidos);
+
+    //PRE:
+    //POST: devuelve la cantidad de vida total de los personajes del jugador.
+    int contadorVida(string jugador[]);
+
+    void imprimirTurno(int num);
+
+    void primerasOpcInternas(string jugador[]);
+
+    void segundasOpcInternas(string jugador[]);
+
+    string eleccionPersonaje(string jugador[]);
 };
 
 
