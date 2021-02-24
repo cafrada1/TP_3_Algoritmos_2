@@ -1,5 +1,6 @@
-#ifndef TP_3_ALGORITMOS_2_LISTA_H
-#define TP_3_ALGORITMOS_2_LISTA_H
+#ifndef TP2_LISTA_H
+#define TP2_LISTA_H
+
 #include <string>
 #include "nodo.h"
 #include <iostream>
@@ -48,16 +49,6 @@ public:
      * FUNCIONAMIENTO: -
      * */
     Dato buscarElemento(string nombre);
-
-    /*
-     * PRE: -
-     *
-     * POST: devuelve true si el elemento esta en la lista y si no lo encuentra devuelve
-     * false.
-     *
-     * FUNCIONAMIENTO: -
-     * */
-    bool chequeo(string nombre);
 
     /*
      * PRE: posicion mayor a 0 y menor al largo de la lista.
@@ -145,20 +136,6 @@ Dato Lista<Dato>::buscarElemento(string nombre) {
 }
 
 template<typename Dato>
-bool Lista<Dato>::chequeo(string nombre) {
-    Nodo<Dato> *actual = primero;
-
-    while (actual != nullptr && actual->obtenerDato() != nombre) {
-        actual = actual->obtenerSiguiente();
-    }
-    if (!actual) {
-        return false;
-    }
-    return true;
-}
-
-
-template<typename Dato>
 void Lista<Dato>::baja(int posicion) {
 
     Nodo<Dato> *nodo_aux = buscarNodo(posicion);
@@ -234,4 +211,4 @@ Lista<Dato>::~Lista() {
     }
 }
 
-#endif //TP_3_ALGORITMOS_2_LISTA_H
+#endif //TP2_LISTA_H

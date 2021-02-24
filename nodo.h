@@ -1,46 +1,58 @@
-//
-// Created by milagros on 30/1/21.
-//
-
-#ifndef TP_3_ALGORITMOS_2_NODO_H
-#define TP_3_ALGORITMOS_2_NODO_H
+#ifndef TP2_NODO_H
+#define TP2_NODO_H
 
 template<typename Dato>
-
 class Nodo {
+    //Atributos
 private:
     Dato elemento;
-    Nodo<Dato> * siguiente;
 
+    Nodo<Dato> *siguiente;
+
+    //Metodos
 public:
+    /*
+     * PRE:
+     * POST:
+     * FUNCIONAMIENTO:
+     */
+    Nodo(Dato elemento_nuevo);
 
-    //POST: crea un nodo con dato = nuevo_elemento y siguiente = 0
-    Nodo(Dato nuevoElemento);
-
-    void asignarSiguiente(Nodo<Dato> * sig);
-
-    //POST: devuelve el nodo siguiente.
-    Nodo<Dato> * obtenerSiguiente();
-
-    //POST: devuelve al elemento datos
+    /*
+     * PRE: -
+     * POST: Devuelve el contenido del nodo.
+     * FUNCIONAMIENTO: -
+     */
     Dato obtenerDato();
 
+
+    /*
+     * PRE: siguiente_nodo debe ser una direccion de memoria valida.
+     * POST: asigna la direccion a siguiente
+     * FUNCIONAMIENTO: -
+     */
+    void asignarSiguiente(Nodo<Dato> *siguiente_nodo);
+
+
+    /*
+     * PRE: -
+     * POST: Devuelve la direccion del siguiente nodo
+     * FUNCIONAMIENTO: -
+     */
+    Nodo<Dato> *obtenerSiguiente();
+
+    /*
+     * PRE:
+     * POST:
+     * FUNCIONAMIENTO:
+     */
+    ~Nodo();
 };
 
 template<typename Dato>
-Nodo<Dato>::Nodo(Dato nuevoElemento){
-    elemento = nuevoElemento;
-    siguiente = 0;
-}
-
-template<typename Dato>
-void Nodo<Dato>::asignarSiguiente(Nodo<Dato> * sig) {
-    siguiente = sig;
-}
-
-template<typename Dato>
-Nodo<Dato>* Nodo<Dato>::obtenerSiguiente() {
-    return siguiente;
+Nodo<Dato>::Nodo(Dato elemento_nuevo) {
+    elemento = elemento_nuevo;
+    siguiente = nullptr;
 }
 
 template<typename Dato>
@@ -48,5 +60,21 @@ Dato Nodo<Dato>::obtenerDato() {
     return elemento;
 }
 
+template<typename Dato>
+Nodo<Dato> *Nodo<Dato>::obtenerSiguiente() {
+    return siguiente;
+}
 
-#endif //TP_3_ALGORITMOS_2_NODO_H
+template<typename Dato>
+void Nodo<Dato>::asignarSiguiente(Nodo<Dato> *siguiente_nodo) {
+    siguiente = siguiente_nodo;
+}
+
+template<typename Dato>
+Nodo<Dato>::~Nodo() {
+    if (elemento != nullptr){
+        delete elemento;
+    }
+}
+
+#endif //TP2_NODO_H

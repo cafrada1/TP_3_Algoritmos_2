@@ -2,7 +2,6 @@
 #include "diccionario.h"
 #include "NodoABB.h"
 #include "menu.h"
-#include "funciones.h"
 #include <string>
 
 using namespace std;
@@ -22,7 +21,6 @@ Menu::Menu(){
     }
     else{
         personajes = new Diccionario<string, Personaje *>();
-        leer_archivo(*personajes);
         elegir_opcion(*personajes);
     }
 }
@@ -160,8 +158,7 @@ void Menu::agregar_nuevo_personaje(Diccionario<string, Personaje *> &personajes)
     int energia = rand() % 21;
     pedir_datos_personaje(tipo, nombre);
     validar_datos(tipo);
-    cargar_atributos_personaje(nuevo_personaje,vida,nombre,escudo,energia,tipo);
-    agregar_personaje_a_diccionario(personajes, nuevo_personaje);
+    personajes.agregarPersonaje(nuevo_personaje,vida,nombre,escudo,energia,tipo);
 
 }
 
@@ -190,18 +187,23 @@ void Menu::alimentar_personaje(Diccionario<string, Personaje *> &personajes, str
 bool Menu::esta_en_el_diccionario(Diccionario<string, Personaje *> &personajes, string nombre){
     return personajes.buscar(nombre);
 }
-string Menu::chequeaRepetido(Lista<string> *repetidos ) {
+string Menu::chequeaRepetido(string repetidos[] ) {
     string nombre = pedirNombre(*personajes);
-    while(repetidos -> chequeo(nombre)){
+    while (estaRepetido(nombre, repetidos) == true) {
         cout << "|| PERSONAJE NO DISPONIBLE ||" << endl;
-        nombre = pedirNombre(*personajes);
+        cout<<"INGRESE:";
+        cin >> nombre;
     }
-
-    repetidos -> alta(nombre);
-
     return nombre;
 }
 
+bool Menu::estaRepetido(std::string nombre, std::string repetidos[]){
+    for(int i = 0; i < 6; i++){
+        if(nombre == repetidos[i])
+            return true;
+    }
+    return false;
+}
 
 void Menu::comenzar_juego(Diccionario<string, Personaje *> &personajes){
     bool continuar = true;
@@ -254,7 +256,7 @@ void Menu::guardarPartida(Diccionario<string, Personaje*> &jugador, int num/*,in
     NodoABB<string , Personaje*> * aux;
     archivo << num << endl;
 
-    for(int i = 0; i < CANTIDAD_PERSONAJES; i++){
+   /* for(int i = 0; i < CANTIDAD_PERSONAJES; i++){
         aux = jugador.encuentraMinimo();
         archivo << aux -> getValue() -> obtenerTipo() << "," << aux->getKey() << ",";
         archivo << aux -> getValue() -> obtenerEscudo() << ",";
@@ -262,7 +264,7 @@ void Menu::guardarPartida(Diccionario<string, Personaje*> &jugador, int num/*,in
         archivo << aux -> getValue() -> obtenerEnergia() << "," << endl;
         //archivo << fila << "," << columna;
         jugador.quitarNodo(aux -> getKey());
-    }
+    }*/
     archivo.close();
 }
 
@@ -303,21 +305,26 @@ void Menu::imprimirTurno(int num){
 }
 
 void Menu::seleccionarPersonajes(string jugador1[], string jugador2[]) {
-    Lista<string>* repetidos = new Lista<string>;
-
+    int cont = 0;
+    string nombre;
+    string personajesUsados[CANTIDAD_PERSONAJES*2];
     for(int i = 0; i < CANTIDAD_PERSONAJES; i++){
         for(int j = 0; j < CANTIDAD_JUGADORES; j++){
+            imprimirTurno(j);
+            nombre = chequeaRepetido(personajesUsados);
             if(j%2==0){
-                imprimirTurno(j);
-                jugador1[i] = chequeaRepetido(repetidos);
+                jugador1[i] = nombre;
             }
             else{
-                imprimirTurno(j);
-                jugador2[i] = chequeaRepetido(repetidos);
+                jugador2[i] = nombre;
             }
+
+            if(j!=0 || i!=0){
+                cont+=  1;
+            }
+            personajesUsados[cont] = nombre;
         }
     }
-    delete repetidos;
 }
 
 void Menu::comienzoJuego() {
@@ -330,15 +337,12 @@ void Menu::comienzoJuego() {
 
     int vidaJugador1 = contadorVida(jugador1);
     int vidaJugador2 = contadorVida(jugador2);
-    cout << "VIDA1: " << vidaJugador1 <<" y vida2: " << vidaJugador2<<endl;
 
     turno = rand() % 2 + 1;
-    cout << turno << endl;
     if(turno == 1)
         contador = 0;
     else
         contador = 1;
-    cout << "CONT:"<<contador << endl;
 
     cout << "\n||COMIENZO DE PARTIDA||" << endl;
 

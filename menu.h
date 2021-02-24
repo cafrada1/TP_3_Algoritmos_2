@@ -14,6 +14,7 @@ using namespace std;
 #define MENU_H_
 
 class Menu{
+
 private:
     Diccionario<string,Personaje*>* personajes;
 public:
@@ -99,13 +100,18 @@ private:
 
     void validar_datos(string &elemento);
 
+    void cargar_atributos_personaje(Personaje* &nuevo_personaje,int vida,string nombre,int escudo,int energia,string tipo);
+
+
     //PRE:
     //POST: devuelve true si existe el archivo partida.csv, false en caso contrario.
     bool existePartida();
 
     //PRE:
     //POST: si el personaje no esta repetido, devuelve el nombre.
-    string chequeaRepetido(Lista<string> *repetidos);
+    string chequeaRepetido(string repetidos[]);
+
+    bool estaRepetido(std::string nombre, std::string repetidos[]);
 
     //PRE:
     //POST: devuelve la cantidad de vida total de los personajes del jugador.
