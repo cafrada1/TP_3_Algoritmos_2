@@ -33,64 +33,247 @@ private:
 
     void cargar_atributos_personaje(Personaje* &nuevo_personaje,int vida,string nombre,int escudo,int energia,string tipo);
 
-    void agregar_personaje_a_diccionario(Personaje* &nuevo_personaje);
-
-public:
-    Diccionario();
-
-    NodoABB<T1 , T2> *getRaiz();
-
+    /*
+     *  PRE:
+     *      nodo : direccion de memoria valida.
+     *      key : valor no existente como key de otro nodo.
+     *
+     *  POST:
+     *      Si el diccionario no esta vacio setea el padre del nodo agregado.
+     *
+     *  Descripcion:
+     *      Inserta al diccionario un nuevo nodo con los valores pasados por parametro.
+     */
     NodoABB<T1 , T2> *agregarNodo(NodoABB<T1 , T2> *nodo_nuevo, T1 key, T2 personaje);
 
+    /*
+     *  PRE: -
+     *
+     *  POST: -
+     *
+     *  Descripcion:
+     *      Retorna la direccion del nodo con la misma key que la pasada por parametro
+     *      si esta se encuentra en el diccionario.
+     *      Retorna nullptr si el elemento no se encuentra en el diccionario.
+     */
+    NodoABB<T1 , T2> *buscar(NodoABB<T1 , T2> *nodo, T1 key);
+
+    /*
+     *  PRE: -
+     *
+     *  POST:
+     *      Realiza un salto de linea al mostrar una key.
+     *
+     *  Descripcion:
+     *      Si nodo no es nulltpr:
+     *        1) Se llama recursivamente pasando como parametro a su hijo izquierdo.
+     *        2) Muestra por pantalla la key del nodo.
+     *        3) Se llama recursivamente pasando como parametro a su hijo derecho
+     */
+    void mostrarOrdenados(NodoABB<T1 , T2> *nodo);
+
+
+    /*
+     *  PRE:
+     *      *nodo : debe ser una direccion de memoria valida.
+     *
+     *  POST: -
+     *
+     *  Descripcion:
+     *      Llama a la funcion correspondiente para eliminar el nodo
+     *      dependiendo del tipo de nodo.
+     */
+    void quitarNodo( NodoABB<T1 , T2> *nodo);
+
+    /*      *nodo debe contener un *padre con direccion de memoria valida.
+      *      *nodo debe contener un *izquierdo con direccion de memoria valida.
+      *
+      *  POST:
+      *      Libera la memoria ocupada por *nodo.
+      *
+      *  Descripcion:
+      *      Elimina el nodo pasado como parametro.
+      *      Conecta al nodo padre de nodo con su nodo hijo izquierdo.
+      */
+    void quitarHijoIzquierdo(NodoABB<T1 , T2> *nodo);
+
+
+    /*
+     *  PRE:
+     *      *nodo debe contener un *padre con direccion de memoria valida.
+     *      *nodo debe contener un *derecho con direccion de memoria valida.
+     *
+     *  POST:
+     *      Libera la memoria ocupada por *nodo.
+     *
+     *  Descripcion:
+     *      Conecta al nodo padre de nodo con su nodo hijo derecho.
+     */
+     void quitarHijoDerecho(NodoABB<T1 , T2> *nodo);
+
+
+     /*
+      *  PRE:
+      *      *nodo debe contener un *padre con direccion de memoria valida.
+      *
+      *  POST:
+      *      Libera la memoria ocupada por *nodo.
+      *
+      *  Descripcion:
+      *      Elimina el nodo pasado como parametro.
+      *      Coloca en nullptr al atributo *izquierdo o *derecho del padre del nodo
+      *      dependiendo de si este es hijo izquierdo o derecho respectivamente.
+      */
+     void quitarHoja(NodoABB<T1 , T2> *nodo);
+
+
+     /*
+      *  PRE:
+      *      *nodo debe contener un *padre con direccion de memoria valida.
+      *      *nodo debe contener un *izquierdo con direccion de memoria valida.
+      *      *nodo debe contener un *derecho con direccion de memoria valida.
+      *
+      *  POST:
+      *      Libera la memoria ocupada por *nodo.
+      *
+      *  Descripcion:
+      *      Elimina el nodo pasado como parametro.
+      *      Conecta al nodo padre con el nodo sucesor.
+      */
+     void quitarNodoConDosHijos(NodoABB<T1 , T2> *nodo);
+
+     /*
+      *  PRE: -
+      *
+      *  POST:
+      *      Libera la memoria ocupada por la raiz.
+      *      Setea raiz a nullptr.
+      *
+      *  Descripcion:
+      *      Elimina la raiz del diccionario.
+      */
+     void quitarRaiz();
+
+
+     /*
+      *  PRE:
+      *      *nodo : debe ser una direccion de memoria valida.
+      *
+      *  POST: -
+      *
+      *  Descripcion:
+      *      Retorna el predecesor del nodo.
+      */
+     NodoABB<T1 , T2> *encuentraMinimo(NodoABB<T1 , T2> *nodo);
+
+
+     /*
+      *  PRE: -
+      *
+      *  POST:
+      *      Libera la memoria de los nodos del diccionario.
+      *      Setea raiz en nullptr.
+      *
+      *  Descripcion:
+      *      Elimina todos los nodos del diccionario.
+      */
+     void limpiar();
+
+public:
+
+     /*
+      *  PRE: -
+      *
+      *  POST: Setea raiz en nullptr.
+      *
+      *  Descripcion:
+      *      Constructor de diccionario.
+      */
+    Diccionario();
+
+
+    /*
+     *  PRE:
+     *      key no debe estar en el diccionario.
+     *
+     *  POST: -
+     *
+     *  Descripcion:
+     *      Agrega un nodo al diccionario con key como key y personaje como value.
+     */
     void agregarPersonaje(T1 key, T2 personaje);
 
     void agregarPersonaje(Personaje* &nuevo_personaje,int vida,string nombre,int escudo,int energia,string tipo);
 
-    NodoABB<T1 , T2> *buscar(NodoABB<T1 , T2> *nodo, T1 key);
 
+    /*
+      *  PRE: -
+      *
+      *  POST: -
+      *
+      *  Descripcion:
+      *      Retorna true si la key se encuentra en el diccionario.
+      *      Retorna false si la key no se encuentra en el diccionario
+      */
     bool buscar(T1 key);
 
-    //PRE:
-    //POST: Devuelve el valor asociado a la clave o nullptr si la clave no se encuentra en el diccionario
+    /*
+     *  PRE: -
+     *
+     *  POST: -
+     *
+     *  Descripcion:
+     *      Retorna el valor de value si la key se encuentra en el diccionario.
+     *      Retorna nullptr si la key no se encuentra.
+     */
     T2 traer(T1 key);
 
-    //PRE:
-    //POST: Muestra los nombres de los personajes en orden alfabetico
-    void mostrarOrdenados(NodoABB<T1 , T2> *nodo);
-
+    /*
+     *  PRE: -
+     *
+     *  POST: -
+     *
+     *  Descripcion:
+     *      Muestra de menor a mayor las key del diccionario.
+     */
     void mostrarOrdenados();
 
-    //PRE:
-    //POST: Encuentra el nodo con la clave inmediatamente menor a la que se encuentra dentro del nodo pasado por referencia
-    NodoABB<T1 , T2> *encuentraMinimo(NodoABB<T1 , T2> *nodo);
 
-    void quitarRaiz();
 
-    void quitarNodo( NodoABB<T1 , T2> *nodo);
-
+    /*
+     *  PRE: -
+     *
+     *  POST:
+     *      No libera la memoria de nodo.
+     *
+     *  Descripcion:
+     *      Elimina el nodo que contenga la key pasada como parametros si esta
+     *      se encuentra en el diccionario.
+     */
     void quitarNodo(T1 key);
-
-    //PRE:
-    //POST: quita un nodo que no tiene hijos
-    void quitarHoja(NodoABB<T1 , T2> *nodo);
     
-    //PRE:	El nodo padre no tiene hijo izquierdo
-    //POST: Quita el nodo pasado por parametro que solo tiene hijo derecho
-    void quitarNodoConHijoDerecho(NodoABB<T1 , T2> *nodo);
-    
-    //PRE: El nodo padre no tiene hijo derecho
-    //POST: Quita el nodo pasado por parametro que solo tiene hijo izquierdo
-    void quitarNodoConHijoIzquierdo(NodoABB<T1 , T2> *nodo);
-    
-    //PRE:
-    //POST: Quita un nodo que tiene 2 hijos
-    void quitarNodoConDosHijos(NodoABB<T1 , T2> *nodo);
 
-    void limpiar();
-
+    /*
+     *  PRE: -
+     *
+     *  POST: -
+     *
+     *  Descripcion:
+     *      Retorna true si raiz es nullptr.
+     *      Retorna false si raiz es distinta de nullptr.
+     */
     bool vacio();
 
-
+    /*
+     *  PRE: -
+     *
+     *  POST:
+     *      Libera la memoria de los nodos del diccionario.
+     *
+     *  Descripcion:
+     *      Destructor de diccionario.
+     *      ELimina todos los nodos .
+     */
     ~Diccionario();
 };
 
@@ -103,7 +286,7 @@ template<typename T1, typename T2>
 Diccionario<T1, T2>::Diccionario(){
 	raiz = nullptr;
 
-	leer_archivo();
+	leer_archivo();  //si existe un archivo con los personajes, los carga al diccionario, sino crea un diccionario vacio
 
 }
 
@@ -173,10 +356,6 @@ void Diccionario<T1, T2>::mostrarOrdenados() {
     mostrarOrdenados(raiz);
 }
 
-template<typename T1, typename T2>
-NodoABB<T1 , T2> *Diccionario<T1, T2>::getRaiz() {
-    return raiz;
-}
 
 template<typename T1, typename T2>
 NodoABB<T1 , T2> *Diccionario<T1, T2>::encuentraMinimo(NodoABB<T1 , T2> *nodo) {
@@ -218,7 +397,7 @@ void Diccionario<T1, T2>::quitarHoja(NodoABB<T1 , T2> *nodo){
 }
 
 template<typename T1, typename T2>
-void Diccionario<T1, T2>::quitarNodoConHijoDerecho(NodoABB<T1 , T2> *nodo){
+void Diccionario<T1, T2>::quitarHijoDerecho(NodoABB<T1 , T2> *nodo){
 
     nodo->getPadre()->setHijoNuevo(nodo->getPadre(), nodo->getDerecho());
     nodo->getDerecho()->setPadre(nodo->getPadre());
@@ -227,9 +406,9 @@ void Diccionario<T1, T2>::quitarNodoConHijoDerecho(NodoABB<T1 , T2> *nodo){
 }
 
 template<typename T1, typename T2>
-void Diccionario<T1, T2>::quitarNodoConHijoIzquierdo(NodoABB<T1 , T2> *nodo){
+void Diccionario<T1, T2>::quitarHijoIzquierdo(NodoABB<T1 , T2> *nodo){
 
-    nodo->getPadre()->setHijoNuevo(nodo->getPadre(), nodo->getIzquierdo());
+    nodo->getPadre()->setHijoNuevo(nodo->getPadre(), nodo->getDerecho());
     nodo->getIzquierdo()->setPadre(nodo->getPadre());
 
     delete nodo;
@@ -237,32 +416,24 @@ void Diccionario<T1, T2>::quitarNodoConHijoIzquierdo(NodoABB<T1 , T2> *nodo){
 
 template<typename T1, typename T2>
 void Diccionario<T1, T2>::quitarNodoConDosHijos(NodoABB<T1 , T2> *nodo){
-    NodoABB<T1 , T2> *nodo_predecesor = encuentraMinimo(nodo->getIzquierdo());
+    NodoABB<T1, T2> *nodo_predecesor = encuentraMinimo(nodo->getIzquierdo());
     T2 aux_value = nodo->getValue();
     T1 aux_key = nodo->getKey();
 
     nodo->setValue(nodo_predecesor->getValue());
     nodo->setKey(nodo_predecesor->getKey());
 
-    if (!nodo_predecesor->esHoja()){  //El nodo predecesor tiene hijos
-    	NodoABB<T1 , T2> *padre_nodo_predecesor = nodo_predecesor->getPadre();
-    	NodoABB<T1 , T2> *hijo_nodo_predecesor = nodo_predecesor->getIzquierdo();
-    	hijo_nodo_predecesor->quitarPadre(hijo_nodo_predecesor);
+    nodo_predecesor->setValue(aux_value);
+    nodo_predecesor->setKey(aux_key);
 
-    	if (padre_nodo_predecesor->getIzquierdo() == nodo_predecesor){ //El predecesor es el hijo inmediato izquierdo del nodo
-    	padre_nodo_predecesor->setIzquierdo(hijo_nodo_predecesor);  //Uno el abuelo con el hijo(izq) del hijo izquierdo
-    	}
-    	else{
-    		padre_nodo_predecesor->setDerecho(hijo_nodo_predecesor); //Uno el abuelo con el hijo(izq) del hijo derecho
-    	}
-    	hijo_nodo_predecesor->setPadre(padre_nodo_predecesor);
-    }
+    if (nodo_predecesor->getIzquierdo() != nullptr) {
 
-    else{  //El nodo predecesor es hoja
-    	nodo_predecesor->quitarPadre(nodo_predecesor);
+        nodo_predecesor->getPadre()->setHijoNuevo(nodo_predecesor->getPadre(), nodo_predecesor->getIzquierdo());
+        nodo_predecesor->getIzquierdo()->setPadre(nodo_predecesor->getPadre());
+    } else {
+        nodo_predecesor->quitarPadre(nodo_predecesor);
+
     }
-    	nodo_predecesor->setValue(aux_value);
-    	nodo_predecesor->setKey(aux_key);
 
     delete nodo_predecesor;
 }
@@ -277,11 +448,11 @@ void Diccionario<T1, T2>::quitarNodo(NodoABB<T1 , T2> *nodo) {
     }
 
     else if (nodo->hijoDerechoUnico()){
-        quitarNodoConHijoDerecho(nodo);
+        quitarHijoDerecho(nodo);
     }
 
     else if (nodo->hijoIzquierdoUnico()){
-        quitarNodoConHijoIzquierdo(nodo);
+        quitarHijoIzquierdo(nodo);
     }
 
     else{
