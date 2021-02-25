@@ -17,7 +17,6 @@ const string PATH_ARCHIVO = "../personajes.csv";   //"../personajes.csv" para la
 using namespace std;
 
 template <typename T1, typename T2>
-
 class Diccionario{
 
 private:

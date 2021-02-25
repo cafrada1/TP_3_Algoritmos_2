@@ -1,5 +1,6 @@
 #include <iostream>
 #include "diccionario.h"
+#include "Tablero.h"
 #include "lista.h"
 #include <fstream>
 #include <cstdlib>
@@ -17,6 +18,7 @@ class Menu{
 
 private:
     Diccionario<string,Personaje*>* personajes;
+    Tablero tablero;
 public:
     Menu();
 
@@ -26,13 +28,13 @@ public:
 
     //PRE:
     //POS:
-    void elegir_opcion(Diccionario<string, Personaje *> &personajes);
+    void elegir_opcion();
 
     //PRE: La opcion es de tipo int
     //POS:
     int ingresar_opcion();
 
-    void procesar_opcion(int opcion, bool &continuar,Diccionario<string, Personaje *> &personajes);
+    void procesar_opcion(int opcion, bool &continuar);
 
     //PRE:
     //POS:
@@ -40,55 +42,50 @@ public:
 
     //PRE:
     //POS: Agrega un nuevo personaje a la lista
-    void agregar_nuevo_personaje(Diccionario<string, Personaje *> &personajes);
+    void agregar_nuevo_personaje();
 
     //PRE: El nombre del personaje se encuentra en la lista
     //POS: Elimina al personaje de la lista
-    void eliminar_personaje(Diccionario<string, Personaje *> &personajes, string nombre);
+    void eliminar_personaje(string nombre);
 
     //PRE: El personaje se encuentra en la lista
     //POS: Devuelve la posicion del prsonaje en la lista
-    int buscar_personaje(Diccionario<string, Personaje *> &personajes,string nombre);
+    int buscar_personaje(string nombre);
 
     //PRE:
     //POS: Muestra los nombres de todos los personajes de la lista
-    void mostrar_nombres_personajes(Diccionario<string, Personaje *> &personajes);
+    void mostrar_nombres_personajes();
 
     //PRE: El personaje se encuentra en la lista
     //POS : Muestra los datos del personaje pedido
-    void mostrar_datos_personaje(Diccionario<string, Personaje *> &personajes, string nombre);
+    void mostrar_datos_personaje(string nombre);
 
     //PRE: El personaje se encuentra en la lista
     //POS: Alimenta al personaje pedido
-    void alimentar_personaje(Diccionario<string, Personaje *> &personajes, string nombre);
+    void alimentar_personaje(string nombre);
 
     //PRE:
     //POS: Verifica si el personaje se encuentra o no en la lista
-    bool esta_en_el_diccionario(Diccionario<string, Personaje *> &personajes, string nombre);
+    bool esta_en_el_diccionario(string nombre);
 
-    void comenzar_juego(Diccionario<string, Personaje *> &personajes);
+    void comenzar_juego();
 
     void mostrar_menu_2();
 
-    //PRE: diccionario de jugador debe contener personajes. 0 < num <=2
-    //POST: crea un archivo csv con la informacion de los personajes del jugador.
-    void guardarPartida(Diccionario<string, Personaje*> &jugador, int num/*,int columna, int fila*/);
-
     //PRE: diccPersonajes debe tener nodos con los personajes.
     //POST: muestra los detalles del personaje deseado.
-    void buscarPersonaje(Diccionario<string, Personaje*> &diccPersonajes);
+    void buscarPersonaje();
 
     void seleccionarPersonajes(string jugador1[], string jugador2[]);
 
     void comienzoJuego();
 
+    void guardarPartida(string jugador[], int num);
+
     ~Menu();
 private:
 
-    //PRE: guarda el personaje elegido en el diccionario
-    void guardarPersonaje(Diccionario<string, Personaje*> &diccPersonajes, Diccionario<string, Personaje*> &jugador, string nombre);
-
-    string pedirNombre(Diccionario<string, Personaje*> &diccPersonajes);
+    string pedirNombre();
 
     //PRE:
     //POS: Si el elemento no es válido, le pide al usuario que lo vuelva a ingresar hasta que lo sea
@@ -119,11 +116,23 @@ private:
 
     void imprimirTurno(int num);
 
-    void primerasOpcInternas(string jugador[]);
+    void primerasOpcInternas(string nombre);
 
-    void segundasOpcInternas(string jugador[]);
+    void segundasOpcInternas(string nombre);
 
     string eleccionPersonaje(string jugador[]);
+
+
+    void posicionarPersonajes(int contador, string jugador1[], string jugador2[]);
+
+    void ponerPersonaje(string personaje, int numeroJugador);
+
+
+    void atacar(string nombre);
+
+    void cargarPartida();
+
+    string opcionGuardar();
 };
 
 

@@ -8,7 +8,16 @@
 #include "personaje.h"
 
 class Fuego : public Personaje {
+private:
 
+    const int COSTO_ENERGIA_ATAQUE = 5;
+    const int COSTO_ENERGIA_DEFENSA = 5;
+    const int DEBILIDAD = -10;
+    const int FORTALEZA = -30;
+    const int ATAQUE = -20;
+    const int DEFENSA_PERSONAL = 10;
+    std::string elemento_debilidad = "agua";
+    std::string elemento_fortaleza = "aire";
 public:
 
     /*
@@ -29,6 +38,16 @@ public:
      * por pantalla la energia recuperada y el alimento usado.
      */
     void alimentarse();
+
+
+    bool validarEnergia();
+
+    void objetivos(Tablero &tablero, string objetivos[]);
+
+    int calculo_ataque(int posicion, string elemento, int defensa);
+
+
+    void defenderse();
 };
 
 
