@@ -18,16 +18,56 @@ void Aire::alimentarse() {
 
 
 
-void Aire::defenderse(){
-    cout<<"hola"<<endl;
+void Aire::defenderse(Tablero &tablero){
+    int fila_origen = posicion/8;
+    int columna_origen = posicion%8;
+    int fila, columna;
+    bool cargado = false;
+    while (cargado==false ){
+        cout<<"Ingrese la fila y la columna donde quiere posicionar a "<<nombre<<endl;
+        cout<<"Fila: ";
+        cin >>fila;
+        cout<<"Columna: ";
+        cin>>columna;
+
+        --fila;
+        --columna;
+        int numero_casilla_nueva = (fila*8)+columna;
+        bool disponible = tablero.consulta_disponible(fila, columna);
+        if (disponible == true){
+            tablero.ponerPersonaje(fila, columna, nombre);
+            tablero.guardar_equipo(fila, columna, equipo);
+            tablero.cambiarDisponible(fila, columna);
+            tablero.cambiarDisponible(fila_origen, columna_origen);
+            if (tablero.consulta_disponible(fila, columna)==false){
+                cout<<"El casillero  "<< fila<<","<<columna<<"ahora esta ocupado por "<<nombre <<endl;
+            }
+            posicion = numero_casilla_nueva;
+            cargado = true;
+
+        }else{
+            cout<<"El casillero seleccionado esta ocupado, por favor seleccione otro"<<endl;
+        }
+
+
+    }
 
 }
-bool Aire::validarEnergia(){
+bool Aire::validarEnergiaAtaque(){
     bool valido = false;
     if (energia >= COSTO_ENERGIA_ATAQUE){
         energia -= COSTO_ENERGIA_ATAQUE;
         valido = true;
     }
+    return valido;
+
+}
+
+bool Aire::validarEnergiaDefensa(){
+    bool valido = false;
+    if (energia >= COSTO_ENERGIA_DEFENSA){
+        energia -= COSTO_ENERGIA_DEFENSA;
+        valido = true;    }
     return valido;
 
 }
@@ -74,5 +114,7 @@ int Aire::calculo_ataque(int posicion, string elemento, int defensa) {
 
 
 }
+
+
 
 

@@ -123,7 +123,7 @@ private:
 
     void primerasOpcInternas(string nombre);
 
-    void segundasOpcInternas(string nombre);
+    void segundasOpcInternas(string nombre, string jugador[]);
 
     string eleccionPersonaje(string jugador[]);
 
@@ -135,7 +135,7 @@ private:
 
     void atacar(string nombre);
 
-    void defenderse(string nombre);
+    void defenderse(string nombre, string jugador[]);
 };
 
 

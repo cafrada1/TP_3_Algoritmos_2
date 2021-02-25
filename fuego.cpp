@@ -31,23 +31,29 @@ void Fuego::alimentarse() {
 
 }
 
-void Fuego::defenderse(){
+void Fuego::defenderse(Tablero &tablero){
     if (energia >= COSTO_ENERGIA_DEFENSA){
         cambiarVida(DEFENSA_PERSONAL);
     }
 
 
 }
-bool Fuego::validarEnergia(){
+bool Fuego::validarEnergiaAtaque(){
     bool valido = false;
     if (energia >= COSTO_ENERGIA_ATAQUE){
         energia -= COSTO_ENERGIA_ATAQUE;
         valido = true;
     }
     return valido;
+}
 
-
-
+bool Fuego::validarEnergiaDefensa(){
+    bool valido = false;
+    if (energia >= COSTO_ENERGIA_DEFENSA){
+        energia -= COSTO_ENERGIA_DEFENSA;
+        valido = true;
+    }
+    return valido;
 }
 
 void Fuego::objetivos(Tablero &tablero, string objetivos[]){

@@ -141,10 +141,12 @@ public:
      * POST: ---------------------------
      * FUNCIONAMIENTO: -
      */
-    virtual void defenderse() = 0;
+    virtual void defenderse(Tablero &tablero) = 0;
 
 
-    virtual bool validarEnergia() = 0;
+    virtual bool validarEnergiaAtaque() = 0;
+
+    virtual bool validarEnergiaDefensa() = 0;
 
     virtual void objetivos(Tablero &tablero, string objetivos[]) = 0;
 

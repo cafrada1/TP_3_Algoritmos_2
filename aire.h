@@ -40,7 +40,9 @@ public:
      */
     void alimentarse();
 
-    bool validarEnergia();
+    bool validarEnergiaAtaque();
+
+    bool validarEnergiaDefensa();
 
     void objetivos(Tablero &tablero, string objetivos[]);
 
@@ -48,7 +50,7 @@ public:
 
 
 
-    void defenderse();
+    void defenderse(Tablero &tablero);
 
 };
 

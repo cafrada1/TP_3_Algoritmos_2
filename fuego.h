@@ -39,15 +39,16 @@ public:
      */
     void alimentarse();
 
+    bool validarEnergiaAtaque();
 
-    bool validarEnergia();
+    bool validarEnergiaDefensa();
 
     void objetivos(Tablero &tablero, string objetivos[]);
 
     int calculo_ataque(int posicion, string elemento, int defensa);
 
 
-    void defenderse();
+    void defenderse(Tablero &tablero);
 };
 
 

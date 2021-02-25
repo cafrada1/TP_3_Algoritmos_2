@@ -13,7 +13,7 @@ class Agua : public Personaje {
 private:
     int cantidad_alimentado = 0;
     int COSTO_ENERGIA_ATAQUE = 5;
-    int MINIMO_ENERGIA_DEFENSA = 12;
+    int COSTO_ENERGIA_DEFENSA = 12;
     int DEBILIDAD_TIERRA = -10;
     int FORTALEZA_FUEGO = -30;
     int ATAQUE = -20;
@@ -42,7 +42,9 @@ public:
      */
     void alimentarse();
 
-    bool validarEnergia();
+    bool validarEnergiaAtaque();
+
+    bool validarEnergiaDefensa();
 
     void objetivos(Tablero &tablero, string objetivos[]);
 
@@ -50,7 +52,7 @@ public:
 
 
 
-    void defenderse();
+    void defenderse(Tablero &tablero);
 
 };
 

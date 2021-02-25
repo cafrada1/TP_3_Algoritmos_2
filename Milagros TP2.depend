@@ -99,13 +99,13 @@
 	"Tablero.h"
 	<string>
 
-1614276139 source:c:\users\user\documents\github\tp_3_algoritmos_2\aire.cpp
+1614288591 source:c:\users\user\documents\github\tp_3_algoritmos_2\aire.cpp
 	"aire.h"
 
-1614276075 c:\users\user\documents\github\tp_3_algoritmos_2\aire.h
+1614287795 c:\users\user\documents\github\tp_3_algoritmos_2\aire.h
 	"personaje.h"
 
-1614275511 c:\users\user\documents\github\tp_3_algoritmos_2\personaje.h
+1614288789 c:\users\user\documents\github\tp_3_algoritmos_2\personaje.h
 	<string>
 	<iostream>
 	"Tablero.h"
@@ -124,16 +124,16 @@
 	"casillero.h"
 	<math.h>
 
-1614276536 source:c:\users\user\documents\github\tp_3_algoritmos_2\fuego.cpp
+1614288905 source:c:\users\user\documents\github\tp_3_algoritmos_2\fuego.cpp
 	"fuego.h"
 
-1614275943 c:\users\user\documents\github\tp_3_algoritmos_2\fuego.h
+1614288902 c:\users\user\documents\github\tp_3_algoritmos_2\fuego.h
 	"personaje.h"
 
-1614285685 source:c:\users\user\documents\github\tp_3_algoritmos_2\agua.cpp
+1614288864 source:c:\users\user\documents\github\tp_3_algoritmos_2\agua.cpp
 	"agua.h"
 
-1614275521 c:\users\user\documents\github\tp_3_algoritmos_2\agua.h
+1614288867 c:\users\user\documents\github\tp_3_algoritmos_2\agua.h
 	"personaje.h"
 
 1614199844 source:c:\users\user\documents\github\tp_3_algoritmos_2\main.cpp
@@ -158,10 +158,10 @@
 1614115572 c:\users\user\documents\github\tp_3_algoritmos_2\nodoabb.h
 	<iostream>
 
-1614276058 c:\users\user\documents\github\tp_3_algoritmos_2\tierra.h
+1614288823 c:\users\user\documents\github\tp_3_algoritmos_2\tierra.h
 	"personaje.h"
 
-1614285753 c:\users\user\documents\github\tp_3_algoritmos_2\menu.h
+1614288646 c:\users\user\documents\github\tp_3_algoritmos_2\menu.h
 	<iostream>
 	"diccionario.h"
 	"Tablero.h"
@@ -189,10 +189,10 @@
 	"Tablero.h"
 	<string>
 
-1614275872 source:c:\users\user\documents\github\tp_3_algoritmos_2\tierra.cpp
+1614288946 source:c:\users\user\documents\github\tp_3_algoritmos_2\tierra.cpp
 	"tierra.h"
 
-1614285790 source:c:\users\user\documents\github\tp_3_algoritmos_2\menu.cpp
+1614289021 source:c:\users\user\documents\github\tp_3_algoritmos_2\menu.cpp
 	<iostream>
 	"diccionario.h"
 	"NodoABB.h"

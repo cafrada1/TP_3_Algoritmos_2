@@ -28,21 +28,27 @@ void Tierra::alimentarse() {
 }
 
 
-void Tierra::defenderse(){
-    if (energia >= MINIMO_ENERGIA_DEFENSA){
+void Tierra::defenderse(Tablero &tablero){
+    if (energia >= COSTO_ENERGIA_DEFENSA){
         cambiarEscudo(ESCUDO_EXTRA);
     }
 }
-bool Tierra::validarEnergia(){
+bool Tierra::validarEnergiaAtaque(){
     bool valido = false;
     if (energia >= COSTO_ENERGIA_ATAQUE){
         energia -= COSTO_ENERGIA_ATAQUE;
         valido = true;
     }
     return valido;
+}
 
-
-
+bool Tierra::validarEnergiaDefensa(){
+    bool valido = false;
+    if (energia >= COSTO_ENERGIA_DEFENSA){
+        energia -= COSTO_ENERGIA_DEFENSA;
+        valido = true;
+    }
+    return valido;
 }
 
 void Tierra::objetivos(Tablero &tablero, string objetivos[]){

@@ -11,7 +11,7 @@ class Tierra : public Personaje {
 
 private:
     const int COSTO_ENERGIA_ATAQUE = 6;
-    const int MINIMO_ENERGIA_DEFENSA = 5;
+    const int COSTO_ENERGIA_DEFENSA = 5;
     const int DEBILIDAD = -10;
     const int FORTALEZA = -20;
     const int ATAQUE_CERCANO = -30;
@@ -44,14 +44,16 @@ public:
      */
     void alimentarse();
 
-    bool validarEnergia();
+    bool validarEnergiaAtaque();
+
+    bool validarEnergiaDefensa();
 
     void objetivos(Tablero &tablero, string objetivos[]);
 
     int calculo_ataque(int posicion, string elemento, int defensa);
 
 
-    void defenderse();
+    void defenderse(Tablero &tablero);
 
 };
 

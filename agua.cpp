@@ -33,28 +33,7 @@ void Agua::alimentarse() {
     }
 }
 
-void Agua::defenderse(){
-   /* int fila_inicio = 0, fila_final = 8;
 
-    int posicion_vector = 0;
-    string personaje_atacado;
-    for (int i = fila_inicio; i <= fila_final; i++){
-        for (int j =0; i < 8; i++){
-            bool disponible = tablero.consulta_disponible(i, j);
-            if (disponible == false){
-                int equipo_casilla = tablero.consulta_equipo(i, j);
-                if (equipo_casilla == equipo){
-                    string personaje_atacado = tablero.consulta_personaje(i,j);
-                    objetivos[posicion_vector] = personaje_atacado;
-                    posicion_vector++;
-                }
-            }
-        }
-    }
-
-*/
-
-}
 /*
 void Agua::atacar(Tablero &tablero, int equipo){
    Personaje *personaje_atacado;
@@ -106,16 +85,26 @@ void Agua::calculo_ataque(){
     personaje_atacado->cambiarVida(ataque);*/
 
 
-bool Agua::validarEnergia(){
+bool Agua::validarEnergiaAtaque(){
     bool valido = false;
     if (energia >= COSTO_ENERGIA_ATAQUE){
         energia -= COSTO_ENERGIA_ATAQUE;
         valido = true;
     }
     return valido;
+}
 
+bool Agua::validarEnergiaDefensa(){
+    bool valido = false;
+    if (energia >= COSTO_ENERGIA_DEFENSA){
+        energia -= COSTO_ENERGIA_DEFENSA;
+        valido = true;
+    }
+    return valido;
 
 }
+
+
 
 void Agua::objetivos(Tablero &tablero, string objetivos[]){
     int fila, columna;
@@ -151,8 +140,13 @@ int Agua::calculo_ataque(int posicion, string elemento, int defensa) {
         ataque = (ataque*20)/100;   //Saca 80% del ataque original
     }
     return ataque;
+}
+
+void Agua::defenderse(Tablero &tablero){
+    if (energia >= COSTO_ENERGIA_DEFENSA){
+        cambiarVida(DEFENSA_PERSONAL);
+    }
 
 
 }
-
 
