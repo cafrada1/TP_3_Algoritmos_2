@@ -134,6 +134,8 @@ private:
 
 
     void atacar(string nombre);
+
+    void defenderse(string nombre);
 };
 
 

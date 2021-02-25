@@ -491,7 +491,7 @@ void Menu::ponerPersonaje(string nombre, int numeroJugador) {
 }
 
 void Menu::atacar(string nombre){
-    mostrarEnemigo(Diccionario<string,Personaje*>* personajes, string nombre);
+
     bool energia_valida = personajes->traer(nombre)->validarEnergia();
 
     if (energia_valida == true){
@@ -519,7 +519,7 @@ void Menu::atacar(string nombre){
     }
 
 }
-void Menu::defenserse(string nombre){
+void Menu::defenderse(string nombre){
 
 
 
@@ -528,7 +528,7 @@ void Menu::defenserse(string nombre){
 
 
 
-
+}
 
 Menu::~Menu() {
     delete personajes;

@@ -33,8 +33,8 @@ void Agua::alimentarse() {
     }
 }
 
-void Agua::defenderse(Tablero &tablero, string objetivos[]){
-    int fila_inicio = 0, fila_final = 8;
+void Agua::defenderse(){
+   /* int fila_inicio = 0, fila_final = 8;
 
     int posicion_vector = 0;
     string personaje_atacado;
@@ -52,7 +52,7 @@ void Agua::defenderse(Tablero &tablero, string objetivos[]){
         }
     }
 
-
+*/
 
 }
 /*
