@@ -38,16 +38,20 @@ string Personaje::obtenerTipo() {
 
 void Personaje::cambiarVida(int cambio_vida) {
 
-    if (vida + cambio_vida <= MAXIMO_VIDA) {
-        vida += cambio_vida;
-    } else if (vida < MAXIMO_VIDA) {
-        vida = MAXIMO_VIDA;
-    }
+    vida += cambio_vida;
+
     if (vida < 0){
         cout<<"El personaje "<< nombre << " ha muerto!";
         vida = 0;
     } else if (cambio_vida < 0){
         cout<<nombre << " ahora tiene "<<vida<<" puntos de vida"<<endl;
+
+    }else if (0 < vida <= MAXIMO_VIDA){
+        cout<<"El personaje "<< nombre << " tiene "<<vida<<" puntos de vida";
+
+    } else if (vida > MAXIMO_VIDA){
+        vida = MAXIMO_VIDA;
+        cout<<"El personaje "<< nombre << " tiene "<<vida<<" puntos de vida";
     }
 
 }
@@ -75,7 +79,24 @@ void Personaje::mostrarDatos() {
 
 }
 
+void Personaje::setVida(int vida){
+    this->vida = vida;
+}
+
+void Personaje::setEnergia(int energia){
+    this->energia = energia;
+}
+
+void Personaje::setEscudo(int escudo){
+    this->escudo = escudo;
+}
 
 
+void Personaje::defensaEspecial() {
+    if (defensa_especial) {
+        cambiarEscudo(ESCUDO_EXTRA);
+        defensa_especial = false;
+    }
+}
 
 

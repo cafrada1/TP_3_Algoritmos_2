@@ -79,7 +79,7 @@ void Aire::objetivos(Tablero &tablero, string objetivos[]){
     int posicion_vector = 0;
     string personaje_atacado;
     for (int i = fila_inicio; i < fila_final; i++){
-        for (int j =0; j < fila_final; j++){
+        for (int j = 0; j < fila_final; j++){
             bool disponible = tablero.consulta_disponible(i, j);
             if (disponible == false){
                 int equipo_enemigo = tablero.consulta_equipo(i, j);

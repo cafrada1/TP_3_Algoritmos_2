@@ -10,6 +10,7 @@
 class Tierra : public Personaje {
 
 private:
+
     const int COSTO_ENERGIA_ATAQUE = 6;
     const int COSTO_ENERGIA_DEFENSA = 5;
     const int DEBILIDAD = -10;
@@ -51,6 +52,8 @@ public:
     void objetivos(Tablero &tablero, string objetivos[]);
 
     int calculo_ataque(int posicion, string elemento, int defensa);
+
+
 
 
     void defenderse(Tablero &tablero);

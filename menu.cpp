@@ -44,6 +44,7 @@ void Menu::bienvenida(){
 }
 
 
+
 enum opciones { AGREGAR_PERSONAJE = 1,
     ELIMINAR_PERSONAJE = 2,
     MOSTRAR_PERSONAJES = 3,
@@ -52,13 +53,15 @@ enum opciones { AGREGAR_PERSONAJE = 1,
     SALIR = 6 };
 
 Menu::Menu(){
+    personajes = new Diccionario<string, Personaje *>();
+    bienvenida();
     if(existePartida()){
-        cout<<"x";
+        int contador = asignarTurno();
+        leerPartida();
+        comienzoJuego(contador);
     }
     else{
-        personajes = new Diccionario<string, Personaje *>();
-        Menu::bienvenida();
-        elegir_opcion(*personajes);
+        elegir_opcion();
     }
 }
 bool Menu::existePartida(){
@@ -90,8 +93,7 @@ int Menu::ingresar_opcion(){
 }
 
 
-void Menu::elegir_opcion(Diccionario<string, Personaje *> &personajes){
-
+void Menu::elegir_opcion(){
     bool continuar = true;
 
     do{
@@ -102,18 +104,18 @@ void Menu::elegir_opcion(Diccionario<string, Personaje *> &personajes){
             opcion = ingresar_opcion();
         }
 
-        procesar_opcion(opcion,continuar,personajes);
+        procesar_opcion(opcion,continuar);
         system("cls");
 
     }while(continuar);
 }
 
 
-void Menu::procesar_opcion(int opcion, bool &continuar,Diccionario<string, Personaje *> &personajes){
+void Menu::procesar_opcion(int opcion, bool &continuar){
 
     switch(opcion){
         case AGREGAR_PERSONAJE:
-            agregar_nuevo_personaje(personajes);
+            agregar_nuevo_personaje();
             break;
 
         case ELIMINAR_PERSONAJE:
@@ -121,17 +123,15 @@ void Menu::procesar_opcion(int opcion, bool &continuar,Diccionario<string, Perso
             string nombre_eliminado;
             cout << "Ingrese el nombre del personaje que desea eliminar: ";
             cin >> nombre_eliminado;
-            if (personajes.buscar(nombre_eliminado))
-                eliminar_personaje(personajes, nombre_eliminado);
+            if (personajes->buscar(nombre_eliminado))
+                eliminar_personaje(nombre_eliminado);
             else
                 cout << "El nombre del personaje no es valido" << endl;
-            system("pause");
         }
             break;
 
         case MOSTRAR_PERSONAJES:
-            personajes.mostrarOrdenados();
-            system("pause");
+            personajes->mostrarOrdenados();
             break;
 
         case DETALLES_PERSONAJE:
@@ -139,11 +139,10 @@ void Menu::procesar_opcion(int opcion, bool &continuar,Diccionario<string, Perso
             string nombre;
             cout << "Ingrese el nombre del personaje para ver detalles: ";
             cin >> nombre;
-            if (personajes.buscar(nombre))
-                mostrar_datos_personaje(personajes, nombre);
+            if (personajes->buscar(nombre))
+                mostrar_datos_personaje(nombre);
             else
                 cout << "El nombre del personaje no es válido" << endl;
-            system("pause");
         }
             break;
 
@@ -161,13 +160,14 @@ void Menu::procesar_opcion(int opcion, bool &continuar,Diccionario<string, Perso
 			break;
 */
         case COMENZAR_JUEGO:
-            comenzar_juego(personajes);
+            comenzar_juego();
             break;
 
         case SALIR:
             continuar = false;
             break;
     }
+    system("pause");
 }
 
 void Menu::validar_elemento(string &elemento){
@@ -192,7 +192,7 @@ void Menu::pedir_datos_personaje(string &elemento, string &nombre){
 }
 
 
-void Menu::agregar_nuevo_personaje(Diccionario<string, Personaje *> &personajes){
+void Menu::agregar_nuevo_personaje(){
     Personaje* nuevo_personaje;
     string tipo, nombre;
     int escudo = rand()% 3;
@@ -200,18 +200,18 @@ void Menu::agregar_nuevo_personaje(Diccionario<string, Personaje *> &personajes)
     int energia = rand() % 21;
     pedir_datos_personaje(tipo, nombre);
     validar_datos(tipo);
-    personajes.agregarPersonaje(nuevo_personaje,vida,nombre,escudo,energia,tipo);
+    personajes->agregarPersonaje(nuevo_personaje,vida,nombre,escudo,energia,tipo);
 
 }
 
 
-void Menu::eliminar_personaje(Diccionario<string, Personaje *> &personajes, string nombre){
-    personajes.quitarNodo(nombre);
+void Menu::eliminar_personaje(string nombre){
+    personajes->quitarNodo(nombre);
 }
 
 
-void Menu::mostrar_datos_personaje(Diccionario<string, Personaje *> &personajes, string nombre){
-    Personaje *personaje = personajes.traer(nombre);
+void Menu::mostrar_datos_personaje(string nombre){
+    Personaje *personaje = personajes->traer(nombre);
     personaje->mostrarDatos();
     //cout << "Nombre: " << personaje->obtenerNombre() << endl;
     //cout << "Elemento: " << personaje->obtenerTipo() << endl;
@@ -221,16 +221,16 @@ void Menu::mostrar_datos_personaje(Diccionario<string, Personaje *> &personajes,
 }
 
 
-void Menu::alimentar_personaje(Diccionario<string, Personaje *> &personajes, string nombre){
-    Personaje *personaje = personajes.traer(nombre);
+void Menu::alimentar_personaje(string nombre){
+    Personaje *personaje = personajes->traer(nombre);
     personaje->alimentarse();
 }
 
-bool Menu::esta_en_el_diccionario(Diccionario<string, Personaje *> &personajes, string nombre){
-    return personajes.buscar(nombre);
+bool Menu::esta_en_el_diccionario(string nombre){
+    return personajes->buscar(nombre);
 }
 string Menu::chequeaRepetido(string repetidos[] ) {
-    string nombre = pedirNombre(*personajes);
+    string nombre = pedirNombre();
     while (estaRepetido(nombre, repetidos) == true) {
         cout << "|| PERSONAJE NO DISPONIBLE ||" << endl;
         cout<<"INGRESE:";
@@ -247,7 +247,7 @@ bool Menu::estaRepetido(std::string nombre, std::string repetidos[]){
     return false;
 }
 
-void Menu::comenzar_juego(Diccionario<string, Personaje *> &personajes){
+void Menu::comenzar_juego(){
     bool continuar = true;
 
     do{
@@ -262,25 +262,30 @@ void Menu::comenzar_juego(Diccionario<string, Personaje *> &personajes){
 
         switch(opcion){
             case 1:
-                buscarPersonaje(personajes);
-                system("pause");
+                buscarPersonaje();
+
                 break;
 
             case 2:
-                personajes.mostrarOrdenados();
-                system("pause");
+                personajes->mostrarOrdenados();
                 break;
 
             case 3:
             {
-                comienzoJuego();
-
+                seleccionarPersonajes();
+                int contador = asignarTurno();
+                tablero.cargar_tablero();
+                posicionarPersonajes(contador);
+                comienzoJuego(contador);
+                cout << "||GRACIAS POR JUGAR||" << endl;
+                continuar = false;
             }
                 break;
             case 4:
                 continuar = false;
                 break;
         }
+        system("pause");
 
     }while(continuar);
 
@@ -295,38 +300,18 @@ void Menu::mostrar_menu_2(){
             "4) Salir.\n";
 }
 
-void Menu::guardarPartida(Diccionario<string, Personaje*> &jugador, int num/*,int columna, int fila*/){
-    ofstream archivo;
-    archivo.open(NOMBRE_ARCHIVO, ios::out | ios::app);
-
-    NodoABB<string , Personaje*> * aux;
-    archivo << num << endl;
-
-   /* for(int i = 0; i < CANTIDAD_PERSONAJES; i++){
-        aux = jugador.encuentraMinimo();
-        archivo << aux -> getValue() -> obtenerTipo() << "," << aux->getKey() << ",";
-        archivo << aux -> getValue() -> obtenerEscudo() << ",";
-        archivo << aux -> getValue() -> obtenerVida() << ",";
-        archivo << aux -> getValue() -> obtenerEnergia() << "," << endl;
-        //archivo << fila << "," << columna;
-        jugador.quitarNodo(aux -> getKey());
-    }*/
-    archivo.close();
-}
-
-
-string Menu::pedirNombre(Diccionario<string, Personaje*> &diccPersonajes) {
+string Menu::pedirNombre() {
     string nombre;
     cout << "PERSONAJES: " << endl;
-    diccPersonajes.mostrarOrdenados();
+    personajes->mostrarOrdenados();
     cout << "Ingrese el nombre del personaje que desee: ";
     cin >> nombre;
     return nombre;
 }
 
-void Menu::buscarPersonaje(Diccionario<string, Personaje*> &diccPersonajes){
-    string nombre = pedirNombre(diccPersonajes);
-    Personaje* aux = diccPersonajes.traer(nombre);
+void Menu::buscarPersonaje(){
+    string nombre = pedirNombre();
+    Personaje* aux = personajes->traer(nombre);
     if(aux != nullptr)
         aux ->mostrarDatos();
     else
@@ -350,7 +335,7 @@ void Menu::imprimirTurno(int num){
         cout << "\n||TURNO DEL JUGADOR 2||" << endl;
 }
 
-void Menu::seleccionarPersonajes(string jugador1[], string jugador2[]) {
+void Menu::seleccionarPersonajes() {
     int cont = 0;
     string nombre;
     string personajesUsados[CANTIDAD_PERSONAJES*2];
@@ -366,7 +351,6 @@ void Menu::seleccionarPersonajes(string jugador1[], string jugador2[]) {
                 jugador2[i] = nombre;
                 personajes->traer(nombre)->setEquipo(2);
             }
-
             if(j!=0 || i!=0){
                 cont+=  1;
             }
@@ -375,30 +359,24 @@ void Menu::seleccionarPersonajes(string jugador1[], string jugador2[]) {
         }
     }
 }
-
-void Menu::comienzoJuego() {
-    int turno;
+int Menu::asignarTurno(){
     int contador;
-
-    string jugador1[CANTIDAD_PERSONAJES];
-    string jugador2[CANTIDAD_PERSONAJES];
-    seleccionarPersonajes(jugador1, jugador2);
-
-    int vidaJugador1 = contadorVida(jugador1);
-    int vidaJugador2 = contadorVida(jugador2);
-
+    int turno;
     turno = rand() % 2 + 1;
     if(turno == 1){
         contador = 0;
     }else{
         contador = 1;
     }
-    tablero.cargar_tablero();
-    tablero.mostrar_tablero();
-    posicionarPersonajes(contador, jugador1, jugador2);
+    return contador;
+}
+void Menu::comienzoJuego(int contador) {
+    string guardar = "NO";
+
+    int vidaJugador1 = contadorVida(jugador1);
+    int vidaJugador2 = contadorVida(jugador2);
 
     cout << "\n||COMIENZO DE PARTIDA||" << endl;
-
     while(vidaJugador1 != 0 || vidaJugador2 != 0){
         imprimirTurno(contador);
         for (int i = 0; i < CANTIDAD_PERSONAJES; i++){
@@ -415,24 +393,21 @@ void Menu::comienzoJuego() {
                     segundasOpcInternas(jugador2[i],jugador2);
                 }
             }
+            system("pause");
+            system("cls");
         }
 
         contador++;
         vidaJugador1 = contadorVida(jugador1);
         vidaJugador2 = contadorVida(jugador2);
-        system("pause");
-        system("cls");
+
+        guardar = opcionGuardar();
+        if(guardar == "SI"){
+            guardarPartida(jugador1, 1);
+            guardarPartida(jugador2, 2);
+        }
 
     }
-}
-
-string Menu::eleccionPersonaje(string jugador[]) {
-    cout << "ELIJA EL PERSONAJE CON EL QUE DESEÉ REALIZAR ESTA ACCION: " << endl;
-    for (int i = 0; i < CANTIDAD_PERSONAJES; i++)
-        cout << (i + 1) << ")" << jugador[i] << endl;
-    int opcion = ingresar_opcion();
-
-    return jugador[opcion - 1];
 
 }
 
@@ -440,6 +415,9 @@ void Menu::primerasOpcInternas(string nombre) {
     string elemento = personajes->traer(nombre)->obtenerTipo();
     if (elemento == "aire")
         personajes->traer(nombre)->cambiarEnergia(5);
+    if (elemento == "tierra"){
+        personajes->traer(nombre)->defensaEspecial();
+    }
 
     personajes->traer(nombre)->mostrarDatos();
 
@@ -457,7 +435,6 @@ void Menu::primerasOpcInternas(string nombre) {
             break;
 
         case 2:
-
             //LLAMADA MOVERSE
             break;
 
@@ -467,7 +444,7 @@ void Menu::primerasOpcInternas(string nombre) {
 }
 
 
-void Menu::segundasOpcInternas(string nombre, string jugador[]) {
+void Menu::segundasOpcInternas(string nombre,string jugador[]) {
 
 
     cout << "ELIJA QUE DESEA HACER CON SU PERSONAJE: " << endl;
@@ -477,7 +454,6 @@ void Menu::segundasOpcInternas(string nombre, string jugador[]) {
 
     int opcion = ingresar_opcion();
 
- /*ACA VA LO DE TABLERO ATAQUE y DEFENSA*/
     switch(opcion){
         case 1:
 
@@ -494,9 +470,10 @@ void Menu::segundasOpcInternas(string nombre, string jugador[]) {
 
 }
 
-void Menu::posicionarPersonajes(int contador, string jugador1[], string jugador2[]){
+void Menu::posicionarPersonajes(int contador){
 
     for (int i = 0; i < CANTIDAD_PERSONAJES; i++){
+
         if(contador % 2 == 0){
             ponerPersonaje(jugador1[i], 1);
             ponerPersonaje(jugador2[i], 2);
@@ -505,6 +482,7 @@ void Menu::posicionarPersonajes(int contador, string jugador1[], string jugador2
             ponerPersonaje(jugador2[i], 2);
             ponerPersonaje(jugador1[i], 1);
         }
+
     }
 }
 
@@ -514,7 +492,7 @@ void Menu::posicionarPersonajes(int contador, string jugador1[], string jugador2
 void Menu::ponerPersonaje(string nombre, int numeroJugador) {
     cout<< "TURNO JUGADOR "<<numeroJugador<<endl;
 
-
+    tablero.mostrar_tablero();
     int fila, columna;
 
     bool cargado = false;
@@ -547,6 +525,7 @@ void Menu::ponerPersonaje(string nombre, int numeroJugador) {
 
 
     }
+    system("cls");
 }
 
 void Menu::atacar(string nombre){
@@ -556,12 +535,12 @@ void Menu::atacar(string nombre){
     if (energia_valida == true){
         string vector_objetivos[3];
         for (int i = 0; i < 3; i++){
-            vector_objetivos[i] = "andy";
+            vector_objetivos[i] = "Andy";
         }
         personajes->traer(nombre)->objetivos(tablero, vector_objetivos);
         for (int i = 0; i < 3; i++){
             cout<<"atacado: "<<vector_objetivos[i]<<endl;
-            if (vector_objetivos[i] != "andy"){
+            if (vector_objetivos[i] != "Andy"){
                 int posicion = personajes->traer(vector_objetivos[i])->obtenerPosicion();
                 cout<<"posicion: "<<posicion<<endl;
                 string elemento = personajes->traer(vector_objetivos[i])->obtenerTipo();
@@ -578,6 +557,101 @@ void Menu::atacar(string nombre){
     }
 
 }
+
+
+void Menu::guardarPartida(string jugador[], int num) {
+    int fila;
+    int columna;
+    ofstream archivo;
+    archivo.open(NOMBRE_ARCHIVO, ios::out | ios::app);
+    Personaje* aux;
+
+    archivo << num << endl;
+
+    for(int i = 0; i < CANTIDAD_PERSONAJES; i++){
+        aux = personajes->traer(jugador[i]);
+        fila = ((aux->obtenerPosicion()) * 8)/64;
+        columna = aux->obtenerPosicion() - (fila)*8;
+        archivo << aux->obtenerTipo() << "," << aux->obtenerNombre() << ","
+        << aux-> obtenerEscudo() << "," << aux-> obtenerVida() <<","
+        << aux-> obtenerEnergia() << "," << fila
+        << "," << columna << endl;
+    }
+    archivo.close();
+}
+
+
+string Menu::opcionGuardar(){
+    string opcion;
+    cout << "¿Desea guardar la partida? SI/NO: ";
+    cin >> opcion;
+    return opcion;
+}
+
+
+void Menu::modificarDatos(string nombre, int vida, int escudo, int energia, int numeroCasilla){
+    personajes->traer(nombre)->setVida(vida);
+    personajes->traer(nombre)->setEnergia(energia);
+    personajes->traer(nombre)->setEscudo(escudo);
+    personajes->traer(nombre)->setPosicion(numeroCasilla);
+}
+string Menu::procesarLinea(string linea){
+    stringstream ss(linea);
+    string tipo;
+    string nombre;
+    string escudo;
+    string vida;
+    string fila;
+    string columna;
+    string energia;
+
+    getline(ss, tipo, ',');
+    getline(ss, nombre, ',');
+    getline(ss, escudo, ',');
+    getline(ss, vida, ',');
+    getline(ss, energia, ',');
+    getline(ss, fila, ',');
+
+    getline(ss, columna, ',');
+    int numeroCasilla = (stoi(fila) * 8) + stoi(columna);
+
+    modificarDatos(nombre,stoi(vida), stoi(escudo), stoi(energia), numeroCasilla);
+    return nombre;
+
+}
+
+void Menu::leerPartida(){
+    ifstream archivo;
+    archivo.open(NOMBRE_ARCHIVO, ios::in);
+    string linea;
+    string nombre;
+    int jugador;
+    int contadorPersonaje = 0;
+    int contadorLinea = 0;
+
+    while(getline(archivo,linea)){
+        if(contadorLinea != 0 && contadorLinea != (CANTIDAD_PERSONAJES+1)){
+            nombre = procesarLinea(linea);
+            if(jugador == 1)
+                jugador1[contadorPersonaje] = nombre;
+            else
+                jugador2[contadorPersonaje] = nombre;
+            contadorPersonaje++;
+        }
+        else if(contadorLinea == 0){
+            contadorPersonaje=0;
+            jugador = stoi(linea);
+        }
+        else{
+            contadorPersonaje=0;
+            jugador = stoi(linea);
+        }
+        contadorLinea++;
+    }
+    archivo.close();
+    remove("../partida.csv");
+}
+
 void Menu::defenderse(string nombre, string jugador[]){
     bool energia_valida = personajes->traer(nombre)->validarEnergiaDefensa();
     string elemento = personajes->traer(nombre)->obtenerTipo();
@@ -594,15 +668,9 @@ void Menu::defenderse(string nombre, string jugador[]){
     }else{
         cout<<nombre<< " no cuenta con suficiente energia para defenderse"<<endl;
     }
-
-
-
-
-
-
-
 }
 
+
 Menu::~Menu() {
-    //delete personajes;
+    delete personajes;
 }

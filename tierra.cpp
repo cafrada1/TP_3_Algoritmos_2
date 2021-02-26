@@ -28,9 +28,13 @@ void Tierra::alimentarse() {
 }
 
 
+
+
+
 void Tierra::defenderse(Tablero &tablero){
     if (energia >= COSTO_ENERGIA_DEFENSA){
         cambiarEscudo(ESCUDO_EXTRA);
+        defensa_especial = true;
     }
 }
 bool Tierra::validarEnergiaAtaque(){
@@ -75,9 +79,9 @@ void Tierra::objetivos(Tablero &tablero, string objetivos[]){
 
 int Tierra::calculo_ataque(int posicion_enemigo, string elemento, int defensa) {
     int fila = posicion/8;
-    int columna = posicion%8;
+    int columna = posicion%8-1;
     int fila_enemigo = posicion_enemigo/8;
-    int columna_enemigo = posicion_enemigo%8;
+    int columna_enemigo = posicion_enemigo%8-1;
 
     cout<<"fila: "<<fila<<endl;
     cout<<"columna : "<<columna<<endl;

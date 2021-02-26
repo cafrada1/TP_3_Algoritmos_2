@@ -19,7 +19,8 @@ class Personaje {
 protected:
     // Atributos
 
-
+    bool defensa_especial = false;
+    const int ESCUDO_EXTRA = -2;
     int vida;
 
     unsigned int escudo;
@@ -134,6 +135,12 @@ public:
 
     void setEquipo(int numero_equipo){equipo = numero_equipo;};
 
+    void setVida(int vida);
+
+    void setEnergia(int energia);
+
+    void setEscudo(int escudo);
+
 
 
 
@@ -153,6 +160,8 @@ public:
     virtual void objetivos(Tablero &tablero, string objetivos[]) = 0;
 
     virtual int calculo_ataque(int posicion, string elemento, int defensa) = 0;
+
+    void defensaEspecial() ;
 
 
 

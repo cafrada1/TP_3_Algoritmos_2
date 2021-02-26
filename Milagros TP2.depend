@@ -99,18 +99,18 @@
 	"Tablero.h"
 	<string>
 
-1614352145 source:c:\users\user\documents\github\tp_3_algoritmos_2\aire.cpp
+1614363686 source:c:\users\user\documents\github\tp_3_algoritmos_2\aire.cpp
 	"aire.h"
 
-1614287795 c:\users\user\documents\github\tp_3_algoritmos_2\aire.h
+1614355609 c:\users\user\documents\github\tp_3_algoritmos_2\aire.h
 	"personaje.h"
 
-1614351938 c:\users\user\documents\github\tp_3_algoritmos_2\personaje.h
+1614363966 c:\users\user\documents\github\tp_3_algoritmos_2\personaje.h
 	<string>
 	<iostream>
 	"Tablero.h"
 
-1614343951 c:\users\user\documents\github\tp_3_algoritmos_2\tablero.h
+1614355609 c:\users\user\documents\github\tp_3_algoritmos_2\tablero.h
 	<string>
 	<stdio.h>
 	<stdlib.h>
@@ -119,26 +119,26 @@
 	"grafo.h"
 	"personaje.h"
 
-1614275700 c:\users\user\documents\github\tp_3_algoritmos_2\casillero.h
+1614355610 c:\users\user\documents\github\tp_3_algoritmos_2\casillero.h
 	<iostream>
 
-1614190650 source:c:\users\user\documents\github\tp_3_algoritmos_2\casillero.cpp
+1614355610 source:c:\users\user\documents\github\tp_3_algoritmos_2\casillero.cpp
 	"casillero.h"
 	<math.h>
 
-1614351310 source:c:\users\user\documents\github\tp_3_algoritmos_2\fuego.cpp
+1614355610 source:c:\users\user\documents\github\tp_3_algoritmos_2\fuego.cpp
 	"fuego.h"
 
-1614288902 c:\users\user\documents\github\tp_3_algoritmos_2\fuego.h
+1614355610 c:\users\user\documents\github\tp_3_algoritmos_2\fuego.h
 	"personaje.h"
 
-1614348526 source:c:\users\user\documents\github\tp_3_algoritmos_2\agua.cpp
+1614355609 source:c:\users\user\documents\github\tp_3_algoritmos_2\agua.cpp
 	"agua.h"
 
-1614288867 c:\users\user\documents\github\tp_3_algoritmos_2\agua.h
+1614355609 c:\users\user\documents\github\tp_3_algoritmos_2\agua.h
 	"personaje.h"
 
-1614346299 source:c:\users\user\documents\github\tp_3_algoritmos_2\main.cpp
+1614355610 source:c:\users\user\documents\github\tp_3_algoritmos_2\main.cpp
 	<iostream>
 	"diccionario.h"
 	"NodoABB.h"
@@ -147,7 +147,7 @@
 	"menu.h"
 	"funciones.h"
 
-1614346299 c:\users\user\documents\github\tp_3_algoritmos_2\diccionario.h
+1614355610 c:\users\user\documents\github\tp_3_algoritmos_2\diccionario.h
 	"personaje.h"
 	"NodoABB.h"
 	<fstream>
@@ -157,19 +157,20 @@
 	"tierra.h"
 	"aire.h"
 
-1614346299 c:\users\user\documents\github\tp_3_algoritmos_2\nodoabb.h
+1614355609 c:\users\user\documents\github\tp_3_algoritmos_2\nodoabb.h
 	<iostream>
 
-1614288823 c:\users\user\documents\github\tp_3_algoritmos_2\tierra.h
+1614363885 c:\users\user\documents\github\tp_3_algoritmos_2\tierra.h
 	"personaje.h"
 
-1614346491 c:\users\user\documents\github\tp_3_algoritmos_2\menu.h
+1614357132 c:\users\user\documents\github\tp_3_algoritmos_2\menu.h
 	<iostream>
 	"diccionario.h"
 	"Tablero.h"
 	"lista.h"
 	<fstream>
 	<cstdlib>
+	<stdio.h>
 
 1614346299 c:\users\user\documents\github\tp_3_algoritmos_2\lista.h
 	<string>
@@ -178,33 +179,33 @@
 
 1614346299 c:\users\user\documents\github\tp_3_algoritmos_2\nodo.h
 
-1614346299 c:\users\user\documents\github\tp_3_algoritmos_2\funciones.h
+1614355610 c:\users\user\documents\github\tp_3_algoritmos_2\funciones.h
 	"diccionario.h"
 	<string>
 
-1614268490 source:c:\users\user\documents\github\tp_3_algoritmos_2\personaje.cpp
+1614365456 source:c:\users\user\documents\github\tp_3_algoritmos_2\personaje.cpp
 	"personaje.h"
 
-1614347253 source:c:\users\user\documents\github\tp_3_algoritmos_2\tablero.cpp
+1614355609 source:c:\users\user\documents\github\tp_3_algoritmos_2\tablero.cpp
 	<iostream>
 	<typeinfo>
 	"Tablero.h"
 	<string>
 	<unistd.h>
 
-1614288946 source:c:\users\user\documents\github\tp_3_algoritmos_2\tierra.cpp
+1614364933 source:c:\users\user\documents\github\tp_3_algoritmos_2\tierra.cpp
 	"tierra.h"
 
-1614351934 source:c:\users\user\documents\github\tp_3_algoritmos_2\menu.cpp
+1614364326 source:c:\users\user\documents\github\tp_3_algoritmos_2\menu.cpp
 	<iostream>
 	"diccionario.h"
 	"NodoABB.h"
 	"menu.h"
 	<string>
 
-1614344956 c:\users\user\documents\github\tp_3_algoritmos_2\vertice.h
+1614355610 c:\users\user\documents\github\tp_3_algoritmos_2\vertice.h
 
-1614346238 c:\users\user\documents\github\tp_3_algoritmos_2\grafo.h
+1614355610 c:\users\user\documents\github\tp_3_algoritmos_2\grafo.h
 	"lista.h"
 	"vertice.h"
 	<iostream>
