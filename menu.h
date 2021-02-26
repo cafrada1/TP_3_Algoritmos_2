@@ -184,14 +184,41 @@ private:
      *      Muestra un sub-menu secundario con opciones atacar o defender.
      */
     void segundasOpcInternas(string nombre, string jugador[]);
-
+    /*
+     *  PRE: contador de turnos
+     *  POST: -
+     *  Descripcion:
+     *      Posiciona a los personajes dependiendo de los turnos
+     */
     void posicionarPersonajes(int contador);
-
+    /*
+     *  PRE: numero de jugar que le toca, y el nombre del personaje que se va a posicionar
+     *  POST: -
+     *  Descripcion:
+     *      Posiciona a los personajes dependiendo de los turnos
+     */
     void ponerPersonaje(string personaje, int numeroJugador);
-
+    /*
+     *  PRE:  nombre del personaje que va a realizar el ataque
+     *  POST: -
+     *  Descripcion:
+     *      realiza el ataque
+     */
     void atacar(string nombre);
-
+    /*
+     *  PRE:  nombre del personaje que va a realizar el ataque y vector de nombres del equipo del jugador que se defiende
+     *  POST: -
+     *  Descripcion:
+     *      realiza la defensa del personaje
+     */
     void defenderse(string nombre, string jugador[]);
+    /*
+     *  PRE:
+     *  POST: -
+     *  Descripcion:
+     *      imprime por pantalla un mensaje de bienvenida.
+     */
+    void bienvenida();
 
     /*
      *  PRE: -

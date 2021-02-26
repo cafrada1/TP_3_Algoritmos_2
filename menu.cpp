@@ -8,6 +8,39 @@ using namespace std;
 
 const int MINIMO_VALOR_MENU = 1, MAXIMO_VALOR_MENU = 6;
 
+void Menu::bienvenida(){
+    //Aunque parezca corrido está bien, NO TOCAR
+    cout << " -----------------------------------------------------------------------------\n";
+    cout << " |           _                  ______          _          _  _              |\n";
+    cout << " |          | |                 | ___ \\        | |        | || |             |\n";
+    cout << " |          | |      __ _       | |_/ /   __ _ | |_  __ _ | || |  __ _       |\n";
+    cout << " |          | |     / _` |      | ___ \\  / _` || __|/ _` || || | / _` |      |\n";
+    cout << " |          | |____| (_| |      | |_/ / | (_| || |_| (_| || || || (_| |      |\n";
+    cout << " |          \\_____/ \\__,_|      \\____/   \\__,_| \\__|\\__,_||_||_| \\__,_|      |\n";
+    cout << " |                     _                  _                                  |\n";
+    cout << " |                    | |                | |                                 |\n";
+    cout << " |                  __| |  ___           | |  ___   ___                      |\n";
+    cout << " |                 / _` | / _ \\          | | / _ \\ / __|                     |\n";
+    cout << " |                | (_| ||  __/          | || (_) |\\__ \\                     |\n";
+    cout << " |                 \\__,_| \\___|          |_| \\___/ |___/                     |\n";
+    cout << " |           _____  _                                _                       |\n";
+    cout << " |          |  ___|| |                              | |                      |\n";
+    cout << " |          | |__  | |  ___  _ __ ___    ___  _ __  | |_  ___   ___          |\n";
+    cout << " |          |  __| | | / _ \\| '_ ` _ \\  / _ \\| '_ \\ | __|/ _ \\ / __|         |\n";
+    cout << " |          | |___ | ||  __/| | | | | ||  __/| | | || |_| (_) |\\__ \\         |\n";
+    cout << " |          \\____/ |_| \\___||_| |_| |_| \\___||_| |_| \\__|\\___/ |___/         |\n";
+    cout << " |                                                                           |\n";
+    cout << " |                                CREADO POR:                                |\n";
+    cout << " |                             Closter Milagros                              |\n";
+    cout << " |                                Sicca Fabio                                |\n";
+    cout << " |                               Antonel Lucas                               |\n";
+    cout << " |                               Capra Franco                                |\n";
+    cout << " |                                                                           |\n";
+    cout << " -----------------------------------------------------------------------------\n";
+
+
+}
+
 enum opciones { AGREGAR_PERSONAJE = 1,
     ELIMINAR_PERSONAJE = 2,
     MOSTRAR_PERSONAJES = 3,
@@ -20,6 +53,7 @@ Menu::Menu(){
     if(existePartida()){
         int contador = asignarTurno();
         leerPartida();
+        tablero.cargar_tablero();
         comienzoJuego(contador);
     }
     else{
@@ -107,19 +141,6 @@ void Menu::procesar_opcion(int opcion, bool &continuar){
         }
             break;
 
-/*
-		case ALIMENTAR_PERSONAJE:
-			{
-			string nombre;
-			cout << "Ingrese el nombre del personaje al que desea alimentar: ";
-			cin >> nombre;
-			if (personajes.buscar(nombre))
-				alimentar_personaje(personajes, nombre);
-			else
-				cout << "El nombre del personaje no es válido" << endl;
-			}
-			break;
-*/
         case COMENZAR_JUEGO:
             comenzar_juego();
             break;
@@ -173,11 +194,6 @@ void Menu::eliminar_personaje(string nombre){
 void Menu::mostrar_datos_personaje(string nombre){
     Personaje *personaje = personajes->traer(nombre);
     personaje->mostrarDatos();
-    //cout << "Nombre: " << personaje->obtenerNombre() << endl;
-    //cout << "Elemento: " << personaje->obtenerTipo() << endl;
-    //cout << "Vida: " << personaje->obtenerVida() << endl;
-    //cout << "Escudo: " << personaje->obtenerEscudo() << endl;
-    //cout << "Energía: " << personaje->obtenerEnergia() << endl;
 }
 
 
@@ -302,9 +318,11 @@ void Menu::seleccionarPersonajes() {
             nombre = chequeaRepetido(personajesUsados);
             if(j%2==0){
                 jugador1[i] = nombre;
+                personajes->traer(nombre)->setEquipo(1);
             }
             else{
                 jugador2[i] = nombre;
+                personajes->traer(nombre)->setEquipo(2);
             }
             if(j!=0 || i!=0){
                 cont+=  1;
@@ -335,6 +353,7 @@ void Menu::comienzoJuego(int contador) {
     while((vidaJugador1 != 0 || vidaJugador2 != 0) && guardar != "SI"){
         imprimirTurno(contador);
         for (int i = 0; i < CANTIDAD_PERSONAJES; i++){
+            tablero.mostrar_tablero();
             if(contador % 2 == 0){
                 if (personajes->traer(jugador1[i])->obtenerVida() != 0){
                     primerasOpcInternas(jugador1[i]);
@@ -357,11 +376,18 @@ void Menu::comienzoJuego(int contador) {
             guardarPartida(jugador2, 2);
         }
     }
-    system("pause");
-    system("cls");
 }
 
 void Menu::primerasOpcInternas(string nombre) {
+    string elemento = personajes->traer(nombre)->obtenerTipo();
+    if (elemento == "aire")
+        personajes->traer(nombre)->cambiarEnergia(5);
+    if (elemento == "tierra"){
+        personajes->traer(nombre)->defensaEspecial();
+    }
+
+    personajes->traer(nombre)->mostrarDatos();
+
     cout << "ELIJA QUE DESEA HACER CON SU PERSONAJE: "<<nombre << endl;
     cout << "1) Alimentar.\n"
             "2) Moverse.\n"
@@ -432,6 +458,7 @@ void Menu::ponerPersonaje(string nombre, int numeroJugador) {
     cout<< "TURNO JUGADOR "<<numeroJugador<<endl;
 
 
+
     int fila, columna;
 
     bool cargado = false;
@@ -444,8 +471,9 @@ void Menu::ponerPersonaje(string nombre, int numeroJugador) {
 
 
         --fila;
-        --columna;
         int numero_casilla = (fila*8)+columna;
+        --columna;
+
         bool disponible = tablero.consulta_disponible(fila, columna);
         if (disponible == true){
             tablero.ponerPersonaje(fila, columna, nombre);
@@ -472,12 +500,12 @@ void Menu::atacar(string nombre){
     if (energia_valida == true){
         string vector_objetivos[3];
         for (int i = 0; i < 3; i++){
-            vector_objetivos[i] = "andy";
+            vector_objetivos[i] = "Andy";
         }
         personajes->traer(nombre)->objetivos(tablero, vector_objetivos);
         for (int i = 0; i < 3; i++){
             cout<<"atacado: "<<vector_objetivos[i]<<endl;
-            if (vector_objetivos[i] != "andy"){
+            if (vector_objetivos[i] != "Andy"){
                 int posicion = personajes->traer(vector_objetivos[i])->obtenerPosicion();
                 cout<<"posicion: "<<posicion<<endl;
                 string elemento = personajes->traer(vector_objetivos[i])->obtenerTipo();
