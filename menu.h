@@ -4,6 +4,7 @@
 #include "lista.h"
 #include <fstream>
 #include <cstdlib>
+#include <stdio.h>
 
 const string NOMBRE_ARCHIVO = "../partida.csv";
 const int CANTIDAD_PERSONAJES = 3;
@@ -19,6 +20,8 @@ class Menu{
 private:
     Diccionario<string,Personaje*>* personajes;
     Tablero tablero;
+    string jugador1[CANTIDAD_PERSONAJES];
+    string jugador2[CANTIDAD_PERSONAJES];
 public:
     Menu();
 
@@ -72,23 +75,57 @@ public:
 
     void mostrar_menu_2();
 
-    //PRE: diccPersonajes debe tener nodos con los personajes.
-    //POST: muestra los detalles del personaje deseado.
+    /*
+     *  PRE: -
+     *  POST: -
+     *  Descripcion:
+     *      Muestra los detalles del personaje deseado.
+     */
     void buscarPersonaje();
 
-    void seleccionarPersonajes(string jugador1[], string jugador2[]);
+    /*
+     *  PRE: -
+     *  POST: -
+     *  Descripcion:
+     *      Agrega en los vectores jugador1 y jugador2 los personajes elegidos.
+     */
+    void seleccionarPersonajes();
 
-    void comienzoJuego();
+    /*
+     *  PRE: Personajes ya seleccionados y posicionados. 0 < contador <=2.
+     *  POST: -
+     *  Descripcion:
+     *      Comienza la partida de juego. Finaliza cuando uno de los dos jugadores tiene vida = 0.
+     */
+    void comienzoJuego(int contador);
 
+    /*
+     *  PRE: 0 < num <=2
+     *  POST: -
+     *  Descripcion:
+     *      Crea un csv con los datos de la partida jugada.
+     */
     void guardarPartida(string jugador[], int num);
 
+    /*
+     *  PRE: El archivo debe existir.
+     *  POST: -
+     *  Descripcion:
+     *      Lee los datos de la partida guardada.
+     */
+    void leerPartida();
+
     ~Menu();
+
 private:
 
     string pedirNombre();
-
-    //PRE:
-    //POS: Si el elemento no es válido, le pide al usuario que lo vuelva a ingresar hasta que lo sea
+    /*
+     *  PRE: -
+     *  POST: -
+     *  Descripcion:
+     *      Si el elemento no es válido, le pide al usuario que lo vuelva a ingresar hasta que lo sea
+     */
     void validar_elemento(string &elemento);
 
     //PRE: La opcion es de tipo int
@@ -99,40 +136,94 @@ private:
 
     void cargar_atributos_personaje(Personaje* &nuevo_personaje,int vida,string nombre,int escudo,int energia,string tipo);
 
-
-    //PRE:
-    //POST: devuelve true si existe el archivo partida.csv, false en caso contrario.
+    /*
+     *  PRE: -
+     *  POST: devuelve true si existe el archivo partida.csv, false en caso contrario.
+     *  Descripcion:
+     *      Cheque la existencia de archivo partida.csv.
+     */
     bool existePartida();
-
-    //PRE:
-    //POST: si el personaje no esta repetido, devuelve el nombre.
+    /*
+     *  PRE: -
+     *  POST: si el personaje no esta repetido, devuelve el nombre.
+     *  Descripcion:
+     *
+     */
     string chequeaRepetido(string repetidos[]);
 
+    /*
+     *  PRE: -
+     *  POST: devuelve true si esta repetido, false en caso contrario.
+     *  Descripcion:
+     *      Chequea si el personaje elegido no fue elegido anteriormente.
+     */
     bool estaRepetido(std::string nombre, std::string repetidos[]);
 
-    //PRE:
-    //POST: devuelve la cantidad de vida total de los personajes del jugador.
+    /*
+     *  PRE: -
+     *  POST: devuelve la cantidad de vida total de los personajes del jugador.
+     *  Descripcion:
+     *
+     */
     int contadorVida(string jugador[]);
 
     void imprimirTurno(int num);
 
+    /*
+     *  PRE: -
+     *  POST: -
+     *  Descripcion:
+     *      Muestra un sub-menu con opciones alimentar o mover el personaje.
+     */
     void primerasOpcInternas(string nombre);
 
+    /*
+     *  PRE: -
+     *  POST: -
+     *  Descripcion:
+     *      Muestra un sub-menu secundario con opciones atacar o defender.
+     */
     void segundasOpcInternas(string nombre);
 
-    string eleccionPersonaje(string jugador[]);
-
-
-    void posicionarPersonajes(int contador, string jugador1[], string jugador2[]);
+    void posicionarPersonajes(int contador);
 
     void ponerPersonaje(string personaje, int numeroJugador);
 
-
     void atacar(string nombre);
 
-    void cargarPartida();
-
+    /*
+     *  PRE: -
+     *  POST: devuelve un string con la opcion elegida.
+     *  Descripcion:
+     *
+     */
     string opcionGuardar();
+
+    /*
+     *  PRE: El archivo debe existir.
+     *  POST: -
+     *  Descripcion:
+     *      Procesa cada linea del archivo csv.
+     */
+    string procesarLinea(string linea);
+
+    /*
+     *  PRE: -
+     *  POST: -
+     *  Descripcion:
+     *      Modifica los datos del diccionario creado a partir de personajes.csv
+     *      con los datos de partida.csv.
+     */
+    void modificarDatos(string nombre,int vida, int escudo, int energia, int numeroCasilla);
+
+    /*
+     *  PRE: -
+     *  POST: devuelve un numero entero.
+     *  Descripcion:
+     *      Decide al azar quien comienza la partida.
+     */
+    int asignarTurno();
+
 };
 
 
