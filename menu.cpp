@@ -338,13 +338,13 @@ void Menu::comienzoJuego(int contador) {
             if(contador % 2 == 0){
                 if (personajes->traer(jugador1[i])->obtenerVida() != 0){
                     primerasOpcInternas(jugador1[i]);
-                    segundasOpcInternas(jugador1[i]);
+                    segundasOpcInternas(jugador1[i], jugador1);
                 }
             }
             else{
                 if (personajes->traer(jugador2[i])->obtenerVida() != 0){
                     primerasOpcInternas(jugador2[i]);
-                    segundasOpcInternas(jugador2[i]);
+                    segundasOpcInternas(jugador2[i], jugador2);
                 }
             }
         }
@@ -357,6 +357,8 @@ void Menu::comienzoJuego(int contador) {
             guardarPartida(jugador2, 2);
         }
     }
+    system("pause");
+    system("cls");
 }
 
 void Menu::primerasOpcInternas(string nombre) {
@@ -383,7 +385,7 @@ void Menu::primerasOpcInternas(string nombre) {
 }
 
 
-void Menu::segundasOpcInternas(string nombre) {
+void Menu::segundasOpcInternas(string nombre,string jugador[]) {
 
 
     cout << "ELIJA QUE DESEA HACER CON SU PERSONAJE: " << endl;
@@ -396,7 +398,7 @@ void Menu::segundasOpcInternas(string nombre) {
     switch(opcion){
         case 1:
 
-            personajes->traer(nombre)->defenderse();
+            defenderse(nombre, jugador);
             break;
 
         case 2:
@@ -464,17 +466,18 @@ void Menu::ponerPersonaje(string nombre, int numeroJugador) {
 }
 
 void Menu::atacar(string nombre){
-    bool energia_valida = personajes->traer(nombre)->validarEnergia();
+
+    bool energia_valida = personajes->traer(nombre)->validarEnergiaAtaque();
 
     if (energia_valida == true){
         string vector_objetivos[3];
         for (int i = 0; i < 3; i++){
-            vector_objetivos[i] = "nadie";
+            vector_objetivos[i] = "andy";
         }
         personajes->traer(nombre)->objetivos(tablero, vector_objetivos);
         for (int i = 0; i < 3; i++){
             cout<<"atacado: "<<vector_objetivos[i]<<endl;
-            if (vector_objetivos[i] != "nadie"){
+            if (vector_objetivos[i] != "andy"){
                 int posicion = personajes->traer(vector_objetivos[i])->obtenerPosicion();
                 cout<<"posicion: "<<posicion<<endl;
                 string elemento = personajes->traer(vector_objetivos[i])->obtenerTipo();
@@ -585,6 +588,25 @@ void Menu::leerPartida(){
     archivo.close();
     remove("../partida.csv");
 }
+
+void Menu::defenderse(string nombre, string jugador[]){
+    bool energia_valida = personajes->traer(nombre)->validarEnergiaDefensa();
+    string elemento = personajes->traer(nombre)->obtenerTipo();
+    if (energia_valida == true){
+        if (elemento == "agua"){
+            for(int i = 0; i<CANTIDAD_PERSONAJES; i++){
+                if (nombre != jugador[i]){
+                    personajes->traer(jugador[i])->cambiarVida(10);
+                }
+            }
+        }
+        personajes->traer(nombre)->defenderse(tablero);
+
+    }else {
+        cout << nombre << " no cuenta con suficiente energia para defenderse" << endl;
+    }
+}
+
 
 Menu::~Menu() {
     delete personajes;

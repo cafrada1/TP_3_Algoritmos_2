@@ -137,16 +137,24 @@ public:
      * POST: ---------------------------
      * FUNCIONAMIENTO: -
      */
-    virtual void defenderse() = 0;
+    virtual void defenderse(Tablero &tablero) = 0;
 
 
-    virtual bool validarEnergia() = 0;
+    virtual bool validarEnergiaAtaque() = 0;
+
+    virtual bool validarEnergiaDefensa() = 0;
 
     virtual void objetivos(Tablero &tablero, string objetivos[]) = 0;
 
     virtual int calculo_ataque(int posicion, string elemento, int defensa) = 0;
 
 
+
+    void setVida(int vida);
+
+    void setEnergia(int energia);
+
+    void setEscudo(int escudo);
 
     /*void mostrarEnemigo(Diccionario<string,Personaje*>* personajes, string nombre){
         personajes->traer(nombre)->mostrarDatos();

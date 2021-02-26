@@ -74,3 +74,14 @@ void Personaje::mostrarDatos() {
 }
 
 
+void Personaje::setVida(int vida){
+    this->vida = vida;
+}
+
+void Personaje::setEnergia(int energia){
+    this->energia = energia;
+}
+
+void Personaje::setEscudo(int escudo){
+    this->escudo = escudo;
+}

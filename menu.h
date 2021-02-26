@@ -183,13 +183,15 @@ private:
      *  Descripcion:
      *      Muestra un sub-menu secundario con opciones atacar o defender.
      */
-    void segundasOpcInternas(string nombre);
+    void segundasOpcInternas(string nombre, string jugador[]);
 
     void posicionarPersonajes(int contador);
 
     void ponerPersonaje(string personaje, int numeroJugador);
 
     void atacar(string nombre);
+
+    void defenderse(string nombre, string jugador[]);
 
     /*
      *  PRE: -
