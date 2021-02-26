@@ -30,7 +30,7 @@ public:
      * POST:
      * FUNCIONAMIENTO:
      */
-    Tierra(unsigned int vida, string nombre, unsigned int escudo, unsigned int energia, string tipo);
+    Tierra(int vida, string nombre, unsigned int escudo, unsigned int energia, string tipo);
 
 
     /*
@@ -45,17 +45,44 @@ public:
      */
     void alimentarse();
 
+    /*
+     * PRE:
+     * POST: false si no tiene suficiente energia, true si tiene suficiente.
+     * FUNCIONAMIENTO: Corrobora que el personaje tiene suficiente energia para atacar
+     */
+
     bool validarEnergiaAtaque();
 
+
+    /*
+     * PRE:
+     * POST: false si no tiene suficiente energia, true si tiene suficiente.
+     * FUNCIONAMIENTO: Corrobora que el personaje tiene suficiente energia para defenderse
+     */
     bool validarEnergiaDefensa();
 
+
+    /*
+     * PRE: Recibe el objeto tablero por referencia, y un vector tipo string que modificara con los objetivos a atacar.
+     * POST:
+     * FUNCIONAMIENTO: define los objetivos a atacar.
+     */
     void objetivos(Tablero &tablero, string objetivos[]);
 
+    /*
+     * PRE: Recibe la posicion, el elemento y la defensa del personaje a atacar.
+     * POST: Devuelve la cantidad de daño realizado al enemigo
+     * FUNCIONAMIENTO: define la cantidad de daño a realizar a un enemigo.
+     */
     int calculo_ataque(int posicion, string elemento, int defensa);
 
 
 
-
+    /*
+     * PRE: Recibe el objeto tablero por referencia
+     * POST:
+     * FUNCIONAMIENTO: defiende al personaje aumentando 2 puntos su defensa por un turno.
+     */
     void defenderse(Tablero &tablero);
 
 };

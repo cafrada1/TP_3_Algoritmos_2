@@ -102,9 +102,24 @@ public:
     void cambiarDisponible();
 
 
-
+    /*
+     *  PRE: personaje : nombre del personaje que está en el casillero.
+     *
+     *  POST: -
+     *
+     *  Descripcion:
+     *      pone el nombre del personaje en la casilla
+     */
     void ponerPersonaje(string nuevo_personaje){personaje = nuevo_personaje;};
 
+    /*
+     *  PRE: personaje : nombre del equipo del personaje.
+     *
+     *  POST: -
+     *
+     *  Descripcion:
+     *      pone el nombre del equipo del personaje en la casilla
+     */
     void setEquipo(int nuevo_equipo){equipo = nuevo_equipo;};
 
 #pragma endregion
@@ -157,9 +172,18 @@ public:
      *  POST: -
      *
      *  Descripcion:
-     *
+     *       Retorna el valor del atributo equipo.
      */
     string getPersonaje(){return personaje;};
+
+    /*
+     *  PRE: -
+     *
+     *  POST: -
+     *
+     *  Descripcion:
+     *      Retorna el valor del atributo equipo.
+     */
 
     int getEquipo(){return equipo;};
 

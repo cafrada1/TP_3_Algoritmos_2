@@ -17,7 +17,7 @@ class Casillero;
 class personaje;
 class Tablero{
 
-    protected:
+protected:
 
         const int TABLERO[MAX_FILA][MAX_COLUMNA] = { {1,1,3,3,3,6,2,2},
                                                      {1,1,3,6,2,2,2,2},
@@ -32,43 +32,84 @@ class Tablero{
 
 
 
-    public:
+public:
 
-        void cargar_casillero(int terreno, int fila, int columna );
+    /*
+     * PRE: fila, columna y el terreno a cargar en ese casillero
+     * POST:
+     * FUNCIONAMIENTO:
+     */
+    void cargar_casillero(int terreno, int fila, int columna );
+    /*
+     * PRE:
+     * POST:
+     * FUNCIONAMIENTO: caraga el tablero segun los valores cargados en la matriz TABLERO
+     */
+    void cargar_tablero();
+    /*
+     * PRE: fila, columna y el personaje a cargar en ese casillero
+     * POST:
+     * FUNCIONAMIENTO:
+     */
+    void ponerPersonaje(int fila, int columna, string personaje);
+    /*
+     * PRE: fila y columna
+     * POST: true si esta disponible, false si no lo esta.
+     * FUNCIONAMIENTO:
+     */
+    bool consulta_disponible(int fila, int columna);
+    /*
+     * PRE: fila y columna
+     * POST: devuelve el nombre del personaje en ese casillero
+     * FUNCIONAMIENTO:
+     */
+    string consulta_personaje(int fila, int columna);
+    /*
+     * PRE:fila, columna
+     * POST:
+     * FUNCIONAMIENTO: cambia el estado de disponible.
+     */
+    void cambiarDisponible(int fila, int columna){tablero[fila][columna]->cambiarDisponible();};
+    /*
+     * PRE: fila y columna
+     * POST:Devuelve el equipo al que pertenece el personaje que se encuentra en esa casilla.
+     * FUNCIONAMIENTO:
+     */
+    int consulta_equipo(int fila, int columna){return tablero[fila][columna]->getEquipo();};
+    /*
+     * PRE: Recibe la fila y la columna y equipo a guardar
+     * POST:
+     * FUNCIONAMIENTO: Desactiva defensas especiales en caso de que las haya
+     */
+    void guardar_equipo(int fila, int columna, int equipo){tablero[fila][columna]->setEquipo(equipo);};
 
-        //void mostrar();
-
-        void cargar_tablero();
-
-        void ponerPersonaje(int fila, int columna, string personaje);
-
-        bool consulta_disponible(int fila, int columna);
-
-        string consulta_personaje(int fila, int columna);
-
-        void cambiarDisponible(int fila, int columna){tablero[fila][columna]->cambiarDisponible();};
-
-        int consulta_equipo(int fila, int columna){return tablero[fila][columna]->getEquipo();};
-
-        void guardar_equipo(int fila, int columna, int equipo){tablero[fila][columna]->setEquipo(equipo);};
+    /*
+     * PRE: Recibe la fila y la columna
+     * POST:Devuelve el nombre del personaje que se encuentra en esa casilla
+     * FUNCIONAMIENTO:
+     */
+    string sacarPersonaje(int fila, int columna);
 
 
-        string sacarPersonaje(int fila, int columna);
-        void mostrar_tablero();
 
-        void espacio();
-        string colorIndice(char color);
-        string inicioColor(char colorLetra, char colorFondo);
-        void print(string palabra, char colorFondo, char colorLetra);
-        char elegir_color_fondo(string terreno);
-        void mostrar_casillero( char color_fondo, char color_letra, string personaje);
-        void mostrar_vacio(int i);
-        void mostrar_indice_fila();
+    /*
+     * PRE:
+     * POST:Imprime por pantalla el tablero
+     */
+    void mostrar_tablero();
 
-        void mostrar_movimiento(Lista<Vertice<int>*> *lista);
-        //void posicionar(int fila, int columna, string personaje);
+    void espacio();
+    string colorIndice(char color);
+    string inicioColor(char colorLetra, char colorFondo);
+    void print(string palabra, char colorFondo, char colorLetra);
+    char elegir_color_fondo(string terreno);
+    void mostrar_casillero( char color_fondo, char color_letra, string personaje);
+    void mostrar_vacio(int i);
+    void mostrar_indice_fila();
 
-        ~Tablero();
+    void mostrar_movimiento(Lista<Vertice<int>*> *lista);
+
+    ~Tablero();
 };
 
 #endif // TABLERO_H_INCLUDED

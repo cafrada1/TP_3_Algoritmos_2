@@ -55,6 +55,7 @@ enum opciones { AGREGAR_PERSONAJE = 1,
 Menu::Menu(){
     personajes = new Diccionario<string, Personaje *>();
     bienvenida();
+    tablero.cargar_tablero();
     if(existePartida()){
         int contador = asignarTurno();
         leerPartida();
@@ -146,19 +147,6 @@ void Menu::procesar_opcion(int opcion, bool &continuar){
         }
             break;
 
-/*
-		case ALIMENTAR_PERSONAJE:
-			{
-			string nombre;
-			cout << "Ingrese el nombre del personaje al que desea alimentar: ";
-			cin >> nombre;
-			if (personajes.buscar(nombre))
-				alimentar_personaje(personajes, nombre);
-			else
-				cout << "El nombre del personaje no es válido" << endl;
-			}
-			break;
-*/
         case COMENZAR_JUEGO:
             comenzar_juego();
             break;
@@ -213,11 +201,6 @@ void Menu::eliminar_personaje(string nombre){
 void Menu::mostrar_datos_personaje(string nombre){
     Personaje *personaje = personajes->traer(nombre);
     personaje->mostrarDatos();
-    //cout << "Nombre: " << personaje->obtenerNombre() << endl;
-    //cout << "Elemento: " << personaje->obtenerTipo() << endl;
-    //cout << "Vida: " << personaje->obtenerVida() << endl;
-    //cout << "Escudo: " << personaje->obtenerEscudo() << endl;
-    //cout << "Energía: " << personaje->obtenerEnergia() << endl;
 }
 
 
@@ -274,7 +257,7 @@ void Menu::comenzar_juego(){
             {
                 seleccionarPersonajes();
                 int contador = asignarTurno();
-                tablero.cargar_tablero();
+
                 posicionarPersonajes(contador);
                 comienzoJuego(contador);
                 cout << "||GRACIAS POR JUGAR||" << endl;
@@ -450,7 +433,7 @@ void Menu::segundasOpcInternas(string nombre,string jugador[]) {
     cout << "ELIJA QUE DESEA HACER CON SU PERSONAJE: " << endl;
     cout << "1) Defenderse.\n"
             "2) Atacar.\n"
-            "3) Pasar opción\n";
+            "3) Pasar opcion\n";
 
     int opcion = ingresar_opcion();
 
@@ -494,6 +477,7 @@ void Menu::ponerPersonaje(string nombre, int numeroJugador) {
 
     tablero.mostrar_tablero();
     int fila, columna;
+
 
     bool cargado = false;
     while (cargado==false ){
@@ -669,6 +653,10 @@ void Menu::defenderse(string nombre, string jugador[]){
         cout<<nombre<< " no cuenta con suficiente energia para defenderse"<<endl;
     }
 }
+
+
+
+
 
 
 Menu::~Menu() {

@@ -8,7 +8,7 @@ const int ENERGIA_RECUPERADA = 10;
 
 const string NOMBRE_ALIMENTO = "Hierbas";
 
-Tierra::Tierra(unsigned int vida, string nombre, unsigned int escudo, unsigned int energia, string tipo) : Personaje(
+Tierra::Tierra(int vida, string nombre, unsigned int escudo, unsigned int energia, string tipo) : Personaje(
         vida, nombre,
         escudo, energia, tipo) {
 
@@ -35,6 +35,7 @@ void Tierra::defenderse(Tablero &tablero){
     if (energia >= COSTO_ENERGIA_DEFENSA){
         cambiarEscudo(ESCUDO_EXTRA);
         defensa_especial = true;
+        cout<<"Por un turno "<<nombre<<" tendra "<<escudo<<" puntos de escudo"<<endl;
     }
 }
 bool Tierra::validarEnergiaAtaque(){

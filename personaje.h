@@ -115,7 +115,11 @@ public:
     void cambiarEnergia(int aumento_energia);
 
 
-
+    /*
+     * PRE: valor a sumar de escudo
+     * POST: -
+     * FUNCIONAMIENTO: suma al escudo actual el cambio de escudo.
+     */
     void cambiarEscudo(int cambio_escudo);
 
     /*
@@ -125,24 +129,53 @@ public:
      */
     void mostrarDatos();
 
-
+    /*
+     * PRE: -
+     * POST: Devuelve la posicion del personaje con un num del 1 al 64.
+     * FUNCIONAMIENTO: -
+     */
     int obtenerPosicion(){return posicion;};
 
 
-
+    /*
+     * PRE: Setea la posicion del personaje con un num del 1 al 64.
+     * POST:
+     * FUNCIONAMIENTO: -
+     */
     void setPosicion(int nuevaPosicion){ posicion = nuevaPosicion;};
 
-
+    /*
+     * PRE: Setea el numero de equipo del personaje
+     * POST:
+     * FUNCIONAMIENTO: -
+     */
     void setEquipo(int numero_equipo){equipo = numero_equipo;};
 
+    /*
+     * PRE: Setea el numero de vida del personaje
+     * POST:
+     * FUNCIONAMIENTO: -
+     */
     void setVida(int vida);
-
+    /*
+     * PRE: Setea el numero de energia del personaje
+     * POST:
+     * FUNCIONAMIENTO: -
+     */
     void setEnergia(int energia);
-
+    /*
+     * PRE: Setea el numero de escudo del personaje
+     * POST:
+     * FUNCIONAMIENTO: -
+     */
     void setEscudo(int escudo);
 
-
-
+    /*
+     * PRE:
+     * POST:
+     * FUNCIONAMIENTO: Desactiva defensas especiales en caso de que las haya
+     */
+    void defensaEspecial() ;
 
 
     /*
@@ -152,7 +185,6 @@ public:
      */
     virtual void defenderse(Tablero &tablero) = 0;
 
-
     virtual bool validarEnergiaAtaque() = 0;
 
     virtual bool validarEnergiaDefensa() = 0;
@@ -161,13 +193,8 @@ public:
 
     virtual int calculo_ataque(int posicion, string elemento, int defensa) = 0;
 
-    void defensaEspecial() ;
 
 
-
-    /*void mostrarEnemigo(Diccionario<string,Personaje*>* personajes, string nombre){
-        personajes->traer(nombre)->mostrarDatos();
-    };*/
 
     /*
      * PRE: -

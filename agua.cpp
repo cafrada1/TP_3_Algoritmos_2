@@ -34,57 +34,6 @@ void Agua::alimentarse() {
 }
 
 
-/*
-void Agua::atacar(Tablero &tablero, int equipo){
-   Personaje *personaje_atacado;
-    bool ocupado = tablero.consulta_ocupado(fila, columna);
-
-    if (ocupado == true){
-        if (energia >= COSTO_ENERGIA_ATAQUE){
-            energia -= COSTO_ENERGIA_ATAQUE;
-            Personaje *personaje_atacado = tablero.consulta_personaje(fila,columna);
-            string nombre_personaje_atacado = personaje_atacado->obtenerNombre();
-            calculo_ataque(Personaje *personaje_atacado);
-            calculo_ataque(personaje_atacado);
-            vida_personaje_atacado = personaje_atacado->obtenerVida();
-            if (vida_personaje_atacado <= 0){
-                cout<<"Has atacado a "<< nombre_personaje_atacado << " y lo has matado!"
-
-            }else{
-                cout<<"Has atacado a "<< nombre_personaje_atacado << " y le quedan "<< vida_personaje_atacado <<" !"<<endl;
-            }
-        }else{
-            cout<<"¡No tienes suficiente energía para atacar!"<<endl;
-        }
-    }else{
-        cout<<"¡Has fallado! El casillero estaba vacío"<<endl;
-    }*/
-
-
-
-/*
-void Agua::calculo_ataque(){
-
-    int ataque = ATAQUE;
-    string elemento_personaje_atacado = personaje_atacado->obtenerTipo();
-    int defensa_personaje_atacado = personaje_atacado->obtenerDefensa();
-
-    if (elemento_personaje_atacado == "fuego"){
-        int ataque = FORTALEZA_FUEGO;
-    }else if (elemento_personaje_atacado == "tierra"){
-        int ataque = DEBILIDAD_TIERRA;
-    }
-    if (defensa_personaje_atacado == 1){
-        ataque = (ataque*90)/100 // Saca 10% del ataque original
-    }else if (defensa_personaje_atacado == 2){
-        ataque = (ataque*80)/100  //Saca 20% del ataque original
-    }else if (defensa_personaje_atacado >= 3){
-        ataque = (ataque*20)/100   //Saca 80% del ataque original
-    }
-
-    personaje_atacado->cambiarVida(ataque);*/
-
-
 bool Agua::validarEnergiaAtaque(){
     bool valido = false;
     if (energia >= COSTO_ENERGIA_ATAQUE){
@@ -114,7 +63,7 @@ void Agua::objetivos(Tablero &tablero, string objetivos[]){
     cout<<"Columna: ";
     cin>>columna;
 
-    bool disponible = tablero.consulta_disponible(fila, columna);
+    bool disponible = tablero.consulta_disponible(fila-1, columna-1);
     if (disponible == false){
         string personaje_atacado = tablero.consulta_personaje(fila-1,columna-1);
         objetivos[0] = personaje_atacado;

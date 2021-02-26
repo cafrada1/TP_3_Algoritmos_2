@@ -31,8 +31,9 @@ void Aire::defenderse(Tablero &tablero){
         cin>>columna;
 
         --fila;
-        --columna;
         int numero_casilla_nueva = (fila*8)+columna;
+        --columna;
+
         bool disponible = tablero.consulta_disponible(fila, columna);
         if (disponible == true){
             tablero.ponerPersonaje(fila, columna, nombre);
