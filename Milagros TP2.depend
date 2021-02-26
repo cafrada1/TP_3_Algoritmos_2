@@ -110,11 +110,13 @@
 	<iostream>
 	"Tablero.h"
 
-1614276360 c:\users\user\documents\github\tp_3_algoritmos_2\tablero.h
+1614343951 c:\users\user\documents\github\tp_3_algoritmos_2\tablero.h
 	<string>
 	<stdio.h>
 	<stdlib.h>
 	"casillero.h"
+	"vertice.h"
+	"grafo.h"
 	"personaje.h"
 
 1614275700 c:\users\user\documents\github\tp_3_algoritmos_2\casillero.h
