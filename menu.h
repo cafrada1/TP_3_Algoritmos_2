@@ -2,6 +2,7 @@
 #include "diccionario.h"
 #include "Tablero.h"
 #include "lista.h"
+#include "vertice.h"
 #include <fstream>
 #include <cstdlib>
 #include <stdio.h>

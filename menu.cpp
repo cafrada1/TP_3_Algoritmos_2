@@ -418,7 +418,7 @@ void Menu::primerasOpcInternas(string nombre) {
             break;
 
         case 2:
-            //LLAMADA MOVERSE
+            moverPersonaje(nombre);
             break;
 
         case 3:
@@ -654,7 +654,11 @@ void Menu::defenderse(string nombre, string jugador[]){
     }
 }
 
+void moverPersonaje(string nombre){
 
+    mostrar_movimiento(Lista<Vertice<int>*> *lista)
+
+}
 
 
 
