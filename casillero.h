@@ -19,6 +19,8 @@ private:
     string tipoTerreno = "";
     bool disponible = true;
     int numero = 0;
+    int equipo;
+    string personaje = "nadie";
 #pragma endregion
 
 #pragma region METODOS
@@ -47,7 +49,7 @@ public:
      *  POST: -
      *
      *  Descripcion:
-     *      Contructor de la clase seteando sus atributos con valores dados por el 
+     *      Contructor de la clase seteando sus atributos con valores dados por el
      *      usuario.
      */
     Casillero(int x, int y, string terreno, int numeroCasillero);
@@ -57,7 +59,7 @@ public:
 #pragma region SETTERS
 
     /*
-     *  PRE: 
+     *  PRE:
      *      x : numero mayor o igual a 0.
      *
      *  POST: -
@@ -98,6 +100,12 @@ public:
      *      Si disponible es true lo cambia a false y si es false lo cambia a true.
      */
     void cambiarDisponible();
+
+
+
+    void ponerPersonaje(string nuevo_personaje){personaje = nuevo_personaje;};
+
+    void setEquipo(int nuevo_equipo){equipo = nuevo_equipo;};
 
 #pragma endregion
 
@@ -142,6 +150,18 @@ public:
      *      Retorna el valor de posY
      */
     int getY();
+
+    /*
+     *  PRE: -
+     *
+     *  POST: -
+     *
+     *  Descripcion:
+     *
+     */
+    string getPersonaje(){return personaje;};
+
+    int getEquipo(){return equipo;};
 
     /*
      *  PRE: -

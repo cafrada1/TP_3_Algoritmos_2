@@ -16,6 +16,7 @@ Casillero::Casillero(int x, int y, string terreno, int numeroCasillero) {
     numero = numeroCasillero;
 }
 
+
 #pragma endregion
 
 #pragma region SETTERS

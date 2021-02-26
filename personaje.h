@@ -5,20 +5,30 @@
 #ifndef TP2_PERSONAJE_H
 #define TP2_PERSONAJE_H
 
+
 #include <string>
 #include <iostream>
+#include "Tablero.h"
 
 using namespace std;
 
+
+
+class Tablero;
 class Personaje {
-private:
+protected:
     // Atributos
 
-    unsigned int vida;
+
+    int vida;
 
     unsigned int escudo;
 
     unsigned int energia;
+
+    int posicion;
+
+    int equipo;
 
     string nombre;
 
@@ -103,12 +113,50 @@ public:
      */
     void cambiarEnergia(int aumento_energia);
 
+
+
+    void cambiarEscudo(int cambio_escudo);
+
     /*
      * PRE: -
      * POST: Muestra por pantalla el contenido de los atributos de personaje.
      * FUNCIONAMIENTO: -
      */
     void mostrarDatos();
+
+
+    int obtenerPosicion(){return posicion;};
+
+
+
+    void setPosicion(int nuevaPosicion){ posicion = nuevaPosicion;};
+
+
+    void setEquipo(int numero_equipo){equipo = numero_equipo;};
+
+
+
+    /*
+     * PRE: -
+     * POST: ---------------------------
+     * FUNCIONAMIENTO: -
+     */
+    virtual void defenderse(Tablero &tablero) = 0;
+
+
+    virtual bool validarEnergiaAtaque() = 0;
+
+    virtual bool validarEnergiaDefensa() = 0;
+
+    virtual void objetivos(Tablero &tablero, string objetivos[]) = 0;
+
+    virtual int calculo_ataque(int posicion, string elemento, int defensa) = 0;
+
+
+
+    /*void mostrarEnemigo(Diccionario<string,Personaje*>* personajes, string nombre){
+        personajes->traer(nombre)->mostrarDatos();
+    };*/
 
     /*
      * PRE: -
