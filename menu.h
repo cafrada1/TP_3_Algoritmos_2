@@ -136,6 +136,8 @@ private:
     void atacar(string nombre);
 
     void defenderse(string nombre, string jugador[]);
+
+    void bienvenida();
 };
 
 

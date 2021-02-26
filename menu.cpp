@@ -36,7 +36,6 @@ void Menu::bienvenida(){
     cout << " |                               Antonel Lucas                               |\n";
     cout << " |                               Capra Franco                                |\n";
     cout << " |                                                                           |\n";
-    cout << " |                                                                           |\n";
     cout << " -----------------------------------------------------------------------------\n";
 
     system("pause");
@@ -58,6 +57,7 @@ Menu::Menu(){
     }
     else{
         personajes = new Diccionario<string, Personaje *>();
+        Menu::bienvenida();
         elegir_opcion(*personajes);
     }
 }
@@ -91,6 +91,7 @@ int Menu::ingresar_opcion(){
 
 
 void Menu::elegir_opcion(Diccionario<string, Personaje *> &personajes){
+
     bool continuar = true;
 
     do{
@@ -102,6 +103,7 @@ void Menu::elegir_opcion(Diccionario<string, Personaje *> &personajes){
         }
 
         procesar_opcion(opcion,continuar,personajes);
+        system("cls");
 
     }while(continuar);
 }
@@ -123,11 +125,13 @@ void Menu::procesar_opcion(int opcion, bool &continuar,Diccionario<string, Perso
                 eliminar_personaje(personajes, nombre_eliminado);
             else
                 cout << "El nombre del personaje no es valido" << endl;
+            system("pause");
         }
             break;
 
         case MOSTRAR_PERSONAJES:
             personajes.mostrarOrdenados();
+            system("pause");
             break;
 
         case DETALLES_PERSONAJE:
@@ -139,6 +143,7 @@ void Menu::procesar_opcion(int opcion, bool &continuar,Diccionario<string, Perso
                 mostrar_datos_personaje(personajes, nombre);
             else
                 cout << "El nombre del personaje no es válido" << endl;
+            system("pause");
         }
             break;
 
@@ -244,8 +249,9 @@ bool Menu::estaRepetido(std::string nombre, std::string repetidos[]){
 
 void Menu::comenzar_juego(Diccionario<string, Personaje *> &personajes){
     bool continuar = true;
-    Menu::bienvenida()
+
     do{
+        system("cls");
         mostrar_menu_2();
 
         int opcion = ingresar_opcion();
@@ -257,15 +263,18 @@ void Menu::comenzar_juego(Diccionario<string, Personaje *> &personajes){
         switch(opcion){
             case 1:
                 buscarPersonaje(personajes);
+                system("pause");
                 break;
 
             case 2:
                 personajes.mostrarOrdenados();
+                system("pause");
                 break;
 
             case 3:
             {
                 comienzoJuego();
+
             }
                 break;
             case 4:
@@ -351,15 +360,18 @@ void Menu::seleccionarPersonajes(string jugador1[], string jugador2[]) {
             nombre = chequeaRepetido(personajesUsados);
             if(j%2==0){
                 jugador1[i] = nombre;
+                personajes->traer(nombre)->setEquipo(1);
             }
             else{
                 jugador2[i] = nombre;
+                personajes->traer(nombre)->setEquipo(2);
             }
 
             if(j!=0 || i!=0){
                 cont+=  1;
             }
             personajesUsados[cont] = nombre;
+            system("cls");
         }
     }
 }
@@ -515,8 +527,9 @@ void Menu::ponerPersonaje(string nombre, int numeroJugador) {
 
 
         --fila;
-        --columna;
         int numero_casilla = (fila*8)+columna;
+        --columna;
+
         bool disponible = tablero.consulta_disponible(fila, columna);
         if (disponible == true){
             tablero.ponerPersonaje(fila, columna, nombre);
@@ -591,5 +604,5 @@ void Menu::defenderse(string nombre, string jugador[]){
 }
 
 Menu::~Menu() {
-    delete personajes;
+    //delete personajes;
 }

@@ -116,7 +116,7 @@ void Agua::objetivos(Tablero &tablero, string objetivos[]){
 
     bool disponible = tablero.consulta_disponible(fila, columna);
     if (disponible == false){
-        string personaje_atacado = tablero.consulta_personaje(fila,columna);
+        string personaje_atacado = tablero.consulta_personaje(fila-1,columna-1);
         objetivos[0] = personaje_atacado;
     }else{
         cout<<" ¡Has fallado! El casillero estaba vacío"<<endl;

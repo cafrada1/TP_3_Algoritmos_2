@@ -59,7 +59,7 @@ bool Fuego::validarEnergiaDefensa(){
 void Fuego::objetivos(Tablero &tablero, string objetivos[]){
     int fila = posicion/8;
     int fila_inicio = fila-1, fila_final = fila+1;
-    if (fila-1 < 0){
+    if (fila_inicio < 0){
         fila_inicio = 0;
     }else if (fila+1 > 7){
         fila_final = 7;
@@ -68,7 +68,7 @@ void Fuego::objetivos(Tablero &tablero, string objetivos[]){
     int posicion_vector = 0;
     string personaje_atacado;
     for (int i = fila_inicio; i <= fila_final; i++){
-        for (int j =0; i < 8; i++){
+        for (int j =0; j < 8; j++){
             bool disponible = tablero.consulta_disponible(i, j);
             if (disponible == false){
                 int equipo_enemigo = tablero.consulta_equipo(i, j);

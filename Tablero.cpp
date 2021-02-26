@@ -331,9 +331,9 @@ void Tablero::mostrar_movimiento(Lista<Vertice<int>*> *lista){
 }
 
 Tablero::~Tablero() {
-    for (int i=0; i<MAX_FILA; i++){
+/*    for (int i=0; i<MAX_FILA; i++){
         for (int j=0; j<MAX_COLUMNA; j++){
             delete tablero[i][j];
         }
-    }
+    }*/
 }
