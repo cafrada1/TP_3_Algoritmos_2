@@ -357,8 +357,6 @@ void Menu::comienzoJuego(int contador) {
             guardarPartida(jugador2, 2);
         }
     }
-    system("pause");
-    system("cls");
 }
 
 void Menu::primerasOpcInternas(string nombre) {
