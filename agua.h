@@ -12,7 +12,15 @@ class Agua : public Personaje {
     // Atributos
 private:
     int cantidad_alimentado = 0;
-
+    int COSTO_ENERGIA_ATAQUE = 5;
+    int COSTO_ENERGIA_DEFENSA = 12;
+    int DEBILIDAD_TIERRA = -10;
+    int FORTALEZA_FUEGO = -30;
+    int ATAQUE = -20;
+    int DEFENSA_PERSONAL = 50;
+    int DEFENSA_EQUIPO = 10;
+    std::string elemento_debilidad = "tiera";
+    std::string elemento_fortaleza = "fuego";
     //Metodos
 public:
     /*
@@ -33,6 +41,18 @@ public:
      * por pantalla la salud recuperada y el alimento usado.
      */
     void alimentarse();
+
+    bool validarEnergiaAtaque();
+
+    bool validarEnergiaDefensa();
+
+    void objetivos(Tablero &tablero, string objetivos[]);
+
+    int calculo_ataque(int posicion, string elemento, int defensa);
+
+
+
+    void defenderse(Tablero &tablero);
 
 };
 

@@ -9,6 +9,19 @@
 
 class Tierra : public Personaje {
 
+private:
+    const int COSTO_ENERGIA_ATAQUE = 6;
+    const int COSTO_ENERGIA_DEFENSA = 5;
+    const int DEBILIDAD = -10;
+    const int FORTALEZA = -20;
+    const int ATAQUE_CERCANO = -30;
+    const int ATAQUE_MEDIANO = -30;
+    const int ATAQUE_LEJANO = -30;
+    const int ESCUDO_EXTRA = 2;
+    const int DEFENSA_EQUIPO = 10;
+    std::string elemento_debilidad = "aire";
+    std::string elemento_fortaleza = "agua";
+
 public:
 
     /*
@@ -30,6 +43,17 @@ public:
      * por pantalla la energia recuperada y el alimento usado.
      */
     void alimentarse();
+
+    bool validarEnergiaAtaque();
+
+    bool validarEnergiaDefensa();
+
+    void objetivos(Tablero &tablero, string objetivos[]);
+
+    int calculo_ataque(int posicion, string elemento, int defensa);
+
+
+    void defenderse(Tablero &tablero);
 
 };
 

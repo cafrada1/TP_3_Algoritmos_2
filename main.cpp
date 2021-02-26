@@ -6,7 +6,8 @@
 #include "casillero.h"
 #include "vertice.h"
 #include "grafo.h"
-
+#include "Tablero.h"
+#include "lista.h"
 int main() {
 
 #pragma region PRUEBA DICCIONARIO
@@ -49,7 +50,7 @@ int main() {
 #pragma endregion
 
 #pragma region PRUEBA GRAFO
-    Grafo *mi_grafo = new Grafo();
+    /*Grafo *mi_grafo = new Grafo();
 
 
     mi_grafo->mostrar();
@@ -60,7 +61,33 @@ int main() {
     mi_grafo->mostrarCamino(lista);
 
     delete lista;
-    delete mi_grafo;
+    delete mi_grafo;*/
 #pragma endregion
+
+
+    Tablero *tablero = new Tablero();
+
+    tablero->cargar_tablero();
+
+    tablero->ponerPersonaje(2,2,"juan");
+    tablero->cambiarDisponible(2,2);
+
+    tablero->ponerPersonaje(3,2,"marcos");
+    tablero->cambiarDisponible(3,2);
+
+    tablero->ponerPersonaje(4,1,"pepe");
+    tablero->cambiarDisponible(4,1);
+
+    tablero->mostrar_tablero();
+
+    Grafo *grafo = new Grafo();
+
+    Lista<Vertice<int> *> *lista = grafo->obtenerCaminoMinimo(19,50,"fuego");
+
+    tablero->mostrar_movimiento(lista);
+
+    delete tablero;
+    delete lista;
+    delete grafo;
     return 0;
 }
