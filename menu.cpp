@@ -668,7 +668,56 @@ void Menu::defenderse(string nombre, string jugador[]){
 }
 
 void Menu::moverPersonaje(string nombre){
-   /* cout<<"Ingrese la fila y la columna a la cual quiere moverse con "<<nombre<<endl;
+
+    int fila, columna;
+    cout<<"Ingrese la fila y la columna donde quiere posicionar a "<<nombre<<endl;
+    cout<<"Fila: ";
+    cin >>fila;
+    cout<<"Columna: ";
+    cin>>columna;
+
+    --fila;
+    int destino = (fila*8)+columna;
+    --columna;
+
+    int origen = personajes->traer(nombre)->obtenerPosicion();
+    int fila_origen = origen/8;
+    int columna_origen = origen%8;
+    string elemento = personajes->traer(nombre)->obtenerTipo();
+    int equipo = personajes->traer(nombre)->getEquipo();
+    int energia_personaje = personajes->traer(nombre)->obtenerEnergia();
+    Grafo *grafo = new Grafo();
+    int energia_gastada = grafo->energiaNecesaria(origen, destino,elemento);
+    bool disponible = tablero.consulta_disponible(fila, columna);
+    if (disponible == true){
+        if (energia_personaje >= energia_gastada){
+            personajes->traer(nombre)->cambiarEnergia(energia_gastada);
+            tablero.ponerPersonaje(fila, columna, nombre);
+            tablero.guardar_equipo(fila, columna, equipo);
+            tablero.cambiarDisponible(fila, columna);
+            tablero.cambiarDisponible(fila_origen, columna_origen);
+            personajes->traer(nombre)->setPosicion(destino);
+            Lista<Vertice<int> *> *lista = grafo->obtenerCaminoMinimo(origen,destino,elemento);
+            tablero.mostrar_movimiento(lista);
+        }else{
+            cout<<nombre<<" no tiene suficiente energia."<<endl;
+        }
+
+    }else{
+        cout<<"El casillero seleccionado esta ocupado, por favor seleccione otro"<<endl;
+    }
+
+  /*
+    --fila;
+    int destino = (fila*8)+columna;
+    --columna;
+    int origen = personajes->traer(nombre)->obtenerPosicion();
+    string elemento = personajes->traer(nombre)->obtenerTipo();
+    Grafo *grafo = new Grafo();
+    ponerPersonaje(nombre,numeroJugador);
+
+
+  cout<<"Ingrese la fila y la columna a la cual quiere moverse con "<<nombre<<endl;
     cout<<"Fila: ";
     cin >>fila;
     cout<<"Columna: ";

@@ -151,6 +151,8 @@ public:
      */
     void setEquipo(int numero_equipo){equipo = numero_equipo;};
 
+
+    int getEquipo(){return equipo;};
     /*
      * PRE: Setea el numero de vida del personaje
      * POST:

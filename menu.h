@@ -6,6 +6,7 @@
 #include <fstream>
 #include <cstdlib>
 #include <stdio.h>
+#include "grafo.h"
 
 const string NOMBRE_ARCHIVO = "../partida.csv";
 const int CANTIDAD_PERSONAJES = 3;
