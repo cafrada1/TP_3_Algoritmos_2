@@ -253,6 +253,8 @@ private:
      */
     int asignarTurno();
 
+    void moverPersonaje(string nombre);
+
 };
 
 

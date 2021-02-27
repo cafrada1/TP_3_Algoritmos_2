@@ -49,11 +49,12 @@ enum opciones { AGREGAR_PERSONAJE = 1,
     SALIR = 6 };
 
 Menu::Menu(){
+    bienvenida();
     personajes = new Diccionario<string, Personaje *>();
+    tablero.cargar_tablero();
     if(existePartida()){
         int contador = asignarTurno();
         leerPartida();
-        tablero.cargar_tablero();
         comienzoJuego(contador);
     }
     else{
@@ -248,7 +249,6 @@ void Menu::comenzar_juego(){
             {
                 seleccionarPersonajes();
                 int contador = asignarTurno();
-                tablero.cargar_tablero();
                 posicionarPersonajes(contador);
                 comienzoJuego(contador);
                 cout << "||GRACIAS POR JUGAR||" << endl;
@@ -402,7 +402,7 @@ void Menu::primerasOpcInternas(string nombre) {
             break;
 
         case 2:
-            //LLAMADA MOVERSE
+            moverPersonaje(nombre);
             break;
 
         case 3:
@@ -593,28 +593,30 @@ void Menu::leerPartida(){
     int jugador;
     int contadorPersonaje = 0;
     int contadorLinea = 0;
-
-    while(getline(archivo,linea)){
-        if(contadorLinea != 0 && contadorLinea != (CANTIDAD_PERSONAJES+1)){
-            nombre = procesarLinea(linea);
-            if(jugador == 1)
-                jugador1[contadorPersonaje] = nombre;
-            else
-                jugador2[contadorPersonaje] = nombre;
-            contadorPersonaje++;
+    if( ! archivo)
+        cout << "EL ARCHIVO NO SE PUDO ABRIR." << endl;
+    else {
+        while (getline(archivo, linea)) {
+            if (contadorLinea != 0 && contadorLinea != (CANTIDAD_PERSONAJES + 1)) {
+                nombre = procesarLinea(linea);
+                if (jugador == 1)
+                    jugador1[contadorPersonaje] = nombre;
+                else
+                    jugador2[contadorPersonaje] = nombre;
+                contadorPersonaje++;
+            } else if (contadorLinea == 0) {
+                contadorPersonaje = 0;
+                jugador = stoi(linea);
+            } else {
+                contadorPersonaje = 0;
+                jugador = stoi(linea);
+            }
+            contadorLinea++;
         }
-        else if(contadorLinea == 0){
-            contadorPersonaje=0;
-            jugador = stoi(linea);
-        }
-        else{
-            contadorPersonaje=0;
-            jugador = stoi(linea);
-        }
-        contadorLinea++;
+        archivo.close();
+        remove("../partida.csv");
+        cout << "PARTIDA ANTERIOR CARGADA." << endl;
     }
-    archivo.close();
-    remove("../partida.csv");
 }
 
 void Menu::defenderse(string nombre, string jugador[]){
@@ -635,7 +637,9 @@ void Menu::defenderse(string nombre, string jugador[]){
     }
 }
 
-
+void Menu::moverPersonaje(string nombre){
+    cout<<"mover"<<endl;
+}
 Menu::~Menu() {
     delete personajes;
 }
