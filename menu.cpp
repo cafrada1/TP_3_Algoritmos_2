@@ -1,6 +1,5 @@
 #include <iostream>
 #include "diccionario.h"
-#include "NodoABB.h"
 #include "menu.h"
 #include <string>
 
@@ -142,8 +141,10 @@ void Menu::procesar_opcion(int opcion, bool &continuar){
         }
             break;
 
-        case COMENZAR_JUEGO:
+        case COMENZAR_JUEGO:{
             comenzar_juego();
+            continuar = false;
+        }
             break;
 
         case SALIR:
