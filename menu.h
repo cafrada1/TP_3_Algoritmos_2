@@ -116,6 +116,8 @@ public:
      */
     void leerPartida();
 
+    void moverPersonaje(string nombre);
+
     ~Menu();
 
 private:

@@ -58,7 +58,9 @@ Menu::Menu(){
     tablero.cargar_tablero();
     if(existePartida()){
         int contador = asignarTurno();
+        cout<<"OK:61"<<endl;
         leerPartida();
+        cout<<"OK:63"<<endl;
         comienzoJuego(contador);
     }
     else{
@@ -574,6 +576,7 @@ string Menu::opcionGuardar(){
 
 
 void Menu::modificarDatos(string nombre, int vida, int escudo, int energia, int numeroCasilla){
+    cout<<"OK:579"<<endl;
     personajes->traer(nombre)->setVida(vida);
     personajes->traer(nombre)->setEnergia(energia);
     personajes->traer(nombre)->setEscudo(escudo);
@@ -588,18 +591,19 @@ string Menu::procesarLinea(string linea){
     string fila;
     string columna;
     string energia;
-
+    cout<<"OK:593"<<endl;
     getline(ss, tipo, ',');
     getline(ss, nombre, ',');
     getline(ss, escudo, ',');
     getline(ss, vida, ',');
     getline(ss, energia, ',');
     getline(ss, fila, ',');
-
+    cout<<"OK:600"<<endl;
     getline(ss, columna, ',');
     int numeroCasilla = (stoi(fila) * 8) + stoi(columna);
-
+    cout<<"OK:603"<<endl;
     modificarDatos(nombre,stoi(vida), stoi(escudo), stoi(energia), numeroCasilla);
+    cout<<"OK:605"<<endl;
     return nombre;
 
 }
@@ -614,24 +618,32 @@ void Menu::leerPartida(){
     int contadorLinea = 0;
 
     while(getline(archivo,linea)){
+         cout<<"OK:619"<<endl;
         if(contadorLinea != 0 && contadorLinea != (CANTIDAD_PERSONAJES+1)){
+            cout<<"OK:620"<<endl;
             nombre = procesarLinea(linea);
+            cout<<"OK:621"<<endl;
             if(jugador == 1)
                 jugador1[contadorPersonaje] = nombre;
             else
                 jugador2[contadorPersonaje] = nombre;
             contadorPersonaje++;
+            cout<<"OK:628"<<endl;
         }
+
         else if(contadorLinea == 0){
             contadorPersonaje=0;
             jugador = stoi(linea);
+            cout<<"OK:633"<<endl;
         }
         else{
             contadorPersonaje=0;
             jugador = stoi(linea);
+            cout<<"OK:638"<<endl;
         }
         contadorLinea++;
     }
+    cout<<"OK:637"<<endl;
     archivo.close();
     remove("../partida.csv");
 }
@@ -654,9 +666,8 @@ void Menu::defenderse(string nombre, string jugador[]){
     }
 }
 
-void moverPersonaje(string nombre){
-
-    mostrar_movimiento(Lista<Vertice<int>*> *lista)
+void Menu::moverPersonaje(string nombre){
+cout<<"mover"<<endl;
 
 }
 

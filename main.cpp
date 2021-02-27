@@ -6,7 +6,7 @@
 #include "menu.h"
 
 
-#include "funciones.h"
+
 
 int main() {
 
