@@ -175,7 +175,7 @@ private:
      *  Descripcion:
      *      Muestra un sub-menu con opciones alimentar o mover el personaje.
      */
-    void primerasOpcInternas(string nombre);
+    void primerasOpcInternas(string nombre, int numeroJugador);
 
     /*
      *  PRE: -
@@ -253,7 +253,7 @@ private:
      */
     int asignarTurno();
 
-    void moverPersonaje(string nombre);
+    void moverPersonaje(string nombre, int numeroJugador);
 
 };
 

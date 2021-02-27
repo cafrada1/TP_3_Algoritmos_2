@@ -357,13 +357,13 @@ void Menu::comienzoJuego(int contador) {
             tablero.mostrar_tablero();
             if(contador % 2 == 0){
                 if (personajes->traer(jugador1[i])->obtenerVida() != 0){
-                    primerasOpcInternas(jugador1[i]);
+                    primerasOpcInternas(jugador1[i],1);
                     segundasOpcInternas(jugador1[i], jugador1);
                 }
             }
             else{
                 if (personajes->traer(jugador2[i])->obtenerVida() != 0){
-                    primerasOpcInternas(jugador2[i]);
+                    primerasOpcInternas(jugador2[i],2);
                     segundasOpcInternas(jugador2[i], jugador2);
                 }
             }
@@ -379,7 +379,7 @@ void Menu::comienzoJuego(int contador) {
     }
 }
 
-void Menu::primerasOpcInternas(string nombre) {
+void Menu::primerasOpcInternas(string nombre, int numeroJugador) {
     string elemento = personajes->traer(nombre)->obtenerTipo();
     if (elemento == "aire")
         personajes->traer(nombre)->cambiarEnergia(5);
@@ -403,7 +403,7 @@ void Menu::primerasOpcInternas(string nombre) {
             break;
 
         case 2:
-            moverPersonaje(nombre);
+            moverPersonaje(nombre, numeroJugador);
             break;
 
         case 3:
@@ -458,18 +458,15 @@ void Menu::posicionarPersonajes(int contador){
 void Menu::ponerPersonaje(string nombre, int numeroJugador) {
     cout<< "TURNO JUGADOR "<<numeroJugador<<endl;
 
-
-
     int fila, columna;
 
     bool cargado = false;
-    while (cargado==false ){
+    while (cargado == false ){
         cout<<"Ingrese la fila y la columna donde quiere posicionar a "<<nombre<<endl;
         cout<<"Fila: ";
         cin >>fila;
         cout<<"Columna: ";
         cin>>columna;
-
 
         --fila;
         int numero_casilla = (fila*8)+columna;
@@ -638,9 +635,26 @@ void Menu::defenderse(string nombre, string jugador[]){
     }
 }
 
-void Menu::moverPersonaje(string nombre){
-    cout<<"mover"<<endl;
+void Menu::moverPersonaje(string nombre, int numeroJugador){
+
+    int fila, columna;
+    cout<<"Ingrese la fila y la columna donde quiere posicionar a "<<nombre<<endl;
+    cout<<"Fila: ";
+    cin >>fila;
+    cout<<"Columna: ";
+    cin>>columna;
+
+    --fila;
+    int destino = (fila*8)+columna;
+    --columna;
+    int origen = personajes->traer(nombre)->obtenerPosicion();
+    string elemento = personajes->traer(nombre)->obtenerTipo();
+    Grafo *grafo = new Grafo();
+    ponerPersonaje(nombre,numeroJugador);
+    Lista<Vertice<int> *> *lista = grafo->obtenerCaminoMinimo(origen,destino,elemento);
+    tablero.mostrar_movimiento(lista);
 }
+
 Menu::~Menu() {
     delete personajes;
 }
