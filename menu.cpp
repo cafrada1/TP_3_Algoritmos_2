@@ -1,6 +1,7 @@
 #include <iostream>
 #include "diccionario.h"
 #include "NodoABB.h"
+#include "grafo.h"
 #include "menu.h"
 #include <string>
 
@@ -362,7 +363,7 @@ void Menu::comienzoJuego(int contador) {
     int vidaJugador2 = contadorVida(jugador2);
 
     cout << "\n||COMIENZO DE PARTIDA||" << endl;
-    while(vidaJugador1 != 0 || vidaJugador2 != 0){
+    while((vidaJugador1 != 0 || vidaJugador2 != 0) && guardar != "SI"){
         imprimirTurno(contador);
         for (int i = 0; i < CANTIDAD_PERSONAJES; i++){
             tablero.mostrar_tablero();
@@ -667,8 +668,21 @@ void Menu::defenderse(string nombre, string jugador[]){
 }
 
 void Menu::moverPersonaje(string nombre){
-cout<<"mover"<<endl;
+   /* cout<<"Ingrese la fila y la columna a la cual quiere moverse con "<<nombre<<endl;
+    cout<<"Fila: ";
+    cin >>fila;
+    cout<<"Columna: ";
+    cin>>columna;
+    --fila;
+    int destino = (fila*8)+columna;
+    int origen = personajes->traer(nombre)->obtenerPosicion();
+    string elemento = personajes->traer(nombre)->getElemento;
+    int energia = grafo->energiaNecesaria(origen, destino);
+    grafo->obtenerCaminoMinimo(origen,destino,)
+    if (personajes->traer(nombre)->getEnergia <= energia) {
+        personaje->setEnergia(personaje->getEnergia  - energia)
 
+*/
 }
 
 
