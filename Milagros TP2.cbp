@@ -43,6 +43,8 @@
 		<Unit filename="diccionario.h" />
 		<Unit filename="fuego.cpp" />
 		<Unit filename="fuego.h" />
+		<Unit filename="grafo.cpp" />
+		<Unit filename="grafo.h" />
 		<Unit filename="lista.h" />
 		<Unit filename="main.cpp" />
 		<Unit filename="menu.cpp" />
@@ -52,6 +54,7 @@
 		<Unit filename="personaje.h" />
 		<Unit filename="tierra.cpp" />
 		<Unit filename="tierra.h" />
+		<Unit filename="vertice.h" />
 		<Extensions />
 	</Project>
 </CodeBlocks_project_file>
