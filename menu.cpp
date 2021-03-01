@@ -59,9 +59,9 @@ Menu::Menu(){
     tablero.cargar_tablero();
     if(existePartida()){
         int contador = asignarTurno();
-        cout<<"OK:61"<<endl;
+
         leerPartida();
-        cout<<"OK:63"<<endl;
+
         comienzoJuego(contador);
     }
     else{
@@ -526,16 +526,11 @@ void Menu::atacar(string nombre){
         }
         personajes->traer(nombre)->objetivos(tablero, vector_objetivos);
         for (int i = 0; i < 3; i++){
-            cout<<"atacado: "<<vector_objetivos[i]<<endl;
             if (vector_objetivos[i] != "Andy"){
                 int posicion = personajes->traer(vector_objetivos[i])->obtenerPosicion();
-                cout<<"posicion: "<<posicion<<endl;
                 string elemento = personajes->traer(vector_objetivos[i])->obtenerTipo();
-                cout<<"ELEMENTO: "<<elemento<<endl;
                 int defensa = personajes->traer(vector_objetivos[i])->obtenerEscudo();
-                cout<<"DEFENSA: "<<defensa<<endl;
                 int ataque = personajes->traer(nombre)->calculo_ataque(posicion, elemento, defensa);
-                cout<<"ATAQUE: "<<ataque<<endl;
                 personajes->traer(vector_objetivos[i])->cambiarVida(ataque);
             }
         }
@@ -592,19 +587,19 @@ string Menu::procesarLinea(string linea){
     string fila;
     string columna;
     string energia;
-    cout<<"OK:593"<<endl;
+
     getline(ss, tipo, ',');
     getline(ss, nombre, ',');
     getline(ss, escudo, ',');
     getline(ss, vida, ',');
     getline(ss, energia, ',');
     getline(ss, fila, ',');
-    cout<<"OK:600"<<endl;
+
     getline(ss, columna, ',');
     int numeroCasilla = (stoi(fila) * 8) + stoi(columna);
-    cout<<"OK:603"<<endl;
+
     modificarDatos(nombre,stoi(vida), stoi(escudo), stoi(energia), numeroCasilla);
-    cout<<"OK:605"<<endl;
+
     return nombre;
 
 }
@@ -619,7 +614,7 @@ void Menu::leerPartida(){
     int contadorLinea = 0;
 
     while(getline(archivo,linea)){
-         cout<<"OK:619"<<endl;
+
         if(contadorLinea != 0 && contadorLinea != (CANTIDAD_PERSONAJES+1)){
             cout<<"OK:620"<<endl;
             nombre = procesarLinea(linea);
@@ -629,22 +624,22 @@ void Menu::leerPartida(){
             else
                 jugador2[contadorPersonaje] = nombre;
             contadorPersonaje++;
-            cout<<"OK:628"<<endl;
+
         }
 
         else if(contadorLinea == 0){
             contadorPersonaje=0;
             jugador = stoi(linea);
-            cout<<"OK:633"<<endl;
+
         }
         else{
             contadorPersonaje=0;
             jugador = stoi(linea);
-            cout<<"OK:638"<<endl;
+
         }
         contadorLinea++;
     }
-    cout<<"OK:637"<<endl;
+
     archivo.close();
     remove("../partida.csv");
 }
@@ -707,31 +702,7 @@ void Menu::moverPersonaje(string nombre){
         cout<<"El casillero seleccionado esta ocupado, por favor seleccione otro"<<endl;
     }
 
-  /*
-    --fila;
-    int destino = (fila*8)+columna;
-    --columna;
-    int origen = personajes->traer(nombre)->obtenerPosicion();
-    string elemento = personajes->traer(nombre)->obtenerTipo();
-    Grafo *grafo = new Grafo();
-    ponerPersonaje(nombre,numeroJugador);
 
-
-  cout<<"Ingrese la fila y la columna a la cual quiere moverse con "<<nombre<<endl;
-    cout<<"Fila: ";
-    cin >>fila;
-    cout<<"Columna: ";
-    cin>>columna;
-    --fila;
-    int destino = (fila*8)+columna;
-    int origen = personajes->traer(nombre)->obtenerPosicion();
-    string elemento = personajes->traer(nombre)->getElemento;
-    int energia = grafo->energiaNecesaria(origen, destino);
-    grafo->obtenerCaminoMinimo(origen,destino,)
-    if (personajes->traer(nombre)->getEnergia <= energia) {
-        personaje->setEnergia(personaje->getEnergia  - energia)
-
-*/
 }
 
 

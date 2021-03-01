@@ -104,7 +104,7 @@ void Tablero::ponerPersonaje(int fila, int columna, string personaje){
 }
 string Tablero::sacarPersonaje(int fila, int columna){
     string personaje = tablero[fila][columna]->getPersonaje();
-    tablero[fila][columna]->ponerPersonaje(" ");
+    tablero[fila][columna]->ponerPersonaje("");
     tablero[fila][columna]->cambiarDisponible();
     return personaje;
 }
