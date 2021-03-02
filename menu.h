@@ -238,7 +238,7 @@ private:
      *  Descripcion:
      *      Procesa cada linea del archivo csv.
      */
-    string procesarLinea(string linea);
+    string procesarLinea(string linea, int numeroJugador);
 
     /*
      *  PRE: -
@@ -247,7 +247,7 @@ private:
      *      Modifica los datos del diccionario creado a partir de personajes.csv
      *      con los datos de partida.csv.
      */
-    void modificarDatos(string nombre,int vida, int escudo, int energia, int numeroCasilla);
+    void modificarDatos(string nombre,int vida, int escudo, int energia, int numeroCasilla,  string tipo);
 
     /*
      *  PRE: -

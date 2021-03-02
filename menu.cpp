@@ -583,14 +583,12 @@ string Menu::opcionGuardar(){
 }
 
 
-void Menu::modificarDatos(string nombre, int vida, int escudo, int energia, int numeroCasilla){
-    cout<<"OK:579"<<endl;
-    personajes->traer(nombre)->setVida(vida);
-    personajes->traer(nombre)->setEnergia(energia);
-    personajes->traer(nombre)->setEscudo(escudo);
+void Menu::modificarDatos(string nombre, int vida, int escudo, int energia, int numeroCasilla, string tipo){
+    Personaje* nuevo_personaje;
+    personajes->agregarPersonaje(nuevo_personaje,vida,nombre,escudo,energia,tipo);
     personajes->traer(nombre)->setPosicion(numeroCasilla);
 }
-string Menu::procesarLinea(string linea){
+string Menu::procesarLinea(string linea, int numeroJugador){
     stringstream ss(linea);
     string tipo;
     string nombre;
@@ -599,7 +597,6 @@ string Menu::procesarLinea(string linea){
     string fila;
     string columna;
     string energia;
-
     getline(ss, tipo, ',');
     getline(ss, nombre, ',');
     getline(ss, escudo, ',');
@@ -609,8 +606,10 @@ string Menu::procesarLinea(string linea){
 
     getline(ss, columna, ',');
     int numeroCasilla = (stoi(fila) * 8) + stoi(columna);
-
-    modificarDatos(nombre,stoi(vida), stoi(escudo), stoi(energia), numeroCasilla);
+    tablero.ponerPersonaje(stoi(fila), stoi(columna), nombre);
+    tablero.guardar_equipo(stoi(fila), stoi(columna), numeroJugador);
+    tablero.cambiarDisponible(stoi(fila), stoi(columna));
+    modificarDatos(nombre,stoi(vida), stoi(escudo), stoi(energia), numeroCasilla, tipo);
 
     return nombre;
 
@@ -630,9 +629,7 @@ void Menu::leerPartida(){
         while(getline(archivo,linea)){
 
             if(contadorLinea != 0 && contadorLinea != (CANTIDAD_PERSONAJES+1)){
-                cout<<"OK:620"<<endl;
-                nombre = procesarLinea(linea);
-                cout<<"OK:621"<<endl;
+                nombre = procesarLinea(linea, jugador);
                 if(jugador == 1)
                     jugador1[contadorPersonaje] = nombre;
                 else
@@ -719,7 +716,7 @@ void Menu::moverPersonaje(string nombre){
 }
 
 void Menu::mostrar_estado_personajes(){
-    cout << "----------------------------------------------------------------------------------\n";
+    cout << "--------------------------------------------------------------------------------\n";
     cout << "|  ESTADO DE LOS PERSONAJES" <<endl;
     for (int j = 0; j < CANTIDAD_PERSONAJES; j++){
         int vida1 = personajes->traer(jugador1[j])->obtenerVida();
@@ -733,7 +730,7 @@ void Menu::mostrar_estado_personajes(){
         int defensa2 = personajes->traer(jugador2[j])->obtenerEscudo();
         cout<< "|  NOMBRE: "<<jugador2[j]<<"  EQUIPO: 2  "<<"VIDA: "<< vida2<<"   ENERGIA: "<<energia2<<"   ELEMENTO: "<<elemento2<<"  DEFENSA: "<<defensa2<<"\n";
     }
-    cout << "----------------------------------------------------------------------------------\n";
+    cout << "--------------------------------------------------------------------------------\n";
 }
 
 
