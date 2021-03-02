@@ -62,11 +62,18 @@ void Agua::objetivos(Tablero &tablero, string objetivos[]){
     cin >>fila;
     cout<<"Columna: ";
     cin>>columna;
-
-    bool disponible = tablero.consulta_disponible(fila-1, columna-1);
+    --fila;
+    --columna;
+    bool disponible = tablero.consulta_disponible(fila, columna);
     if (disponible == false){
-        string personaje_atacado = tablero.consulta_personaje(fila-1,columna-1);
-        objetivos[0] = personaje_atacado;
+        int equipo_enemigo = tablero.consulta_equipo(fila, columna);
+        if (equipo_enemigo != equipo){
+            string personaje_atacado = tablero.consulta_personaje(fila,columna);
+            objetivos[0] = personaje_atacado;
+        }else{
+            cout<<" No puedes atacar a alguien de tu equipo!"<<endl;
+        }
+
     }else{
         cout<<" ¡Has fallado! El casillero estaba vacío"<<endl;
     }

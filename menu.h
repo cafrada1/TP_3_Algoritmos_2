@@ -257,6 +257,9 @@ private:
      */
     int asignarTurno();
 
+
+    void mostrar_estado_personajes();
+
 };
 
 

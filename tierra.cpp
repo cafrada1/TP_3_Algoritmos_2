@@ -68,8 +68,13 @@ void Tierra::objetivos(Tablero &tablero, string objetivos[]){
 
     bool disponible = tablero.consulta_disponible(fila, columna);
     if (disponible == false){
-        string personaje_atacado = tablero.consulta_personaje(fila,columna);
-        objetivos[0] = personaje_atacado;
+        int equipo_enemigo = tablero.consulta_equipo(fila, columna);
+        if (equipo_enemigo != equipo){
+            string personaje_atacado = tablero.consulta_personaje(fila-1,columna-1);
+            objetivos[0] = personaje_atacado;
+        }else{
+            cout<<" No puedes atacar a alguien de tu equipo!"<<endl;
+        }
     }else{
         cout<<" ¡Has fallado! El casillero estaba vacío"<<endl;
     }
@@ -79,17 +84,11 @@ void Tierra::objetivos(Tablero &tablero, string objetivos[]){
 
 
 int Tierra::calculo_ataque(int posicion_enemigo, string elemento, int defensa) {
-    int fila = posicion/8;
-    int columna = posicion%8-1;
-    int fila_enemigo = posicion_enemigo/8;
-    int columna_enemigo = posicion_enemigo%8-1;
-
-    cout<<"fila: "<<fila<<endl;
-    cout<<"columna : "<<columna<<endl;
-    cout<<"fila enemigo: "<<fila_enemigo<<endl;
-    cout<<"columna enemi: "<<columna_enemigo<<endl;
+    int fila = (posicion-1)/8;
+    int columna = (posicion-1)%8;
+    int fila_enemigo = (posicion_enemigo-1)/8;
+    int columna_enemigo = (posicion_enemigo-1)%8;
     int ataque;
-
     if(((fila_enemigo-2) < fila < (fila_enemigo+2)) && ((columna_enemigo-2) < columna < (columna_enemigo+2))){
         ataque = ATAQUE_CERCANO;
     }else if(((fila_enemigo-4) < fila < (fila_enemigo+4)) && ((columna_enemigo-4) < columna < (columna_enemigo+4))){
@@ -97,9 +96,6 @@ int Tierra::calculo_ataque(int posicion_enemigo, string elemento, int defensa) {
     }else if(((fila_enemigo-6) < fila < (fila_enemigo+6)) && ((columna_enemigo-6) < columna < (columna_enemigo+6))){
         ataque = ATAQUE_LEJANO;
     }
-
-
-
     if (elemento == elemento_fortaleza){
         ataque += FORTALEZA;
     }else if (elemento == elemento_debilidad){

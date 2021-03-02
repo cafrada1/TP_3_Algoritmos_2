@@ -44,11 +44,11 @@ void Personaje::cambiarVida(int cambio_vida) {
         cout<<"El personaje "<< nombre << " ha muerto!"<<endl;
         vida = 0;
     }else if (0 < vida <= MAXIMO_VIDA){
-        cout<<"El personaje "<< nombre << " tiene "<<vida<<" puntos de vida"<<endl;
+        cout<<"El personaje "<< nombre << " ahora tiene "<<vida<<" puntos de vida"<<endl;
 
     } else if (vida > MAXIMO_VIDA){
         vida = MAXIMO_VIDA;
-        cout<<"El personaje "<< nombre << " tiene "<<vida<<" puntos de vida"<<endl;
+        cout<<"El personaje "<< nombre << " ahora tiene "<<vida<<" puntos de vida"<<endl;
     }
 
 }

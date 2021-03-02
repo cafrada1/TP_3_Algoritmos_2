@@ -75,20 +75,7 @@ void Tablero::cargar_tablero(){
         }
     }
 }
-/*
-void Tablero::mostrar(){
-    for (int fila=0; fila<8; fila++){
-        for (int columna=0; columna<8; columna++){
 
-            string simbolo = tablero[fila][columna]->obtener_simbolo();
-            cout << simbolo<< "|";
-        }
-        cout << "\n" <<endl;
-        cout<<"------------------------------\n";
-
-    }
-}
-*/
 
 bool Tablero::consulta_disponible(int fila, int columna){
     return tablero[fila][columna]->getDisponible();
@@ -244,9 +231,9 @@ void Tablero::mostrar_indice_fila(){
 }
 
 void Tablero::mostrar_tablero(){
-    int contador = 0;
+
     string nombre;
-    string lista[PERSONAJES_MAXIMO];
+
     espacio();
     mostrar_indice_fila();
     espacio();
@@ -263,9 +250,10 @@ void Tablero::mostrar_tablero(){
             }
             else {
 
+
+
                 nombre = tablero[i][j]->getPersonaje();
-                lista[contador] = nombre;
-                contador++;
+
                 mostrar_casillero(elegir_color_fondo(terreno),LETRA_NEGRO,nombre.substr(0,3));
             }
         }
@@ -280,11 +268,7 @@ void Tablero::mostrar_tablero(){
     espacio();
     cout<<endl;
 
-    cout<< "Indice de personajes: "<<endl;
-    for (int i=0; i<contador; i++){
-        cout <<"\t"<< i+1<<": " <<lista[i]<<endl;
-    }
-    cout << endl;
+
 }
 
 void Tablero::mostrar_movimiento(Lista<Vertice<int>*> *lista){
@@ -298,7 +282,7 @@ void Tablero::mostrar_movimiento(Lista<Vertice<int>*> *lista){
     bool sacar = true;
 
     for (int i=0; i<lista->obtenerLargo()-1; i++){
-        system("clear");
+        system("cls");
         mostrar_tablero();
 
         usleep(DELAY*MICRO);
@@ -326,7 +310,7 @@ void Tablero::mostrar_movimiento(Lista<Vertice<int>*> *lista){
         }
 
     }
-    system("clear");
+    system("cls");
     mostrar_tablero();
 }
 
